@@ -13,14 +13,14 @@
 <style>
 :root{--bg:#04050c;--panel:#0b0f1a;--text:#eef4ff;--muted:#8d9ab2;--border:#293553;--accent:#8f83ff;--cyan:#55d8ff;--violet:#b070ff;--pink:#ff75c8;--mint:#6effcf}
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;overscroll-behavior:none}
 body{overflow:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
 button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .app{height:100%;display:grid;grid-template-rows:auto auto 1fr}
-.topbar{display:flex;gap:7px;align-items:center;padding:8px max(9px,env(safe-area-inset-right)) 8px max(9px,env(safe-area-inset-left));background:#050711;border-bottom:1px solid #18213a;overflow-x:auto;scrollbar-width:none;z-index:40}
+.topbar{display:flex;gap:7px;align-items:center;touch-action:pan-x;padding:8px max(9px,env(safe-area-inset-right)) 8px max(9px,env(safe-area-inset-left));background:#050711;border-bottom:1px solid #18213a;overflow-x:auto;scrollbar-width:none;z-index:40}
 .topbar::-webkit-scrollbar{display:none}.brand{font-weight:900;white-space:nowrap}.brand span{color:#9b90ff}
 .btn{min-height:42px;padding:8px 10px;border-radius:10px;border:1px solid #33405e;background:#12192a;color:var(--text);white-space:nowrap}.btn.primary{background:#352f75;border-color:#7469d8}.btn.danger{background:#3b2029;border-color:#713747;color:#ffdbe2}.btn.active{outline:2px solid var(--accent)}.btn:disabled{opacity:.4}.spacer{flex:1}
-.projectbar{display:flex;gap:9px;align-items:center;padding:7px max(9px,env(safe-area-inset-right)) 7px max(9px,env(safe-area-inset-left));background:#090c15;border-bottom:1px solid #18213a;z-index:35}
+.projectbar{display:flex;gap:9px;align-items:center;touch-action:none;padding:7px max(9px,env(safe-area-inset-right)) 7px max(9px,env(safe-area-inset-left));background:#090c15;border-bottom:1px solid #18213a;z-index:35}
 .projectbar input{min-width:190px;background:#050813;color:var(--text);border:1px solid #2b3756;border-radius:9px;padding:8px 9px}.status{font-size:12px;color:var(--muted);white-space:nowrap}
 .workspace{display:grid;grid-template-columns:225px 1fr;min-height:0}.sidebar{background:#080b13;border-right:1px solid #18213a;padding:12px;overflow:auto}.sidebar h3{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#9daac1;margin:12px 0 7px}.help{font-size:12px;color:#8c99b0;line-height:1.5}
 .stage{position:relative;overflow:hidden;touch-action:none;background:radial-gradient(circle at 50% 86%,rgba(118,91,255,.14),transparent 24%),radial-gradient(circle at 18% 25%,rgba(74,194,255,.06),transparent 22%),radial-gradient(circle at 82% 34%,rgba(255,100,198,.06),transparent 21%),#04050c;cursor:grab}
@@ -53,7 +53,7 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <button class="btn primary" id="afterBtn">+ After</button><button class="btn" id="beforeBtn">+ Before</button><button class="btn" id="branchBtn">+ Branch</button><button class="btn" id="editBtn">Edit</button><button class="btn" id="floatBtn">+ Floating</button><button class="btn" id="connectBtn">Merge / Connect</button><button class="btn" id="insertBtn">Insert Between</button><button class="btn" id="snapBtn">Snap Floating</button><button class="btn" id="collapseBtn">Collapse</button>
 <div class="spacer"></div><button class="btn" id="backupBtn">Backup</button><label class="btn" for="restoreInput">Restore</label><input id="restoreInput" type="file" accept=".json,.timeweb" hidden><button class="btn" id="newBtn">New</button>
 </div>
-<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.2</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
+<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.2.1</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
 <div class="workspace">
 <aside class="sidebar">
 <h3>Camera controls</h3><div class="help">Drag anywhere to pan. Pinch with two fingers to zoom. If you start on a point and move immediately, you pan. Hold the point first, then drag, to move the event.</div>
@@ -93,7 +93,7 @@ let p=rawLoad(),editing=null,connectFrom=null;
 function legacyHeight(pr){const ml=Math.max(0,...pr.nodes.filter(x=>x.snapped).map(x=>x.level||0));return Math.max(1800,LEGACY_TOP+LEGACY_BOTTOM+(ml+3)*GAP)}
 function migrate(pr){if(pr.layoutVersion===2)return false;const oldOY=legacyHeight(pr)-LEGACY_BOTTOM;pr.nodes.forEach(x=>{if(x.id==='BIG_BANG'){x.x=0;return}x.x=(Number(x.x)||LEGACY_W/2-NW/2)+NW/2-LEGACY_W/2;if(!x.snapped){x.freeY=(Number(x.freeY)||oldOY-NH/2)+NH/2-oldOY}});pr.layoutVersion=2;return true}
 if(migrate(p))localStorage.setItem(KEY,JSON.stringify(p));
-function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.2'}
+function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.2.1'}
 function n(id){return p.nodes.find(x=>x.id===id)}function e(id){return p.edges.find(x=>x.id===id)}function out(id){return p.edges.filter(x=>x.from===id)}function inc(id){return p.edges.filter(x=>x.to===id)}
 function color(){const c=COLS[p.colorIndex%COLS.length];p.colorIndex++;return c}function wy(x){return -(x.level||0)*GAP}
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
@@ -104,16 +104,16 @@ function hidden(){const set=new Set();function walk(id){for(const ed of out(id))
 
 /* camera */
 let cam=loadCamera(),active=new Map(),gesture='none',panStart=null,pinchStart=null,nodePress=null,nodeDrag=null,pressTimer=null,lastMoves=[],inertiaId=0;
-function loadCamera(){try{const c=JSON.parse(localStorage.getItem(CAMKEY));if(c&&Number.isFinite(c.x)&&Number.isFinite(c.y)&&Number.isFinite(c.s))return{x:c.x,y:c.y,s:Math.max(.25,Math.min(2.4,c.s))}}catch(_){}return{x:innerWidth/2,y:innerHeight*.72,s:1}}
+function loadCamera(){try{const c=JSON.parse(localStorage.getItem(CAMKEY));if(c&&Number.isFinite(c.x)&&Number.isFinite(c.y)&&Number.isFinite(c.s))return{x:c.x,y:c.y,s:Math.max(.35,Math.min(2,c.s))}}catch(_){}return{x:innerWidth/2,y:innerHeight*.72,s:1}}
 function saveCamera(){localStorage.setItem(CAMKEY,JSON.stringify(cam))}
 function applyCamera(){world.style.transform=`translate(${cam.x}px,${cam.y}px) scale(${cam.s})`;$('zoomRead').textContent=Math.round(cam.s*100)+'%'}
 function screenToWorld(sx,sy){const r=stage.getBoundingClientRect();return{x:(sx-r.left-cam.x)/cam.s,y:(sy-r.top-cam.y)/cam.s}}
 function worldToStage(x,yv){return{x:cam.x+x*cam.s,y:cam.y+yv*cam.s}}
 function cancelInertia(){if(inertiaId)cancelAnimationFrame(inertiaId);inertiaId=0}
-function focusWorld(wx,wyv,scale=cam.s,bottomBias=false){cancelInertia();cam.s=Math.max(.25,Math.min(2.4,scale));cam.x=stage.clientWidth/2-wx*cam.s;cam.y=(bottomBias?stage.clientHeight-115:stage.clientHeight/2)-wyv*cam.s;applyCamera();saveCamera()}
+function focusWorld(wx,wyv,scale=cam.s,bottomBias=false){cancelInertia();cam.s=Math.max(.35,Math.min(2,scale));cam.x=stage.clientWidth/2-wx*cam.s;cam.y=(bottomBias?stage.clientHeight-115:stage.clientHeight/2)-wyv*cam.s;applyCamera();saveCamera()}
 function focusBigBang(){focusWorld(0,0,Math.max(.55,Math.min(1.25,cam.s)),true)}
 function focusSelected(){const x=p.selectedNodeId?n(p.selectedNodeId):null;if(!x)return;if(x.id==='BIG_BANG'){focusBigBang();return}focusWorld(x.x,x.snapped?wy(x):x.freeY,Math.max(.55,cam.s),false)}
-function fitWeb(){const vis=p.nodes.filter(x=>!hidden().has(x.id));if(!vis.length){focusBigBang();return}const pts=vis.map(x=>({x:x.id==='BIG_BANG'?0:x.x,y:x.id==='BIG_BANG'?0:(x.snapped?wy(x):x.freeY)}));let minX=Math.min(...pts.map(q=>q.x))-NW,maxX=Math.max(...pts.map(q=>q.x))+NW,minY=Math.min(...pts.map(q=>q.y))-NH,maxY=Math.max(...pts.map(q=>q.y))+NH;const bw=Math.max(300,maxX-minX),bh=Math.max(300,maxY-minY),s=Math.max(.25,Math.min(1.5,Math.min((stage.clientWidth-80)/bw,(stage.clientHeight-100)/bh)));focusWorld((minX+maxX)/2,(minY+maxY)/2,s,false)}
+function fitWeb(){const vis=p.nodes.filter(x=>!hidden().has(x.id));if(!vis.length){focusBigBang();return}const pts=vis.map(x=>({x:x.id==='BIG_BANG'?0:x.x,y:x.id==='BIG_BANG'?0:(x.snapped?wy(x):x.freeY)}));let minX=Math.min(...pts.map(q=>q.x))-NW,maxX=Math.max(...pts.map(q=>q.x))+NW,minY=Math.min(...pts.map(q=>q.y))-NH,maxY=Math.max(...pts.map(q=>q.y))+NH;const bw=Math.max(300,maxX-minX),bh=Math.max(300,maxY-minY),s=Math.max(.35,Math.min(1.5,Math.min((stage.clientWidth-80)/bw,(stage.clientHeight-100)/bh)));focusWorld((minX+maxX)/2,(minY+maxY)/2,s,false)}
 function startInertia(vx,vy){cancelInertia();let px=vx,py=vy,prev=performance.now();function frame(now){const dt=Math.min(32,now-prev);prev=now;cam.x+=px*dt;cam.y+=py*dt;const friction=Math.pow(.91,dt/16);px*=friction;py*=friction;applyCamera();if(Math.hypot(px,py)>.015)inertiaId=requestAnimationFrame(frame);else{inertiaId=0;saveCamera()}}inertiaId=requestAnimationFrame(frame)}
 
 /* rendering */
@@ -129,7 +129,7 @@ function startNodeDrag(id,ev){const x=n(id);if(!x||id==='BIG_BANG')return;gestur
 function startPinch(){if(active.size<2)return;clearPress();gesture='pinch';stage.classList.remove('panning');const pts=[...active.values()].slice(0,2),r=stage.getBoundingClientRect(),mx=(pts[0].x+pts[1].x)/2-r.left,my=(pts[0].y+pts[1].y)/2-r.top,dist=Math.hypot(pts[1].x-pts[0].x,pts[1].y-pts[0].y),worldPt={x:(mx-cam.x)/cam.s,y:(my-cam.y)/cam.s};pinchStart={dist,scale:cam.s,worldPt}}
 stage.addEventListener('pointerdown',ev=>{if(ev.button!==0&&ev.pointerType==='mouse')return;cancelInertia();active.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});try{stage.setPointerCapture(ev.pointerId)}catch(_){}
 if(active.size===2){startPinch();return}const eid=targetEdgeId(ev.target),nid=targetNodeId(ev.target);if(eid&&!nid){p.selectedEdgeId=eid;p.selectedNodeId=null;save();render();return}if(nid&&nid!=='BIG_BANG'){nodePress={id:nid,sx:ev.clientX,sy:ev.clientY};pressTimer=setTimeout(()=>{if(nodePress&&active.size===1)startNodeDrag(nid,ev)},410)}else startPan(ev)});
-stage.addEventListener('pointermove',ev=>{if(!active.has(ev.pointerId))return;active.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});if(active.size>=2){if(gesture!=='pinch')startPinch();const pts=[...active.values()].slice(0,2),r=stage.getBoundingClientRect(),mx=(pts[0].x+pts[1].x)/2-r.left,my=(pts[0].y+pts[1].y)/2-r.top,dist=Math.max(20,Math.hypot(pts[1].x-pts[0].x,pts[1].y-pts[0].y)),ns=Math.max(.25,Math.min(2.4,pinchStart.scale*(dist/pinchStart.dist)));cam.s=ns;cam.x=mx-pinchStart.worldPt.x*ns;cam.y=my-pinchStart.worldPt.y*ns;applyCamera();return}
+stage.addEventListener('pointermove',ev=>{if(!active.has(ev.pointerId))return;active.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});if(active.size>=2){if(gesture!=='pinch')startPinch();const pts=[...active.values()].slice(0,2),r=stage.getBoundingClientRect(),mx=(pts[0].x+pts[1].x)/2-r.left,my=(pts[0].y+pts[1].y)/2-r.top,dist=Math.max(20,Math.hypot(pts[1].x-pts[0].x,pts[1].y-pts[0].y)),ns=Math.max(.35,Math.min(2,pinchStart.scale*(dist/pinchStart.dist)));cam.s=ns;cam.x=mx-pinchStart.worldPt.x*ns;cam.y=my-pinchStart.worldPt.y*ns;applyCamera();return}
 if(nodePress&&gesture==='none'){const d=Math.hypot(ev.clientX-nodePress.sx,ev.clientY-nodePress.sy);if(d>9){clearPress();startPan({clientX:ev.clientX,clientY:ev.clientY});return}}
 if(gesture==='pan'&&panStart){cam.x=panStart.cx+(ev.clientX-panStart.x);cam.y=panStart.cy+(ev.clientY-panStart.y);lastMoves.push({x:ev.clientX,y:ev.clientY,t:performance.now()});if(lastMoves.length>5)lastMoves.shift();applyCamera();return}
 if(gesture==='node'&&nodeDrag){const x=n(nodeDrag.id),w=screenToWorld(ev.clientX,ev.clientY);if(!x)return;x.x=Math.round(w.x/20)*20;if(x.snapped){x.level=Math.max(1,Math.round(-w.y/GAP));const sy=worldToStage(0,-x.level*GAP).y;$('snapGuide').style.top=sy+'px';$('snapLabel').style.top=sy+'px';$('snapLabel').textContent='T+'+x.level;$('snapGuide').classList.add('show');$('snapLabel').classList.add('show')}else{x.freeY=w.y}render();const el=nodeLayer.querySelector(`[data-id="${CSS.escape(x.id)}"]`);el?.classList.add('grabbed')}});
@@ -163,6 +163,19 @@ $('bigBangBtn').onclick=focusBigBang;$('selectedBtn').onclick=focusSelected;$('f
 $('newBtn').onclick=()=>{if(confirm('Start a new Time Web? Make a Backup first if you want to keep this universe.')){p=fresh();save();render();focusBigBang()}};
 $('saveEdit').onclick=saveEdit;$('cancelEdit').onclick=()=>$('nodeModal').classList.remove('show');$('deleteBtn').onclick=()=>{if(confirm('Delete this event and its web connections?'))del()};$('snapBefore').onclick=()=>snap('before');$('snapAfter').onclick=()=>snap('after');$('cancelSnap').onclick=()=>$('snapModal').classList.remove('show');['nodeModal','snapModal'].forEach(id=>$(id).addEventListener('click',ev=>{if(ev.target===$(id))$(id).classList.remove('show')}));
 window.addEventListener('resize',()=>{applyCamera()});
+
+/* iOS / Safari guard:
+   The app has its own canvas pinch zoom. Prevent Safari from zooming the entire webpage. */
+['gesturestart','gesturechange','gestureend'].forEach(type=>{
+  document.addEventListener(type,ev=>{ev.preventDefault()}, {passive:false});
+});
+document.addEventListener('touchmove',ev=>{
+  if(ev.touches && ev.touches.length>1) ev.preventDefault();
+},{passive:false});
+document.addEventListener('dblclick',ev=>{
+  if(ev.target.closest && ev.target.closest('#stage')) ev.preventDefault();
+},{passive:false});
+
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 render();requestAnimationFrame(()=>{if(!localStorage.getItem(CAMKEY))focusBigBang();else applyCamera()});
 })();
