@@ -74,10 +74,10 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <div class="legacy-actions" aria-hidden="true">
 <button id="afterBtn"></button><button id="beforeBtn"></button><button id="branchBtn"></button><button id="editBtn"></button><button id="connectBtn"></button><button id="insertBtn"></button><button id="snapBtn"></button><button id="collapseBtn"></button>
 </div>
-<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.4</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
+<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.4.1</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
 <div class="workspace">
 <aside class="sidebar">
-<h3>Camera controls</h3><div class="help">Drag anywhere to pan. Pinch with two fingers to zoom. If you start on a point and move immediately, you pan. Hold the point first, then drag, to move the event.</div>
+<h3>Camera controls</h3><div class="help">One finger pans. Pinch begins only after a real second finger touches the canvas. Tap empty space to deselect. Hold an event first, then drag, to move it.</div>
 <h3>Chronology</h3><div class="help">Physical height is time. Higher = later. Lower = earlier. Event movement snaps to chronology levels.</div>
 <h3>Context tools</h3><div class="help">Tap an event to get tools beside it. Use <b>Edit</b>, <b>+</b>, or <b>•••</b>. Floating events show <b>Snap</b>. Tap a thread for <b>＋ Insert Event</b>.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
 </aside>
@@ -149,7 +149,7 @@ let p=rawLoad(),editing=null,connectFrom=null;
 function legacyHeight(pr){const ml=Math.max(0,...pr.nodes.filter(x=>x.snapped).map(x=>x.level||0));return Math.max(1800,LEGACY_TOP+LEGACY_BOTTOM+(ml+3)*GAP)}
 function migrate(pr){if(pr.layoutVersion===2)return false;const oldOY=legacyHeight(pr)-LEGACY_BOTTOM;pr.nodes.forEach(x=>{if(x.id==='BIG_BANG'){x.x=0;return}x.x=(Number(x.x)||LEGACY_W/2-NW/2)+NW/2-LEGACY_W/2;if(!x.snapped){x.freeY=(Number(x.freeY)||oldOY-NH/2)+NH/2-oldOY}});pr.layoutVersion=2;return true}
 if(migrate(p))localStorage.setItem(KEY,JSON.stringify(p));
-function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.4'}
+function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.4.1'}
 function n(id){return p.nodes.find(x=>x.id===id)}function e(id){return p.edges.find(x=>x.id===id)}function out(id){return p.edges.filter(x=>x.from===id)}function inc(id){return p.edges.filter(x=>x.to===id)}
 function color(){const c=COLS[p.colorIndex%COLS.length];p.colorIndex++;return c}function wy(x){return -(x.level||0)*GAP}
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
@@ -243,26 +243,327 @@ function startInertia(vx,vy){cancelInertia();let px=vx,py=vy,prev=performance.no
 function render(){nodeLayer.innerHTML='';const hid=hidden();p.nodes.forEach(x=>{if(hid.has(x.id))return;if(x.id==='BIG_BANG'){const el=document.createElement('div');el.className='origin'+(p.selectedNodeId===x.id?' selected':'');el.dataset.id=x.id;el.innerHTML='BIG<br>BANG';nodeLayer.appendChild(el);return}const el=document.createElement('div');el.className='node'+(x.snapped?'':' float')+(p.selectedNodeId===x.id?' selected':'')+(x.collapsed?' collapsed':'');el.dataset.id=x.id;el.dataset.count=x.collapsed?countDesc(x.id):0;el.style.left=(x.x-NW/2)+'px';el.style.top=((x.snapped?wy(x):x.freeY)-NH/2)+'px';const cs=[...new Set(inc(x.id).concat(out(x.id)).map(q=>q.color))].slice(0,5);el.innerHTML=`${x.snapped?`<div class="badge">T+${x.level}</div>`:`<div class="null">NULL</div>`}<div class="title">${esc(x.title)}</div><div class="meta">${x.chapter?`<span>${esc(x.chapter)}</span>`:''}${x.pov?`<span>• ${esc(x.pov)}</span>`:''}${x.location?`<span>• ${esc(x.location)}</span>`:''}</div><div class="summary">${esc(x.consequence||x.summary||'Open event details')}</div><div class="dots">${cs.map(c=>`<span class="tdot" style="background:${c};box-shadow:0 0 8px ${c}"></span>`).join('')}</div>`;nodeLayer.appendChild(el)});drawEdges(hid);const sn=p.selectedNodeId?n(p.selectedNodeId):null,se=p.selectedEdgeId?e(p.selectedEdgeId):null;$('selectionStatus').textContent=sn?`Selected: ${sn.title}${sn.snapped?' • T+'+sn.level:' • NULL'}`:se?`Selected thread: ${n(se.from)?.title||'?'} → ${n(se.to)?.title||'?'} • tap + to insert`:'Nothing selected';$('insertBtn').disabled=!se;$('editBtn').disabled=!sn;$('snapBtn').disabled=!(sn&&!sn.snapped);$('collapseBtn').disabled=!(sn&&sn.id!=='BIG_BANG'&&out(sn.id).length);$('collapseBtn').textContent=sn?.collapsed?'Expand':'Collapse';applyCamera()}
 function drawEdges(hid){const defs=svg.querySelector('defs').outerHTML;svg.innerHTML=defs;p.edges.forEach(ed=>{if(hid.has(ed.from)||hid.has(ed.to))return;const a=n(ed.from),b=n(ed.to);if(!a||!b||!a.snapped||!b.snapped)return;const ax=a.id==='BIG_BANG'?0:a.x,ay=a.id==='BIG_BANG'?0:wy(a),bx=b.id==='BIG_BANG'?0:b.x,by=b.id==='BIG_BANG'?0:wy(b),mid=(ay+by)/2,d=`M ${ax} ${ay} C ${ax} ${mid}, ${bx} ${mid}, ${bx} ${by}`;const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',d);path.setAttribute('class','edge');path.setAttribute('stroke',ed.color||COLS[0]);svg.appendChild(path);const hit=document.createElementNS('http://www.w3.org/2000/svg','path');hit.setAttribute('d',d);hit.setAttribute('class','edgeHit'+(p.selectedEdgeId===ed.id?' selected':''));hit.dataset.edgeId=ed.id;svg.appendChild(hit)})}
 
-/* pointer gesture system */
+/* pointer gesture system — v1.4.1 hardened state machine */
 function targetNodeId(target){const el=target.closest?.('.node,.origin');return el?.dataset?.id||null}
 function targetEdgeId(target){const el=target.closest?.('.edgeHit');return el?.dataset?.edgeId||null}
 function clearPress(){clearTimeout(pressTimer);pressTimer=null;nodePress=null}
-function startPan(ev){gesture='pan';panStart={x:ev.clientX,y:ev.clientY,cx:cam.x,cy:cam.y};lastMoves=[{x:ev.clientX,y:ev.clientY,t:performance.now()}];stage.classList.add('panning')}
-function startNodeDrag(id,ev){const x=n(id);if(!x||id==='BIG_BANG')return;gesture='node';nodeDrag={id,startWX:x.x,startWY:x.snapped?wy(x):x.freeY};const el=nodeLayer.querySelector(`[data-id="${CSS.escape(id)}"]`);el?.classList.add('grabbed');if(navigator.vibrate)navigator.vibrate(18)}
-function startPinch(){if(active.size<2)return;clearPress();gesture='pinch';stage.classList.remove('panning');const pts=[...active.values()].slice(0,2),r=stage.getBoundingClientRect(),mx=(pts[0].x+pts[1].x)/2-r.left,my=(pts[0].y+pts[1].y)/2-r.top,dist=Math.hypot(pts[1].x-pts[0].x,pts[1].y-pts[0].y),worldPt={x:(mx-cam.x)/cam.s,y:(my-cam.y)/cam.s};pinchStart={dist,scale:cam.s,worldPt}}
-stage.addEventListener('pointerdown',ev=>{if(ev.button!==0&&ev.pointerType==='mouse')return;cancelInertia();active.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});try{stage.setPointerCapture(ev.pointerId)}catch(_){}
-if(active.size===2){startPinch();return}const eid=targetEdgeId(ev.target),nid=targetNodeId(ev.target);if(eid&&!nid){hideContextMenus();p.selectedEdgeId=eid;p.selectedNodeId=null;save();render();return}if(nid&&nid!=='BIG_BANG'){nodePress={id:nid,sx:ev.clientX,sy:ev.clientY};pressTimer=setTimeout(()=>{if(nodePress&&active.size===1)startNodeDrag(nid,ev)},410)}else startPan(ev)});
-stage.addEventListener('pointermove',ev=>{if(!active.has(ev.pointerId))return;active.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});if(active.size>=2){if(gesture!=='pinch')startPinch();const pts=[...active.values()].slice(0,2),r=stage.getBoundingClientRect(),mx=(pts[0].x+pts[1].x)/2-r.left,my=(pts[0].y+pts[1].y)/2-r.top,dist=Math.max(20,Math.hypot(pts[1].x-pts[0].x,pts[1].y-pts[0].y)),ns=Math.max(.35,Math.min(2,pinchStart.scale*(dist/pinchStart.dist)));cam.s=ns;cam.x=mx-pinchStart.worldPt.x*ns;cam.y=my-pinchStart.worldPt.y*ns;applyCamera();return}
-if(nodePress&&gesture==='none'){const d=Math.hypot(ev.clientX-nodePress.sx,ev.clientY-nodePress.sy);if(d>9){clearPress();startPan({clientX:ev.clientX,clientY:ev.clientY});return}}
-if(gesture==='pan'&&panStart){cam.x=panStart.cx+(ev.clientX-panStart.x);cam.y=panStart.cy+(ev.clientY-panStart.y);lastMoves.push({x:ev.clientX,y:ev.clientY,t:performance.now()});if(lastMoves.length>5)lastMoves.shift();applyCamera();return}
-if(gesture==='node'&&nodeDrag){const x=n(nodeDrag.id),w=screenToWorld(ev.clientX,ev.clientY);if(!x)return;x.x=Math.round(w.x/20)*20;if(x.snapped){x.level=Math.max(1,Math.round(-w.y/GAP));const sy=worldToStage(0,-x.level*GAP).y;$('snapGuide').style.top=sy+'px';$('snapLabel').style.top=sy+'px';$('snapLabel').textContent='T+'+x.level;$('snapGuide').classList.add('show');$('snapLabel').classList.add('show')}else{x.freeY=w.y}render();const el=nodeLayer.querySelector(`[data-id="${CSS.escape(x.id)}"]`);el?.classList.add('grabbed')}});
+function touchPointers(){return [...active.entries()].filter(([,v])=>v.type==='touch')}
+function pointerRecord(id){return active.get(id)||null}
 
-function pointerEnd(ev){if(!active.has(ev.pointerId))return;const wasOne=active.size===1;active.delete(ev.pointerId);clearPress();
-if(gesture==='pinch'){if(active.size===1){const rem=[...active.values()][0];startPan({clientX:rem.x,clientY:rem.y})}else{gesture='none';saveCamera()}return}
-if(gesture==='node'){normalizeEdges();$('snapGuide').classList.remove('show');$('snapLabel').classList.remove('show');gesture='none';nodeDrag=null;save();render();return}
-if(gesture==='pan'){stage.classList.remove('panning');if(wasOne&&lastMoves.length>=2){const a=lastMoves[Math.max(0,lastMoves.length-3)],b=lastMoves[lastMoves.length-1],dt=Math.max(16,b.t-a.t),vx=(b.x-a.x)/dt,vy=(b.y-a.y)/dt;gesture='none';panStart=null;saveCamera();if(Math.hypot(vx,vy)>.08)startInertia(vx,vy)}else{gesture='none';panStart=null;saveCamera()}return}
-gesture='none';const nid=targetNodeId(ev.target);if(nid){if(connectFrom){finishConnect(nid)}else{hideContextMenus();p.selectedNodeId=nid;p.selectedEdgeId=null;save();render()}}}
-stage.addEventListener('pointerup',pointerEnd);stage.addEventListener('pointercancel',pointerEnd);
+function startPan(ev,opts={}){
+  gesture='pan';
+  panStart={
+    pointerId:ev.pointerId,
+    x:ev.clientX,y:ev.clientY,
+    cx:cam.x,cy:cam.y,
+    moved:false,
+    emptyTap:!!opts.emptyTap,
+    startedAfterPinch:!!opts.startedAfterPinch
+  };
+  lastMoves=[{x:ev.clientX,y:ev.clientY,t:performance.now()}];
+  stage.classList.add('panning');
+}
+
+function startNodeDrag(id,ev){
+  const x=n(id);if(!x||id==='BIG_BANG')return;
+  gesture='node';
+  nodeDrag={
+    id,
+    pointerId:ev.pointerId,
+    startWX:x.x,
+    startWY:x.snapped?wy(x):x.freeY
+  };
+  const el=nodeLayer.querySelector(`[data-id="${CSS.escape(id)}"]`);
+  el?.classList.add('grabbed');
+  if(navigator.vibrate)navigator.vibrate(18);
+}
+
+function startPinch(){
+  const touches=touchPointers();
+  if(touches.length!==2)return false;
+  clearPress();
+  stage.classList.remove('panning');
+  panStart=null;
+  gesture='pinch';
+
+  const [,a]=touches[0],[,b]=touches[1];
+  const r=stage.getBoundingClientRect();
+  const mx=(a.x+b.x)/2-r.left,my=(a.y+b.y)/2-r.top;
+  const dist=Math.max(20,Math.hypot(b.x-a.x,b.y-a.y));
+  const worldPt={x:(mx-cam.x)/cam.s,y:(my-cam.y)/cam.s};
+  pinchStart={dist,scale:cam.s,worldPt};
+  return true;
+}
+
+function resetGestureEngine({save=true,renderNode=true}={}){
+  const wasNode=gesture==='node'&&nodeDrag;
+  clearPress();
+  active.clear();
+  stage.classList.remove('panning');
+  $('snapGuide').classList.remove('show');
+  $('snapLabel').classList.remove('show');
+
+  if(wasNode){
+    normalizeEdges();
+    if(save)save();
+  }
+  gesture='none';
+  panStart=null;
+  pinchStart=null;
+  nodeDrag=null;
+  lastMoves=[];
+  if(save)saveCamera();
+  if(wasNode&&renderNode)render();
+}
+
+/* A new primary touch means iOS itself considers this the first finger.
+   If our map still contains an older touch at that moment, it is stale. */
+function flushGhostPointersIfNeeded(ev){
+  if(ev.pointerType!=='touch'||!ev.isPrimary)return;
+  if(touchPointers().length===0)return;
+  resetGestureEngine({save:true,renderNode:true});
+}
+
+function selectNode(id){
+  if(!id)return;
+  hideContextMenus();
+  p.selectedNodeId=id;
+  p.selectedEdgeId=null;
+  save();
+  render();
+}
+
+function deselectAll(){
+  hideContextMenus();
+  connectFrom=null;
+  $('connectBtn').classList.remove('active');
+  p.selectedNodeId=null;
+  p.selectedEdgeId=null;
+  save();
+  render();
+}
+
+stage.addEventListener('pointerdown',ev=>{
+  if(ev.button!==0&&ev.pointerType==='mouse')return;
+
+  flushGhostPointersIfNeeded(ev);
+  cancelInertia();
+
+  const eid=targetEdgeId(ev.target),nid=targetNodeId(ev.target);
+  active.set(ev.pointerId,{
+    x:ev.clientX,y:ev.clientY,
+    type:ev.pointerType||'unknown',
+    isPrimary:!!ev.isPrimary,
+    downAt:performance.now(),
+    startNode:nid,
+    startEdge:eid,
+    emptyStart:!nid&&!eid
+  });
+
+  try{stage.setPointerCapture(ev.pointerId)}catch(_){}
+
+  /* Pinch may ONLY begin here, on the actual second touch-down.
+     Pointer-move is never allowed to invent a pinch. */
+  if(ev.pointerType==='touch'&&touchPointers().length===2&&gesture!=='node'){
+    startPinch();
+    return;
+  }
+
+  if(eid&&!nid){
+    hideContextMenus();
+    p.selectedEdgeId=eid;
+    p.selectedNodeId=null;
+    save();
+    render();
+    return;
+  }
+
+  if(nid){
+    nodePress={id:nid,pointerId:ev.pointerId,sx:ev.clientX,sy:ev.clientY};
+    if(nid!=='BIG_BANG'){
+      const pressEv={pointerId:ev.pointerId,clientX:ev.clientX,clientY:ev.clientY};
+      pressTimer=setTimeout(()=>{
+        if(nodePress&&nodePress.pointerId===ev.pointerId&&active.has(ev.pointerId)&&gesture==='none'){
+          startNodeDrag(nid,pressEv);
+        }
+      },410);
+    }
+    return;
+  }
+
+  startPan(ev,{emptyTap:true});
+});
+
+stage.addEventListener('pointermove',ev=>{
+  const rec=pointerRecord(ev.pointerId);
+  if(!rec)return;
+
+  rec.x=ev.clientX;rec.y=ev.clientY;rec.lastAt=performance.now();
+
+  /* Pinch updates only if pinch mode was explicitly armed by the second
+     pointer-down. One-finger movement can never enter this branch. */
+  if(gesture==='pinch'){
+    const touches=touchPointers();
+    if(touches.length!==2)return;
+    const [,a]=touches[0],[,b]=touches[1];
+    const r=stage.getBoundingClientRect();
+    const mx=(a.x+b.x)/2-r.left,my=(a.y+b.y)/2-r.top;
+    const dist=Math.max(20,Math.hypot(b.x-a.x,b.y-a.y));
+    const ns=Math.max(.35,Math.min(2,pinchStart.scale*(dist/pinchStart.dist)));
+    cam.s=ns;
+    cam.x=mx-pinchStart.worldPt.x*ns;
+    cam.y=my-pinchStart.worldPt.y*ns;
+    applyCamera();
+    return;
+  }
+
+  if(nodePress&&nodePress.pointerId===ev.pointerId&&gesture==='none'){
+    const d=Math.hypot(ev.clientX-nodePress.sx,ev.clientY-nodePress.sy);
+    if(d>9){
+      clearPress();
+      startPan(ev,{emptyTap:false});
+      return;
+    }
+  }
+
+  if(gesture==='pan'&&panStart&&panStart.pointerId===ev.pointerId){
+    const dx=ev.clientX-panStart.x,dy=ev.clientY-panStart.y;
+    if(Math.hypot(dx,dy)>6)panStart.moved=true;
+    cam.x=panStart.cx+dx;
+    cam.y=panStart.cy+dy;
+    lastMoves.push({x:ev.clientX,y:ev.clientY,t:performance.now()});
+    if(lastMoves.length>5)lastMoves.shift();
+    applyCamera();
+    return;
+  }
+
+  if(gesture==='node'&&nodeDrag&&nodeDrag.pointerId===ev.pointerId){
+    const x=n(nodeDrag.id),w=screenToWorld(ev.clientX,ev.clientY);
+    if(!x)return;
+    x.x=Math.round(w.x/20)*20;
+    if(x.snapped){
+      x.level=Math.max(1,Math.round(-w.y/GAP));
+      const sy=worldToStage(0,-x.level*GAP).y;
+      $('snapGuide').style.top=sy+'px';
+      $('snapLabel').style.top=sy+'px';
+      $('snapLabel').textContent='T+'+x.level;
+      $('snapGuide').classList.add('show');
+      $('snapLabel').classList.add('show');
+    }else{
+      x.freeY=w.y;
+    }
+    render();
+    const el=nodeLayer.querySelector(`[data-id="${CSS.escape(x.id)}"]`);
+    el?.classList.add('grabbed');
+  }
+});
+
+function pointerEnd(ev,cancelled=false){
+  const rec=pointerRecord(ev.pointerId);
+  if(!rec)return;
+
+  const endingGesture=gesture;
+  const endingPan=panStart?{...panStart}:null;
+  active.delete(ev.pointerId);
+  clearPress();
+
+  if(endingGesture==='pinch'){
+    const touches=touchPointers();
+    if(touches.length===1&&!cancelled){
+      const [id,r]=touches[0];
+      /* A pinch ending with one finger becomes a completely fresh pan.
+         No old pinch coordinates are reused. */
+      startPan({pointerId:id,clientX:r.x,clientY:r.y},{emptyTap:false,startedAfterPinch:true});
+    }else{
+      gesture='none';
+      pinchStart=null;
+      stage.classList.remove('panning');
+      saveCamera();
+    }
+    return;
+  }
+
+  if(endingGesture==='node'&&nodeDrag&&nodeDrag.pointerId===ev.pointerId){
+    normalizeEdges();
+    $('snapGuide').classList.remove('show');
+    $('snapLabel').classList.remove('show');
+    gesture='none';
+    nodeDrag=null;
+    save();
+    render();
+
+    /* If another real touch is still down, treat it as a new pan only. */
+    const touches=touchPointers();
+    if(touches.length===1&&!cancelled){
+      const [id,r]=touches[0];
+      startPan({pointerId:id,clientX:r.x,clientY:r.y},{emptyTap:false});
+    }
+    return;
+  }
+
+  if(endingGesture==='pan'&&endingPan&&endingPan.pointerId===ev.pointerId){
+    stage.classList.remove('panning');
+
+    if(cancelled){
+      gesture='none';
+      panStart=null;
+      lastMoves=[];
+      saveCamera();
+      return;
+    }
+
+    /* A stationary empty-space touch is a deselect, not a pan. */
+    if(endingPan.emptyTap&&!endingPan.moved&&!endingPan.startedAfterPinch){
+      gesture='none';
+      panStart=null;
+      lastMoves=[];
+      deselectAll();
+      return;
+    }
+
+    if(endingPan.moved&&lastMoves.length>=2){
+      const a=lastMoves[Math.max(0,lastMoves.length-3)],b=lastMoves[lastMoves.length-1];
+      const dt=Math.max(16,b.t-a.t),vx=(b.x-a.x)/dt,vy=(b.y-a.y)/dt;
+      gesture='none';
+      panStart=null;
+      saveCamera();
+      if(Math.hypot(vx,vy)>.08)startInertia(vx,vy);
+    }else{
+      gesture='none';
+      panStart=null;
+      saveCamera();
+    }
+    return;
+  }
+
+  gesture='none';
+
+  /* Reliable tap selection uses the pointer's original target rather than
+     the pointer-up target, which may be retargeted by pointer capture. */
+  if(!cancelled&&rec.startNode){
+    selectNode(rec.startNode);
+  }
+
+  if(active.size===0){
+    panStart=null;
+    pinchStart=null;
+    nodeDrag=null;
+    lastMoves=[];
+  }
+}
+
+stage.addEventListener('pointerup',ev=>pointerEnd(ev,false));
+stage.addEventListener('pointercancel',ev=>pointerEnd(ev,true));
+stage.addEventListener('lostpointercapture',ev=>{
+  if(active.has(ev.pointerId))pointerEnd(ev,true);
+});
+
+/* If iOS backgrounds the PWA, changes tabs, opens Control Center, etc.,
+   all touch state is discarded. This prevents ghost fingers on return. */
+window.addEventListener('blur',()=>resetGestureEngine({save:true,renderNode:true}));
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='hidden')resetGestureEngine({save:true,renderNode:true});
+});
 
 /* story editing */
 function createEvent(level,x,snapped=true){const id=uid(),obj={id,title:'New Event',snapped,level:snapped?level:null,x,freeY:snapped?null:-Math.max(2,level)*GAP,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false};p.nodes.push(obj);p.selectedNodeId=id;p.selectedEdgeId=null;save();render();openEdit(id);return obj}
