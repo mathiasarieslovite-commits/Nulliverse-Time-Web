@@ -19,6 +19,21 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 .app{height:100%;display:grid;grid-template-rows:auto auto 1fr}
 .topbar{display:flex;gap:7px;align-items:center;touch-action:pan-x;padding:8px max(9px,env(safe-area-inset-right)) 8px max(9px,env(safe-area-inset-left));background:#050711;border-bottom:1px solid #18213a;overflow-x:auto;scrollbar-width:none;z-index:40}
 .topbar::-webkit-scrollbar{display:none}.brand{font-weight:900;white-space:nowrap}.brand span{color:#9b90ff}
+.legacy-actions{display:none!important}
+.context-tools{position:absolute;z-index:31;width:190px;display:none;filter:drop-shadow(0 10px 24px rgba(0,0,0,.42));touch-action:none}
+.context-tools.show{display:block}
+.context-row{display:flex;gap:5px;padding:5px;border:1px solid #43516f;border-radius:13px;background:rgba(9,13,24,.96);backdrop-filter:blur(10px)}
+.context-row .ctxbtn{flex:1;min-width:0;min-height:40px;padding:7px 8px;border-radius:9px;border:1px solid #34415f;background:#141b2d;color:#eef4ff;font-size:12px;font-weight:750;white-space:nowrap}
+.context-row .ctxbtn.primary{background:#3c347f;border-color:#7469d8}
+.context-row .ctxbtn.danger{background:#3b2029;border-color:#713747;color:#ffdbe2}
+.context-menu{display:none;margin-top:6px;padding:5px;gap:5px;flex-wrap:wrap;border:1px solid #3b4866;border-radius:12px;background:rgba(8,12,22,.97);backdrop-filter:blur(10px)}
+.context-menu.show{display:flex}
+.context-menu .ctxbtn{flex:1 1 82px;min-height:38px;padding:6px 7px;border-radius:9px;border:1px solid #34415f;background:#12192a;color:#eef4ff;font-size:11px;font-weight:700}
+.context-menu .ctxbtn.danger{background:#3b2029;border-color:#713747;color:#ffdbe2}
+.thread-tools{position:absolute;z-index:30;display:none;touch-action:none}
+.thread-tools.show{display:block}
+.thread-tools button{min-height:42px;padding:8px 13px;border-radius:999px;border:1px solid #9e95ff;background:rgba(42,35,101,.96);color:white;font-size:12px;font-weight:850;box-shadow:0 0 15px rgba(132,116,255,.7),0 0 32px rgba(83,205,255,.2);backdrop-filter:blur(8px)}
+
 .btn{min-height:42px;padding:8px 10px;border-radius:10px;border:1px solid #33405e;background:#12192a;color:var(--text);white-space:nowrap}.btn.primary{background:#352f75;border-color:#7469d8}.btn.danger{background:#3b2029;border-color:#713747;color:#ffdbe2}.btn.active{outline:2px solid var(--accent)}.btn:disabled{opacity:.4}.spacer{flex:1}
 .projectbar{display:flex;gap:9px;align-items:center;touch-action:none;padding:7px max(9px,env(safe-area-inset-right)) 7px max(9px,env(safe-area-inset-left));background:#090c15;border-bottom:1px solid #18213a;z-index:35}
 .projectbar input{min-width:190px;background:#050813;color:var(--text);border:1px solid #2b3756;border-radius:9px;padding:8px 9px}.status{font-size:12px;color:var(--muted);white-space:nowrap}
@@ -30,7 +45,7 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 .time-axis{position:absolute;left:0;top:-50000px;width:1px;height:50000px;background:linear-gradient(to top,rgba(142,131,255,.02),rgba(142,131,255,.42),rgba(142,131,255,.05));z-index:1;pointer-events:none}
 .web{position:absolute;left:-50000px;top:-50000px;width:100000px;height:100000px;z-index:3;overflow:visible}
 .edge{fill:none;stroke-width:4;stroke-linecap:round;filter:url(#glow);opacity:.9}
-.edgeHit{fill:none;stroke:transparent;stroke-width:26;pointer-events:stroke;cursor:pointer}.edgeHit.selected{stroke:rgba(255,255,255,.07)}.edge-plus{position:absolute;z-index:24;width:44px;height:44px;margin-left:-22px;margin-top:-22px;border-radius:50%;border:1px solid #9e95ff;background:radial-gradient(circle at 50% 45%,#fff 0 7%,#bfb8ff 8% 13%,#6d60ff 34%,#29245c 72%);color:white;font-size:28px;font-weight:800;line-height:38px;text-align:center;box-shadow:0 0 16px rgba(132,116,255,.85),0 0 36px rgba(83,205,255,.28);display:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.edge-plus.show{display:block}.edge-plus:active{transform:scale(.94)}
+.edgeHit{fill:none;stroke:transparent;stroke-width:26;pointer-events:stroke;cursor:pointer}.edgeHit.selected{stroke:rgba(255,255,255,.07)}.edge-plus{position:absolute;z-index:24;width:44px;height:44px;margin-left:-22px;margin-top:-22px;border-radius:50%;border:1px solid #9e95ff;background:radial-gradient(circle at 50% 45%,#fff 0 7%,#bfb8ff 8% 13%,#6d60ff 34%,#29245c 72%);color:white;font-size:28px;font-weight:800;line-height:38px;text-align:center;box-shadow:0 0 16px rgba(132,116,255,.85),0 0 36px rgba(83,205,255,.28);display:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.edge-plus.show{display:none}.edge-plus:active{transform:scale(.94)}
 .origin{position:absolute;width:94px;height:94px;left:-47px;top:-47px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;font-weight:900;letter-spacing:.08em;background:radial-gradient(circle at 50% 45%,#fff 0 8%,#dfe4ff 9% 12%,#776cff 24%,rgba(104,76,255,.45) 46%,rgba(15,16,42,.96) 70%);border:1px solid #a095ff;box-shadow:0 0 30px rgba(113,96,255,.8),0 0 80px rgba(68,160,255,.25);z-index:8;touch-action:none}
 .origin.selected{outline:3px solid var(--accent)}
 .node{position:absolute;width:196px;min-height:84px;padding:9px 10px;border-radius:14px;border:1px solid #3b4868;background:rgba(13,18,32,.95);box-shadow:0 8px 26px rgba(0,0,0,.35);z-index:8;user-select:none;-webkit-user-select:none;touch-action:none}
@@ -50,15 +65,21 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <div class="app">
 <div class="topbar">
 <div class="brand">NULLIVERSE <span>TIME WEB</span></div>
-<button class="btn primary" id="afterBtn">+ After</button><button class="btn" id="beforeBtn">+ Before</button><button class="btn" id="branchBtn">+ Branch</button><button class="btn" id="editBtn">Edit</button><button class="btn" id="floatBtn">+ Floating</button><button class="btn" id="connectBtn">Merge / Connect</button><button class="btn" id="insertBtn">Insert Between</button><button class="btn" id="snapBtn">Snap Floating</button><button class="btn" id="collapseBtn">Collapse</button>
-<div class="spacer"></div><button class="btn" id="backupBtn">Backup</button><label class="btn" for="restoreInput">Restore</label><input id="restoreInput" type="file" accept=".json,.timeweb" hidden><button class="btn" id="newBtn">New</button>
+<button class="btn primary" id="floatBtn">+ Floating</button>
+<div class="spacer"></div>
+<button class="btn" id="backupBtn">Backup</button>
+<label class="btn" for="restoreInput">Restore</label><input id="restoreInput" type="file" accept=".json,.timeweb" hidden>
+<button class="btn" id="newBtn">New</button>
 </div>
-<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.3</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
+<div class="legacy-actions" aria-hidden="true">
+<button id="afterBtn"></button><button id="beforeBtn"></button><button id="branchBtn"></button><button id="editBtn"></button><button id="connectBtn"></button><button id="insertBtn"></button><button id="snapBtn"></button><button id="collapseBtn"></button>
+</div>
+<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.4</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
 <div class="workspace">
 <aside class="sidebar">
 <h3>Camera controls</h3><div class="help">Drag anywhere to pan. Pinch with two fingers to zoom. If you start on a point and move immediately, you pan. Hold the point first, then drag, to move the event.</div>
 <h3>Chronology</h3><div class="help">Physical height is time. Higher = later. Lower = earlier. Event movement snaps to chronology levels.</div>
-<h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Tap a thread to select it, then use <b>Insert Between</b>.</div>
+<h3>Context tools</h3><div class="help">Tap an event to get tools beside it. Use <b>Edit</b>, <b>+</b>, or <b>•••</b>. Floating events show <b>Snap</b>. Tap a thread for <b>＋ Insert Event</b>.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
 </aside>
 <main class="stage" id="stage">
 <div class="world" id="world">
@@ -68,6 +89,30 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 </div>
 <div class="snap-guide" id="snapGuide"></div><div class="snap-label" id="snapLabel">T+1</div>
 <button class="edge-plus" id="edgePlus" aria-label="Insert event on selected thread" title="Insert event here">+</button>
+
+<div class="context-tools" id="nodeTools">
+  <div class="context-row">
+    <button class="ctxbtn primary" id="ctxEdit">Edit</button>
+    <button class="ctxbtn" id="ctxAdd">+</button>
+    <button class="ctxbtn" id="ctxSnap">Snap</button>
+    <button class="ctxbtn" id="ctxMore">•••</button>
+  </div>
+  <div class="context-menu" id="ctxAddMenu">
+    <button class="ctxbtn" id="ctxBefore">+ Before</button>
+    <button class="ctxbtn" id="ctxAfter">+ After</button>
+    <button class="ctxbtn" id="ctxBranch">+ Branch</button>
+  </div>
+  <div class="context-menu" id="ctxMoreMenu">
+    <button class="ctxbtn" id="ctxConnect">Connect</button>
+    <button class="ctxbtn" id="ctxCollapse">Collapse</button>
+    <button class="ctxbtn danger" id="ctxDelete">Delete</button>
+  </div>
+</div>
+
+<div class="thread-tools" id="threadTools">
+  <button id="ctxThreadInsert">＋ Insert Event</button>
+</div>
+
 <div class="zoomread" id="zoomRead">100%</div>
 <div class="navpod"><button class="btn" id="bigBangBtn">Big Bang</button><button class="btn" id="selectedBtn">Selected</button><button class="btn" id="fitBtn">Fit Web</button></div>
 </main>
@@ -85,6 +130,16 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <div class="field"><label>Anchor event</label><select id="snapAnchor"></select></div><div class="choices"><button class="btn choice" id="snapBefore"><b>Snap Before</b><small>Immediately earlier than the anchor.</small></button><button class="btn choice primary" id="snapAfter"><b>Snap After</b><small>Immediately later than the anchor.</small></button></div><div class="actions"><button class="btn" id="cancelSnap">Cancel</button></div>
 </div></div>
 
+<div class="modal-bg" id="deleteModal"><div class="modal" style="width:min(560px,100%)">
+<h2>Delete Event</h2>
+<div class="notice" id="deleteNotice">This event is part of more than one path.</div>
+<div class="choices">
+<button class="btn choice primary" id="deleteReconnect"><b>Delete & Reconnect</b><small>Remove the event and reconnect paths through it.</small></button>
+<button class="btn choice danger" id="deleteSever"><b>Delete & Sever</b><small>Remove the event and leave its connections broken.</small></button>
+</div>
+<div class="actions"><button class="btn" id="cancelDelete">Cancel</button></div>
+</div></div>
+
 <script>
 (()=>{const KEY='nulliverse_timeweb_v1',CAMKEY='nulliverse_timeweb_camera_v1_2',GAP=150,NW=196,NH=84,LEGACY_W=2400,LEGACY_TOP=260,LEGACY_BOTTOM=220,COLS=['#55d8ff','#b070ff','#ff75c8','#6effcf','#ffd66e','#7f9dff'];
 const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2),$=id=>document.getElementById(id),stage=$('stage'),world=$('world'),nodeLayer=$('nodeLayer'),svg=$('webSvg');
@@ -94,7 +149,7 @@ let p=rawLoad(),editing=null,connectFrom=null;
 function legacyHeight(pr){const ml=Math.max(0,...pr.nodes.filter(x=>x.snapped).map(x=>x.level||0));return Math.max(1800,LEGACY_TOP+LEGACY_BOTTOM+(ml+3)*GAP)}
 function migrate(pr){if(pr.layoutVersion===2)return false;const oldOY=legacyHeight(pr)-LEGACY_BOTTOM;pr.nodes.forEach(x=>{if(x.id==='BIG_BANG'){x.x=0;return}x.x=(Number(x.x)||LEGACY_W/2-NW/2)+NW/2-LEGACY_W/2;if(!x.snapped){x.freeY=(Number(x.freeY)||oldOY-NH/2)+NH/2-oldOY}});pr.layoutVersion=2;return true}
 if(migrate(p))localStorage.setItem(KEY,JSON.stringify(p));
-function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.3'}
+function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.4'}
 function n(id){return p.nodes.find(x=>x.id===id)}function e(id){return p.edges.find(x=>x.id===id)}function out(id){return p.edges.filter(x=>x.from===id)}function inc(id){return p.edges.filter(x=>x.to===id)}
 function color(){const c=COLS[p.colorIndex%COLS.length];p.colorIndex++;return c}function wy(x){return -(x.level||0)*GAP}
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
@@ -107,7 +162,7 @@ function hidden(){const set=new Set();function walk(id){for(const ed of out(id))
 let cam=loadCamera(),active=new Map(),gesture='none',panStart=null,pinchStart=null,nodePress=null,nodeDrag=null,pressTimer=null,lastMoves=[],inertiaId=0;
 function loadCamera(){try{const c=JSON.parse(localStorage.getItem(CAMKEY));if(c&&Number.isFinite(c.x)&&Number.isFinite(c.y)&&Number.isFinite(c.s))return{x:c.x,y:c.y,s:Math.max(.35,Math.min(2,c.s))}}catch(_){}return{x:innerWidth/2,y:innerHeight*.72,s:1}}
 function saveCamera(){localStorage.setItem(CAMKEY,JSON.stringify(cam))}
-function applyCamera(){world.style.transform=`translate(${cam.x}px,${cam.y}px) scale(${cam.s})`;$('zoomRead').textContent=Math.round(cam.s*100)+'%';updateEdgePlus()}
+function applyCamera(){world.style.transform=`translate(${cam.x}px,${cam.y}px) scale(${cam.s})`;$('zoomRead').textContent=Math.round(cam.s*100)+'%';updateEdgePlus();updateContextTools()}
 function screenToWorld(sx,sy){const r=stage.getBoundingClientRect();return{x:(sx-r.left-cam.x)/cam.s,y:(sy-r.top-cam.y)/cam.s}}
 function worldToStage(x,yv){return{x:cam.x+x*cam.s,y:cam.y+yv*cam.s}}
 function edgeMidpoint(ed){
@@ -128,6 +183,55 @@ function updateEdgePlus(){
   }
   btn.style.left=pt.x+'px';btn.style.top=pt.y+'px';btn.classList.add('show');
 }
+function hideContextMenus(){
+  $('ctxAddMenu').classList.remove('show');
+  $('ctxMoreMenu').classList.remove('show');
+}
+function updateContextTools(){
+  const tools=$('nodeTools'),thread=$('threadTools');
+  const sn=p.selectedNodeId?n(p.selectedNodeId):null;
+  const se=p.selectedEdgeId?e(p.selectedEdgeId):null;
+
+  if(sn){
+    const wx=sn.id==='BIG_BANG'?0:sn.x;
+    const wyv=sn.id==='BIG_BANG'?0:(sn.snapped?wy(sn):sn.freeY);
+    const pt=worldToStage(wx,wyv);
+    const halfW=(sn.id==='BIG_BANG'?47:NW/2)*cam.s;
+    const halfH=(sn.id==='BIG_BANG'?47:NH/2)*cam.s;
+    let left=pt.x-95;
+    let top=pt.y-halfH-58;
+    if(top<8) top=pt.y+halfH+10;
+    left=Math.max(8,Math.min(stage.clientWidth-198,left));
+    top=Math.max(8,Math.min(stage.clientHeight-55,top));
+    tools.style.left=left+'px';
+    tools.style.top=top+'px';
+    tools.classList.add('show');
+
+    const floating=!sn.snapped;
+    $('ctxAdd').style.display=floating?'none':'inline-block';
+    $('ctxSnap').style.display=floating?'inline-block':'none';
+    $('ctxConnect').style.display=floating?'none':'inline-block';
+    $('ctxCollapse').style.display=(!floating && sn.id!=='BIG_BANG' && out(sn.id).length)?'inline-block':'none';
+    $('ctxCollapse').textContent=sn.collapsed?'Expand':'Collapse';
+    $('ctxDelete').style.display=sn.id==='BIG_BANG'?'none':'inline-block';
+    $('ctxBefore').style.display=(sn.id==='BIG_BANG'||sn.level<=0)?'none':'inline-block';
+  }else{
+    tools.classList.remove('show');
+    hideContextMenus();
+  }
+
+  if(se && !sn){
+    const mid=edgeMidpoint(se);
+    if(mid){
+      const pt=worldToStage(mid.x,mid.y);
+      let left=pt.x-58,top=pt.y-21;
+      left=Math.max(8,Math.min(stage.clientWidth-124,left));
+      top=Math.max(8,Math.min(stage.clientHeight-50,top));
+      thread.style.left=left+'px';thread.style.top=top+'px';
+      thread.classList.add('show');
+    }else thread.classList.remove('show');
+  }else thread.classList.remove('show');
+}
 function cancelInertia(){if(inertiaId)cancelAnimationFrame(inertiaId);inertiaId=0}
 function focusWorld(wx,wyv,scale=cam.s,bottomBias=false){cancelInertia();cam.s=Math.max(.35,Math.min(2,scale));cam.x=stage.clientWidth/2-wx*cam.s;cam.y=(bottomBias?stage.clientHeight-115:stage.clientHeight/2)-wyv*cam.s;applyCamera();saveCamera()}
 function focusBigBang(){focusWorld(0,0,Math.max(.55,Math.min(1.25,cam.s)),true)}
@@ -147,7 +251,7 @@ function startPan(ev){gesture='pan';panStart={x:ev.clientX,y:ev.clientY,cx:cam.x
 function startNodeDrag(id,ev){const x=n(id);if(!x||id==='BIG_BANG')return;gesture='node';nodeDrag={id,startWX:x.x,startWY:x.snapped?wy(x):x.freeY};const el=nodeLayer.querySelector(`[data-id="${CSS.escape(id)}"]`);el?.classList.add('grabbed');if(navigator.vibrate)navigator.vibrate(18)}
 function startPinch(){if(active.size<2)return;clearPress();gesture='pinch';stage.classList.remove('panning');const pts=[...active.values()].slice(0,2),r=stage.getBoundingClientRect(),mx=(pts[0].x+pts[1].x)/2-r.left,my=(pts[0].y+pts[1].y)/2-r.top,dist=Math.hypot(pts[1].x-pts[0].x,pts[1].y-pts[0].y),worldPt={x:(mx-cam.x)/cam.s,y:(my-cam.y)/cam.s};pinchStart={dist,scale:cam.s,worldPt}}
 stage.addEventListener('pointerdown',ev=>{if(ev.button!==0&&ev.pointerType==='mouse')return;cancelInertia();active.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});try{stage.setPointerCapture(ev.pointerId)}catch(_){}
-if(active.size===2){startPinch();return}const eid=targetEdgeId(ev.target),nid=targetNodeId(ev.target);if(eid&&!nid){p.selectedEdgeId=eid;p.selectedNodeId=null;save();render();return}if(nid&&nid!=='BIG_BANG'){nodePress={id:nid,sx:ev.clientX,sy:ev.clientY};pressTimer=setTimeout(()=>{if(nodePress&&active.size===1)startNodeDrag(nid,ev)},410)}else startPan(ev)});
+if(active.size===2){startPinch();return}const eid=targetEdgeId(ev.target),nid=targetNodeId(ev.target);if(eid&&!nid){hideContextMenus();p.selectedEdgeId=eid;p.selectedNodeId=null;save();render();return}if(nid&&nid!=='BIG_BANG'){nodePress={id:nid,sx:ev.clientX,sy:ev.clientY};pressTimer=setTimeout(()=>{if(nodePress&&active.size===1)startNodeDrag(nid,ev)},410)}else startPan(ev)});
 stage.addEventListener('pointermove',ev=>{if(!active.has(ev.pointerId))return;active.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});if(active.size>=2){if(gesture!=='pinch')startPinch();const pts=[...active.values()].slice(0,2),r=stage.getBoundingClientRect(),mx=(pts[0].x+pts[1].x)/2-r.left,my=(pts[0].y+pts[1].y)/2-r.top,dist=Math.max(20,Math.hypot(pts[1].x-pts[0].x,pts[1].y-pts[0].y)),ns=Math.max(.35,Math.min(2,pinchStart.scale*(dist/pinchStart.dist)));cam.s=ns;cam.x=mx-pinchStart.worldPt.x*ns;cam.y=my-pinchStart.worldPt.y*ns;applyCamera();return}
 if(nodePress&&gesture==='none'){const d=Math.hypot(ev.clientX-nodePress.sx,ev.clientY-nodePress.sy);if(d>9){clearPress();startPan({clientX:ev.clientX,clientY:ev.clientY});return}}
 if(gesture==='pan'&&panStart){cam.x=panStart.cx+(ev.clientX-panStart.x);cam.y=panStart.cy+(ev.clientY-panStart.y);lastMoves.push({x:ev.clientX,y:ev.clientY,t:performance.now()});if(lastMoves.length>5)lastMoves.shift();applyCamera();return}
@@ -157,7 +261,7 @@ function pointerEnd(ev){if(!active.has(ev.pointerId))return;const wasOne=active.
 if(gesture==='pinch'){if(active.size===1){const rem=[...active.values()][0];startPan({clientX:rem.x,clientY:rem.y})}else{gesture='none';saveCamera()}return}
 if(gesture==='node'){normalizeEdges();$('snapGuide').classList.remove('show');$('snapLabel').classList.remove('show');gesture='none';nodeDrag=null;save();render();return}
 if(gesture==='pan'){stage.classList.remove('panning');if(wasOne&&lastMoves.length>=2){const a=lastMoves[Math.max(0,lastMoves.length-3)],b=lastMoves[lastMoves.length-1],dt=Math.max(16,b.t-a.t),vx=(b.x-a.x)/dt,vy=(b.y-a.y)/dt;gesture='none';panStart=null;saveCamera();if(Math.hypot(vx,vy)>.08)startInertia(vx,vy)}else{gesture='none';panStart=null;saveCamera()}return}
-gesture='none';const nid=targetNodeId(ev.target);if(nid){if(connectFrom){finishConnect(nid)}else{p.selectedNodeId=nid;p.selectedEdgeId=null;save();render()}}}
+gesture='none';const nid=targetNodeId(ev.target);if(nid){if(connectFrom){finishConnect(nid)}else{hideContextMenus();p.selectedNodeId=nid;p.selectedEdgeId=null;save();render()}}}
 stage.addEventListener('pointerup',pointerEnd);stage.addEventListener('pointercancel',pointerEnd);
 
 /* story editing */
@@ -169,7 +273,54 @@ function finishConnect(id){const a=n(connectFrom),b=n(id);if(a&&b&&b.snapped&&a.
 function insertBetween(){const ed=p.selectedEdgeId?e(p.selectedEdgeId):null;if(!ed)return;const a=n(ed.from),b=n(ed.to);if(!a||!b)return;const early=a.level<=b.level?a:b,late=a.level<=b.level?b:a;let level;if(late.level-early.level>1)level=Math.round((early.level+late.level)/2);else{push(late.level);level=early.level+1}const obj=createEvent(level,((early.id==='BIG_BANG'?0:early.x)+(late.id==='BIG_BANG'?0:late.x))/2,true);p.edges=p.edges.filter(q=>q.id!==ed.id);p.edges.push({id:uid(),from:early.id,to:obj.id,color:ed.color},{id:uid(),from:obj.id,to:late.id,color:ed.color});save();render();openEdit(obj.id)}
 function openEdit(id){editing=id;const x=n(id);if(!x)return;$('nodeModalTitle').textContent=id==='BIG_BANG'?'Big Bang Notes':'Edit Event';$('fTitle').value=x.title||'';$('fChapter').value=x.chapter||'';$('fPov').value=x.pov||'';$('fLocation').value=x.location||'';$('fTags').value=(x.tags||[]).join(', ');$('fSummary').value=x.summary||'';$('fConsequence').value=x.consequence||'';$('fReader').value=x.reader||'';$('fTruth').value=x.truth||'';$('fNotes').value=x.notes||'';$('fStatus').value=id==='BIG_BANG'?'Fixed origin':x.snapped?'Snapped at T+'+x.level:'Floating in the Nulliverse';$('fTitle').disabled=id==='BIG_BANG';$('deleteBtn').style.display=id==='BIG_BANG'?'none':'inline-block';$('nodeModal').classList.add('show')}
 function saveEdit(){const x=n(editing);if(!x)return;if(x.id!=='BIG_BANG')x.title=$('fTitle').value.trim()||'Untitled Event';x.chapter=$('fChapter').value.trim();x.pov=$('fPov').value.trim();x.location=$('fLocation').value.trim();x.tags=$('fTags').value.split(',').map(s=>s.trim()).filter(Boolean);x.summary=$('fSummary').value.trim();x.consequence=$('fConsequence').value.trim();x.reader=$('fReader').value.trim();x.truth=$('fTruth').value.trim();x.notes=$('fNotes').value.trim();save();$('nodeModal').classList.remove('show');render()}
-function del(){const id=editing;if(id==='BIG_BANG')return;p.nodes=p.nodes.filter(x=>x.id!==id);p.edges=p.edges.filter(x=>x.from!==id&&x.to!==id);p.selectedNodeId='BIG_BANG';save();$('nodeModal').classList.remove('show');render()}
+let deleteTarget=null;
+function edgeExistsBetween(a,b){
+  return p.edges.some(ed=>(ed.from===a&&ed.to===b)||(ed.from===b&&ed.to===a));
+}
+function removeNode(id,reconnect){
+  if(id==='BIG_BANG')return;
+  const incoming=inc(id).slice(),outgoing=out(id).slice();
+  const bridges=[];
+  if(reconnect){
+    incoming.forEach(i=>outgoing.forEach(o=>{
+      if(i.from!==o.to && !edgeExistsBetween(i.from,o.to)){
+        const a=n(i.from),b=n(o.to);
+        if(a&&b&&a.snapped&&b.snapped){
+          const early=a.level<=b.level?a:b,late=a.level<=b.level?b:a;
+          bridges.push({id:uid(),from:early.id,to:late.id,color:i.color||o.color||color()});
+        }
+      }
+    }));
+  }
+  p.nodes=p.nodes.filter(x=>x.id!==id);
+  p.edges=p.edges.filter(x=>x.from!==id&&x.to!==id);
+  p.edges.push(...bridges);
+  p.selectedNodeId='BIG_BANG';
+  p.selectedEdgeId=null;
+  editing=null;
+  save();
+  $('nodeModal').classList.remove('show');
+  $('deleteModal').classList.remove('show');
+  render();
+}
+function requestDelete(id){
+  const x=n(id);if(!x||id==='BIG_BANG')return;
+  const incoming=inc(id).slice(),outgoing=out(id).slice();
+  const simple=x.snapped&&incoming.length===1&&outgoing.length===1;
+  if(simple){
+    const a=n(incoming[0].from),b=n(outgoing[0].to);
+    const msg=`Delete “${x.title}”?\n\nThe surrounding timeline will reconnect automatically${a&&b?`:\n${a.title} → ${b.title}`:''}.`;
+    if(confirm(msg))removeNode(id,true);
+    return;
+  }
+  if(incoming.length===0&&outgoing.length===0){
+    if(confirm(`Delete “${x.title}”?`))removeNode(id,false);
+    return;
+  }
+  deleteTarget=id;
+  $('deleteNotice').textContent=`“${x.title}” has ${incoming.length} incoming and ${outgoing.length} outgoing connection${incoming.length+outgoing.length===1?'':'s'}. Choose whether paths through it should reconnect or be left severed.`;
+  $('deleteModal').classList.add('show');
+}
 function openSnap(){const x=p.selectedNodeId?n(p.selectedNodeId):null;if(!x||x.snapped)return;$('snapAnchor').innerHTML=p.nodes.filter(q=>q.snapped&&q.id!==x.id).sort((a,b)=>a.level-b.level).map(q=>`<option value="${q.id}">${esc(q.title)} — T+${q.level}</option>`).join('');$('snapModal').classList.add('show')}
 function snap(where){const x=p.selectedNodeId?n(p.selectedNodeId):null,a=n($('snapAnchor').value);if(!x||x.snapped||!a)return;let level;if(where==='after'){level=a.level+1;if(p.nodes.some(q=>q.snapped&&q.id!=='BIG_BANG'&&q.level===level))push(level,1,x.id)}else{if(a.level<=1){push(1,1,x.id);level=1}else{level=a.level-1;if(p.nodes.some(q=>q.snapped&&q.id!=='BIG_BANG'&&q.level===level)){push(a.level,1,x.id);level=a.level}}}x.snapped=true;x.level=level;x.freeY=null;x.x=Math.round(x.x/20)*20;const c=inc(a.id)[0]?.color||out(a.id)[0]?.color||color();if(where==='after')p.edges.push({id:uid(),from:a.id,to:x.id,color:c});else p.edges.push({id:uid(),from:x.id,to:a.id,color:c});save();$('snapModal').classList.remove('show');render()}
 function collapse(){const x=p.selectedNodeId?n(p.selectedNodeId):null;if(!x||x.id==='BIG_BANG')return;x.collapsed=!x.collapsed;save();render()}
@@ -181,8 +332,25 @@ $('projectTitle').addEventListener('input',ev=>{p.title=ev.target.value;save()})
 $('bigBangBtn').onclick=focusBigBang;$('selectedBtn').onclick=focusSelected;$('fitBtn').onclick=fitWeb;
 $('edgePlus').addEventListener('pointerdown',ev=>{ev.stopPropagation()});
 $('edgePlus').addEventListener('click',ev=>{ev.preventDefault();ev.stopPropagation();insertBetween()});
+[$('nodeTools'),$('threadTools')].forEach(el=>{
+  el.addEventListener('pointerdown',ev=>ev.stopPropagation());
+  el.addEventListener('pointermove',ev=>ev.stopPropagation());
+  el.addEventListener('pointerup',ev=>ev.stopPropagation());
+});
+$('ctxEdit').onclick=()=>{const x=p.selectedNodeId?n(p.selectedNodeId):null;if(x)openEdit(x.id)};
+$('ctxAdd').onclick=()=>{$('ctxMoreMenu').classList.remove('show');$('ctxAddMenu').classList.toggle('show')};
+$('ctxMore').onclick=()=>{$('ctxAddMenu').classList.remove('show');$('ctxMoreMenu').classList.toggle('show')};
+$('ctxSnap').onclick=()=>{hideContextMenus();openSnap()};
+$('ctxBefore').onclick=()=>{hideContextMenus();relative('before',false)};
+$('ctxAfter').onclick=()=>{hideContextMenus();relative('after',false)};
+$('ctxBranch').onclick=()=>{hideContextMenus();relative('after',true)};
+$('ctxConnect').onclick=()=>{hideContextMenus();connect()};
+$('ctxCollapse').onclick=()=>{hideContextMenus();collapse()};
+$('ctxDelete').onclick=()=>{hideContextMenus();const x=p.selectedNodeId?n(p.selectedNodeId):null;if(x)requestDelete(x.id)};
+$('ctxThreadInsert').onclick=()=>insertBetween();
+
 $('newBtn').onclick=()=>{if(confirm('Start a new Time Web? Make a Backup first if you want to keep this universe.')){p=fresh();save();render();focusBigBang()}};
-$('saveEdit').onclick=saveEdit;$('cancelEdit').onclick=()=>$('nodeModal').classList.remove('show');$('deleteBtn').onclick=()=>{if(confirm('Delete this event and its web connections?'))del()};$('snapBefore').onclick=()=>snap('before');$('snapAfter').onclick=()=>snap('after');$('cancelSnap').onclick=()=>$('snapModal').classList.remove('show');['nodeModal','snapModal'].forEach(id=>$(id).addEventListener('click',ev=>{if(ev.target===$(id))$(id).classList.remove('show')}));
+$('saveEdit').onclick=saveEdit;$('cancelEdit').onclick=()=>$('nodeModal').classList.remove('show');$('deleteBtn').onclick=()=>{if(editing)requestDelete(editing)};$('snapBefore').onclick=()=>snap('before');$('snapAfter').onclick=()=>snap('after');$('cancelSnap').onclick=()=>$('snapModal').classList.remove('show');$('deleteReconnect').onclick=()=>{if(deleteTarget)removeNode(deleteTarget,true)};$('deleteSever').onclick=()=>{if(deleteTarget)removeNode(deleteTarget,false)};$('cancelDelete').onclick=()=>{$('deleteModal').classList.remove('show');deleteTarget=null};['nodeModal','snapModal','deleteModal'].forEach(id=>$(id).addEventListener('click',ev=>{if(ev.target===$(id)){$(id).classList.remove('show');if(id==='deleteModal')deleteTarget=null}}));
 window.addEventListener('resize',()=>{applyCamera()});
 
 /* iOS / Safari guard:
