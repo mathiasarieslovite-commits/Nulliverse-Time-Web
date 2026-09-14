@@ -59,10 +59,14 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 .snap-guide{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(151,138,255,.82),transparent);box-shadow:0 0 10px rgba(151,138,255,.55);z-index:20;pointer-events:none;display:none}.snap-guide.show{display:block}
 .snap-label{position:absolute;right:10px;transform:translateY(-50%);z-index:21;pointer-events:none;background:#17142d;border:1px solid #554b9b;color:#c9c3ff;border-radius:999px;padding:3px 7px;font-size:10px;display:none}.snap-label.show{display:block}
 .navpod{position:absolute;left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom));z-index:25;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;max-width:none}.navpod .btn{min-width:0;width:100%;padding-left:6px;padding-right:6px;overflow:hidden;text-overflow:ellipsis;background:rgba(10,14,26,.92);backdrop-filter:blur(8px)}
+.historypod{position:absolute;right:max(8px,env(safe-area-inset-right));bottom:calc(max(8px,env(safe-area-inset-bottom)) + 54px);z-index:26;display:flex;gap:6px}
+.historypod .btn{min-height:36px;padding:6px 10px;font-size:11px;background:rgba(10,14,26,.94);backdrop-filter:blur(8px)}
+.historypod .btn:disabled{opacity:.35}
+
 .zoomread{position:absolute;left:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:25;font-size:10px;color:#8492aa;background:rgba(7,10,18,.78);border:1px solid #222c45;border-radius:999px;padding:4px 7px;pointer-events:none}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.73);display:none;align-items:center;justify-content:center;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));z-index:60}.modal-bg.show{display:flex}
 .modal{width:min(720px,100%);max-height:89dvh;overflow:auto;-webkit-overflow-scrolling:touch;background:#0b0f1b;border:1px solid #33415f;border-radius:15px;padding:17px;box-shadow:0 20px 60px rgba(0,0,0,.5)}.modal h2{margin:0 0 14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.field{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}.field label{font-size:11px;color:#9ba9c0}.field input,.field textarea,.field select{width:100%;background:#050813;color:var(--text);border:1px solid #2b3858;border-radius:9px;padding:10px}.field textarea{min-height:82px;resize:vertical}.actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:10px}.notice{font-size:12px;line-height:1.45;color:#9aa8be;background:#101523;border:1px solid #2a3653;border-radius:10px;padding:10px;margin-bottom:10px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choice{min-height:66px;text-align:left;white-space:normal}.choice b{display:block}.choice small{display:block;color:#8f9db5;margin-top:3px}
-@media(max-width:820px){.workspace{grid-template-columns:1fr}.sidebar{display:none}.brand{display:none}.topbar{padding-left:max(9px,env(safe-area-inset-left));padding-right:max(9px,env(safe-area-inset-right));gap:8px}.topbar .btn{min-width:0}.projectbar input{width:auto;flex-basis:44%}.projectbar #selectionStatus{display:none}.grid,.choices{grid-template-columns:1fr}.node{width:184px}.navpod{left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom))}.navpod .btn{font-size:12px}.zoomread{left:8px;bottom:calc(max(8px,env(safe-area-inset-bottom)) + 54px)}}
+@media(max-width:820px){.workspace{grid-template-columns:1fr}.sidebar{display:none}.brand{display:none}.topbar{padding-left:max(9px,env(safe-area-inset-left));padding-right:max(9px,env(safe-area-inset-right));gap:8px}.topbar .btn{min-width:0}.projectbar input{width:auto;flex-basis:44%}.projectbar #selectionStatus{display:none}.grid,.choices{grid-template-columns:1fr}.node{width:184px}.navpod{left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom))}.navpod .btn{font-size:12px}.historypod{right:max(8px,env(safe-area-inset-right));bottom:calc(max(8px,env(safe-area-inset-bottom)) + 54px)}.zoomread{left:8px;bottom:calc(max(8px,env(safe-area-inset-bottom)) + 54px)}}
 </style>
 </head>
 <body>
@@ -81,12 +85,12 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <div class="legacy-actions" aria-hidden="true">
 <button id="afterBtn"></button><button id="beforeBtn"></button><button id="branchBtn"></button><button id="editBtn"></button><button id="connectBtn"></button><button id="insertBtn"></button><button id="snapBtn"></button><button id="collapseBtn"></button>
 </div>
-<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.5</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
+<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.6</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
 <div class="workspace">
 <aside class="sidebar">
 <h3>Camera controls</h3><div class="help">One finger pans. Pinch begins only after a real second finger touches the canvas. Tap empty space to deselect. Hold an event first, then drag, to move it.</div>
 <h3>Chronology</h3><div class="help">Physical height is time. Higher = later. Lower = earlier. Event movement snaps to chronology levels.</div>
-<h3>Creating events</h3><div class="help"><b>Continue</b> extends the end of a path. <b>Insert Event</b> places something inside an existing connection. <b>New Branch</b> deliberately creates another path from an event that already continues. There is no Before command.</div><h3>Mobile layout</h3><div class="help">Global maintenance actions live under the top <b>•••</b>. The bottom dock always contains <b>Big Bang</b>, <b>Selected</b>, and <b>Fit Web</b>.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
+<h3>Creating events</h3><div class="help"><b>Continue</b> extends the end of a path. <b>Insert Event</b> places something inside an existing connection. <b>New Branch</b> deliberately creates another path from an event that already continues. There is no Before command.</div><h3>Mobile layout</h3><div class="help">Global maintenance actions live under the top <b>•••</b>. The bottom dock always contains <b>Big Bang</b>, <b>Selected</b>, and <b>Fit Web</b>.</div><h3>Undo / Redo</h3><div class="help">Story changes are remembered for up to 100 actions. Camera pan and zoom are intentionally not included in history.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
 </aside>
 <main class="stage" id="stage">
 <div class="world" id="world">
@@ -120,6 +124,10 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 </div>
 
 <div class="zoomread" id="zoomRead">100%</div>
+<div class="historypod" id="historyPod">
+  <button class="btn" id="undoBtn" disabled>↶ Undo</button>
+  <button class="btn" id="redoBtn" disabled>↷ Redo</button>
+</div>
 <div class="navpod"><button class="btn" id="bigBangBtn">Big Bang</button><button class="btn" id="selectedBtn">Selected</button><button class="btn" id="fitBtn">Fit Web</button></div>
 </main>
 </div></div>
@@ -155,7 +163,57 @@ let p=rawLoad(),editing=null,connectFrom=null;
 function legacyHeight(pr){const ml=Math.max(0,...pr.nodes.filter(x=>x.snapped).map(x=>x.level||0));return Math.max(1800,LEGACY_TOP+LEGACY_BOTTOM+(ml+3)*GAP)}
 function migrate(pr){if(pr.layoutVersion===2)return false;const oldOY=legacyHeight(pr)-LEGACY_BOTTOM;pr.nodes.forEach(x=>{if(x.id==='BIG_BANG'){x.x=0;return}x.x=(Number(x.x)||LEGACY_W/2-NW/2)+NW/2-LEGACY_W/2;if(!x.snapped){x.freeY=(Number(x.freeY)||oldOY-NH/2)+NH/2-oldOY}});pr.layoutVersion=2;return true}
 if(migrate(p))localStorage.setItem(KEY,JSON.stringify(p));
-function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.5'}
+const HISTORY_LIMIT=100;
+let undoStack=[],redoStack=[];
+
+function historyState(){return JSON.stringify(p)}
+function updateHistoryButtons(){
+  const u=$('undoBtn'),r=$('redoBtn');
+  if(!u||!r)return;
+  u.disabled=undoStack.length===0;
+  r.disabled=redoStack.length===0;
+  u.title=undoStack.length?`Undo: ${undoStack[undoStack.length-1].label}`:'Nothing to undo';
+  r.title=redoStack.length?`Redo: ${redoStack[redoStack.length-1].label}`:'Nothing to redo';
+}
+function checkpoint(label){
+  undoStack.push({label,state:historyState()});
+  if(undoStack.length>HISTORY_LIMIT)undoStack.shift();
+  redoStack=[];
+  updateHistoryButtons();
+}
+function closeTransientUI(){
+  connectFrom=null;
+  editing=null;
+  deleteTarget=null;
+  $('connectBtn')?.classList.remove('active');
+  $('nodeModal')?.classList.remove('show');
+  $('snapModal')?.classList.remove('show');
+  $('deleteModal')?.classList.remove('show');
+  hideContextMenus?.();
+}
+function restoreHistoryState(state){
+  p=JSON.parse(state);
+  closeTransientUI();
+  save();
+  render();
+}
+function undo(){
+  if(!undoStack.length)return;
+  const entry=undoStack.pop();
+  redoStack.push({label:entry.label,state:historyState()});
+  restoreHistoryState(entry.state);
+  updateHistoryButtons();
+}
+function redo(){
+  if(!redoStack.length)return;
+  const entry=redoStack.pop();
+  undoStack.push({label:entry.label,state:historyState()});
+  if(undoStack.length>HISTORY_LIMIT)undoStack.shift();
+  restoreHistoryState(entry.state);
+  updateHistoryButtons();
+}
+
+function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.6'}
 function n(id){return p.nodes.find(x=>x.id===id)}function e(id){return p.edges.find(x=>x.id===id)}function out(id){return p.edges.filter(x=>x.from===id)}function inc(id){return p.edges.filter(x=>x.to===id)}
 function color(){const c=COLS[p.colorIndex%COLS.length];p.colorIndex++;return c}function wy(x){return -(x.level||0)*GAP}
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
@@ -280,7 +338,8 @@ function startNodeDrag(id,ev){
     id,
     pointerId:ev.pointerId,
     startWX:x.x,
-    startWY:x.snapped?wy(x):x.freeY
+    startWY:x.snapped?wy(x):x.freeY,
+    historyPushed:false
   };
   const el=nodeLayer.querySelector(`[data-id="${CSS.escape(id)}"]`);
   el?.classList.add('grabbed');
@@ -449,6 +508,7 @@ stage.addEventListener('pointermove',ev=>{
   if(gesture==='node'&&nodeDrag&&nodeDrag.pointerId===ev.pointerId){
     const x=n(nodeDrag.id),w=screenToWorld(ev.clientX,ev.clientY);
     if(!x)return;
+    if(!nodeDrag.historyPushed){checkpoint('Move event');nodeDrag.historyPushed=true}
     x.x=Math.round(w.x/20)*20;
     if(x.snapped){
       x.level=Math.max(1,Math.round(-w.y/GAP));
@@ -575,7 +635,7 @@ document.addEventListener('visibilitychange',()=>{
 });
 
 /* story editing */
-function createEvent(level,x,snapped=true){const id=uid(),obj={id,title:'New Event',snapped,level:snapped?level:null,x,freeY:snapped?null:-Math.max(2,level)*GAP,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false};p.nodes.push(obj);p.selectedNodeId=id;p.selectedEdgeId=null;save();render();openEdit(id);return obj}
+function createEvent(level,x,snapped=true,historyLabel='Create event'){checkpoint(historyLabel);const id=uid(),obj={id,title:'New Event',snapped,level:snapped?level:null,x,freeY:snapped?null:-Math.max(2,level)*GAP,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false};p.nodes.push(obj);p.selectedNodeId=id;p.selectedEdgeId=null;save();render();openEdit(id);return obj}
 function continuePath(){
   const a=p.selectedNodeId?n(p.selectedNodeId):null;
   if(!a||!a.snapped){alert('Select a snapped event first.');return}
@@ -586,7 +646,7 @@ function continuePath(){
   }
 
   const level=a.level+1;
-  const obj=createEvent(level,(a.id==='BIG_BANG'?0:a.x),true);
+  const obj=createEvent(level,(a.id==='BIG_BANG'?0:a.x),true,'Continue path');
   const c=inc(a.id)[0]?.color||color();
 
   p.edges.push({id:uid(),from:a.id,to:obj.id,color:c});
@@ -608,7 +668,7 @@ function newBranch(){
   const spread=300+Math.floor(outgoing.length/2)*90;
   const baseX=a.id==='BIG_BANG'?0:a.x;
 
-  const obj=createEvent(level,baseX+(direction*spread),true);
+  const obj=createEvent(level,baseX+(direction*spread),true,'New branch');
 
   /* Keep current color behavior for now.
      Named threads / color architecture are intentionally deferred. */
@@ -618,18 +678,37 @@ function newBranch(){
   save();render();
 }
 
-function floating(){const center=screenToWorld(stage.getBoundingClientRect().left+stage.clientWidth/2,stage.getBoundingClientRect().top+stage.clientHeight/2),id=uid(),obj={id,title:'Floating Idea',snapped:false,level:null,x:center.x,freeY:center.y,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false};p.nodes.push(obj);p.selectedNodeId=id;p.selectedEdgeId=null;save();render();openEdit(id)}
+function floating(){checkpoint('Create floating event');const center=screenToWorld(stage.getBoundingClientRect().left+stage.clientWidth/2,stage.getBoundingClientRect().top+stage.clientHeight/2),id=uid(),obj={id,title:'Floating Idea',snapped:false,level:null,x:center.x,freeY:center.y,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false};p.nodes.push(obj);p.selectedNodeId=id;p.selectedEdgeId=null;save();render();openEdit(id)}
 function connect(){const a=p.selectedNodeId?n(p.selectedNodeId):null;if(!a||!a.snapped){alert('Select a snapped event first.');return}connectFrom=a.id;$('connectBtn').classList.add('active');$('selectionStatus').textContent='Tap the snapped event this thread should connect to.'}
-function finishConnect(id){const a=n(connectFrom),b=n(id);if(a&&b&&b.snapped&&a.id!==b.id&&!p.edges.some(ed=>(ed.from===a.id&&ed.to===b.id)||(ed.from===b.id&&ed.to===a.id))){const early=a.level<=b.level?a:b,late=a.level<=b.level?b:a;p.edges.push({id:uid(),from:early.id,to:late.id,color:inc(early.id)[0]?.color||out(early.id)[0]?.color||'#ff75c8'})}connectFrom=null;$('connectBtn').classList.remove('active');p.selectedNodeId=id;save();render()}
-function insertBetween(){const ed=p.selectedEdgeId?e(p.selectedEdgeId):null;if(!ed)return;const a=n(ed.from),b=n(ed.to);if(!a||!b)return;const early=a.level<=b.level?a:b,late=a.level<=b.level?b:a;let level;if(late.level-early.level>1)level=Math.round((early.level+late.level)/2);else{push(late.level);level=early.level+1}const obj=createEvent(level,((early.id==='BIG_BANG'?0:early.x)+(late.id==='BIG_BANG'?0:late.x))/2,true);p.edges=p.edges.filter(q=>q.id!==ed.id);p.edges.push({id:uid(),from:early.id,to:obj.id,color:ed.color},{id:uid(),from:obj.id,to:late.id,color:ed.color});save();render();openEdit(obj.id)}
+function finishConnect(id){const a=n(connectFrom),b=n(id);if(a&&b&&b.snapped&&a.id!==b.id&&!p.edges.some(ed=>(ed.from===a.id&&ed.to===b.id)||(ed.from===b.id&&ed.to===a.id))){checkpoint('Connect events');const early=a.level<=b.level?a:b,late=a.level<=b.level?b:a;p.edges.push({id:uid(),from:early.id,to:late.id,color:inc(early.id)[0]?.color||out(early.id)[0]?.color||'#ff75c8'})}connectFrom=null;$('connectBtn').classList.remove('active');p.selectedNodeId=id;save();render()}
+function insertBetween(){const ed=p.selectedEdgeId?e(p.selectedEdgeId):null;if(!ed)return;const a=n(ed.from),b=n(ed.to);if(!a||!b)return;const early=a.level<=b.level?a:b,late=a.level<=b.level?b:a;let level;if(late.level-early.level>1)level=Math.round((early.level+late.level)/2);else{push(late.level);level=early.level+1}const obj=createEvent(level,((early.id==='BIG_BANG'?0:early.x)+(late.id==='BIG_BANG'?0:late.x))/2,true,'Insert event');p.edges=p.edges.filter(q=>q.id!==ed.id);p.edges.push({id:uid(),from:early.id,to:obj.id,color:ed.color},{id:uid(),from:obj.id,to:late.id,color:ed.color});save();render();openEdit(obj.id)}
 function openEdit(id){editing=id;const x=n(id);if(!x)return;$('nodeModalTitle').textContent=id==='BIG_BANG'?'Big Bang Notes':'Edit Event';$('fTitle').value=x.title||'';$('fChapter').value=x.chapter||'';$('fPov').value=x.pov||'';$('fLocation').value=x.location||'';$('fTags').value=(x.tags||[]).join(', ');$('fSummary').value=x.summary||'';$('fConsequence').value=x.consequence||'';$('fReader').value=x.reader||'';$('fTruth').value=x.truth||'';$('fNotes').value=x.notes||'';$('fStatus').value=id==='BIG_BANG'?'Fixed origin':x.snapped?'Snapped at T+'+x.level:'Floating in the Nulliverse';$('fTitle').disabled=id==='BIG_BANG';$('deleteBtn').style.display=id==='BIG_BANG'?'none':'inline-block';$('nodeModal').classList.add('show')}
-function saveEdit(){const x=n(editing);if(!x)return;if(x.id!=='BIG_BANG')x.title=$('fTitle').value.trim()||'Untitled Event';x.chapter=$('fChapter').value.trim();x.pov=$('fPov').value.trim();x.location=$('fLocation').value.trim();x.tags=$('fTags').value.split(',').map(s=>s.trim()).filter(Boolean);x.summary=$('fSummary').value.trim();x.consequence=$('fConsequence').value.trim();x.reader=$('fReader').value.trim();x.truth=$('fTruth').value.trim();x.notes=$('fNotes').value.trim();save();$('nodeModal').classList.remove('show');render()}
+function saveEdit(){
+  const x=n(editing);if(!x)return;
+  const next={
+    title:x.id==='BIG_BANG'?x.title:($('fTitle').value.trim()||'Untitled Event'),
+    chapter:$('fChapter').value.trim(),
+    pov:$('fPov').value.trim(),
+    location:$('fLocation').value.trim(),
+    tags:$('fTags').value.split(',').map(s=>s.trim()).filter(Boolean),
+    summary:$('fSummary').value.trim(),
+    consequence:$('fConsequence').value.trim(),
+    reader:$('fReader').value.trim(),
+    truth:$('fTruth').value.trim(),
+    notes:$('fNotes').value.trim()
+  };
+  const current={title:x.title,chapter:x.chapter,pov:x.pov,location:x.location,tags:x.tags||[],summary:x.summary,consequence:x.consequence,reader:x.reader,truth:x.truth,notes:x.notes};
+  if(JSON.stringify(next)!==JSON.stringify(current))checkpoint('Edit event');
+  Object.assign(x,next);
+  save();$('nodeModal').classList.remove('show');render();
+}
 let deleteTarget=null;
 function edgeExistsBetween(a,b){
   return p.edges.some(ed=>(ed.from===a&&ed.to===b)||(ed.from===b&&ed.to===a));
 }
 function removeNode(id,reconnect){
   if(id==='BIG_BANG')return;
+  checkpoint(reconnect?'Delete & reconnect':'Delete event');
   const incoming=inc(id).slice(),outgoing=out(id).slice();
   const bridges=[];
   if(reconnect){
@@ -673,10 +752,10 @@ function requestDelete(id){
   $('deleteModal').classList.add('show');
 }
 function openSnap(){const x=p.selectedNodeId?n(p.selectedNodeId):null;if(!x||x.snapped)return;$('snapAnchor').innerHTML=p.nodes.filter(q=>q.snapped&&q.id!==x.id).sort((a,b)=>a.level-b.level).map(q=>`<option value="${q.id}">${esc(q.title)} — T+${q.level}</option>`).join('');$('snapModal').classList.add('show')}
-function snap(where){const x=p.selectedNodeId?n(p.selectedNodeId):null,a=n($('snapAnchor').value);if(!x||x.snapped||!a)return;let level;if(where==='after'){level=a.level+1;if(p.nodes.some(q=>q.snapped&&q.id!=='BIG_BANG'&&q.level===level))push(level,1,x.id)}else{if(a.level<=1){push(1,1,x.id);level=1}else{level=a.level-1;if(p.nodes.some(q=>q.snapped&&q.id!=='BIG_BANG'&&q.level===level)){push(a.level,1,x.id);level=a.level}}}x.snapped=true;x.level=level;x.freeY=null;x.x=Math.round(x.x/20)*20;const c=inc(a.id)[0]?.color||out(a.id)[0]?.color||color();if(where==='after')p.edges.push({id:uid(),from:a.id,to:x.id,color:c});else p.edges.push({id:uid(),from:x.id,to:a.id,color:c});save();$('snapModal').classList.remove('show');render()}
-function collapse(){const x=p.selectedNodeId?n(p.selectedNodeId):null;if(!x||x.id==='BIG_BANG')return;x.collapsed=!x.collapsed;save();render()}
+function snap(where){const x=p.selectedNodeId?n(p.selectedNodeId):null,a=n($('snapAnchor').value);if(!x||x.snapped||!a)return;checkpoint('Snap floating event');let level;if(where==='after'){level=a.level+1;if(p.nodes.some(q=>q.snapped&&q.id!=='BIG_BANG'&&q.level===level))push(level,1,x.id)}else{if(a.level<=1){push(1,1,x.id);level=1}else{level=a.level-1;if(p.nodes.some(q=>q.snapped&&q.id!=='BIG_BANG'&&q.level===level)){push(a.level,1,x.id);level=a.level}}}x.snapped=true;x.level=level;x.freeY=null;x.x=Math.round(x.x/20)*20;const c=inc(a.id)[0]?.color||out(a.id)[0]?.color||color();if(where==='after')p.edges.push({id:uid(),from:a.id,to:x.id,color:c});else p.edges.push({id:uid(),from:x.id,to:a.id,color:c});save();$('snapModal').classList.remove('show');render()}
+function collapse(){const x=p.selectedNodeId?n(p.selectedNodeId):null;if(!x||x.id==='BIG_BANG')return;checkpoint(x.collapsed?'Expand branch':'Collapse branch');x.collapsed=!x.collapsed;save();render()}
 function backup(){p.title=$('projectTitle').value.trim()||'My Universe';save();const blob=new Blob([JSON.stringify(p,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(p.title||'Nulliverse').replace(/[^a-z0-9-_]+/gi,'_')+'.timeweb.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),800)}
-$('restoreInput').addEventListener('click',()=>{$('topMenuPanel').classList.remove('show')});$('restoreInput').addEventListener('change',async ev=>{const f=ev.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.nodes)||!Array.isArray(d.edges))throw new Error('Not a Time Web project');p=d;if(migrate(p)){}save();render();fitWeb()}catch(err){alert('Could not restore: '+err.message)}ev.target.value=''});
+$('restoreInput').addEventListener('click',()=>{$('topMenuPanel').classList.remove('show')});$('restoreInput').addEventListener('change',async ev=>{const f=ev.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.nodes)||!Array.isArray(d.edges))throw new Error('Not a Time Web project');checkpoint('Restore project');p=d;if(migrate(p)){}save();render();fitWeb()}catch(err){alert('Could not restore: '+err.message)}ev.target.value=''});
 
 /* controls */
 $('projectTitle').addEventListener('input',ev=>{p.title=ev.target.value;save()});
@@ -692,6 +771,16 @@ document.addEventListener('pointerdown',ev=>{
   }
 });$('afterBtn').onclick=continuePath;$('beforeBtn').onclick=()=>{};$('branchBtn').onclick=newBranch;$('editBtn').onclick=()=>{const x=p.selectedNodeId?n(p.selectedNodeId):null;if(x)openEdit(x.id)};$('floatBtn').onclick=floating;$('connectBtn').onclick=connect;$('insertBtn').onclick=insertBetween;$('snapBtn').onclick=openSnap;$('collapseBtn').onclick=collapse;$('backupBtn').onclick=()=>{$('topMenuPanel').classList.remove('show');backup()};
 $('bigBangBtn').onclick=focusBigBang;$('selectedBtn').onclick=focusSelected;$('fitBtn').onclick=fitWeb;
+$('undoBtn').onclick=undo;
+$('redoBtn').onclick=redo;
+document.addEventListener('keydown',ev=>{
+  const tag=ev.target?.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  const mod=ev.metaKey||ev.ctrlKey;
+  if(!mod||ev.key.toLowerCase()!=='z')return;
+  ev.preventDefault();
+  if(ev.shiftKey)redo();else undo();
+});
 $('edgePlus').addEventListener('pointerdown',ev=>{ev.stopPropagation()});
 $('edgePlus').addEventListener('click',ev=>{ev.preventDefault();ev.stopPropagation();insertBetween()});
 [$('nodeTools'),$('threadTools')].forEach(el=>{
@@ -710,7 +799,7 @@ $('ctxCollapse').onclick=()=>{hideContextMenus();collapse()};
 $('ctxDelete').onclick=()=>{hideContextMenus();const x=p.selectedNodeId?n(p.selectedNodeId):null;if(x)requestDelete(x.id)};
 $('ctxThreadInsert').onclick=()=>insertBetween();
 
-$('newBtn').onclick=()=>{$('topMenuPanel').classList.remove('show');if(confirm('Start a new Time Web? Make a Backup first if you want to keep this universe.')){p=fresh();save();render();focusBigBang()}};
+$('newBtn').onclick=()=>{$('topMenuPanel').classList.remove('show');if(confirm('Start a new Time Web? Make a Backup first if you want to keep this universe.')){checkpoint('New universe');p=fresh();save();render();focusBigBang()}};
 $('saveEdit').onclick=saveEdit;$('cancelEdit').onclick=()=>$('nodeModal').classList.remove('show');$('deleteBtn').onclick=()=>{if(editing)requestDelete(editing)};$('snapBefore').onclick=()=>snap('before');$('snapAfter').onclick=()=>snap('after');$('cancelSnap').onclick=()=>$('snapModal').classList.remove('show');$('deleteReconnect').onclick=()=>{if(deleteTarget)removeNode(deleteTarget,true)};$('deleteSever').onclick=()=>{if(deleteTarget)removeNode(deleteTarget,false)};$('cancelDelete').onclick=()=>{$('deleteModal').classList.remove('show');deleteTarget=null};['nodeModal','snapModal','deleteModal'].forEach(id=>$(id).addEventListener('click',ev=>{if(ev.target===$(id)){$(id).classList.remove('show');if(id==='deleteModal')deleteTarget=null}}));
 window.addEventListener('resize',()=>{applyCamera()});
 
@@ -727,7 +816,7 @@ document.addEventListener('dblclick',ev=>{
 },{passive:false});
 
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-render();requestAnimationFrame(()=>{if(!localStorage.getItem(CAMKEY))focusBigBang();else applyCamera()});
+render();updateHistoryButtons();requestAnimationFrame(()=>{if(!localStorage.getItem(CAMKEY))focusBigBang();else applyCamera()});
 })();
 </script>
 </body>
