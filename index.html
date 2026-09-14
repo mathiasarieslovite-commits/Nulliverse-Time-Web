@@ -59,7 +59,7 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 .node{position:absolute;width:196px;min-height:84px;padding:9px 10px;border-radius:14px;border:1px solid #3b4868;background:rgba(13,18,32,.95);box-shadow:0 8px 26px rgba(0,0,0,.35);z-index:8;user-select:none;-webkit-user-select:none;touch-action:none}
 .node.selected{outline:3px solid var(--accent)}.node.grabbed{outline:3px solid #d4ceff;box-shadow:0 0 35px rgba(143,131,255,.42);transform:scale(1.025)}
 .node.float{border-style:dashed;background:rgba(16,16,31,.86);box-shadow:0 0 28px rgba(142,124,255,.13)}
-.node .title{font-size:13px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.node .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;font-size:10px;color:#90a0ba}.node .summary{font-size:11px;color:#c7d0e1;margin-top:6px;line-height:1.28;max-height:29px;overflow:hidden}.node .badge{position:absolute;left:-44px;top:27px;width:37px;text-align:right;font-size:10px;color:#71819c}.node .null{position:absolute;left:-42px;top:26px;font-size:9px;color:#aa9dff;border:1px solid #453e78;border-radius:999px;padding:2px 4px;background:#0c0b19}.dots{display:flex;gap:3px;margin-top:6px}.tdot{width:7px;height:7px;border-radius:50%}.node.collapsed:after{content:attr(data-count) " hidden";position:absolute;right:6px;bottom:-23px;font-size:10px;color:#a8b4c9;background:#121728;border:1px solid #36415d;border-radius:999px;padding:3px 7px}
+.node .title{font-size:13px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.node .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;font-size:10px;color:#90a0ba}.time-chip{display:inline-flex;align-items:center;width:max-content;max-width:100%;margin-top:5px;padding:2px 7px;border-radius:999px;border:1px solid #34415e;background:#111727;color:#c9d3e6;font-size:9px;font-weight:800;letter-spacing:.02em;white-space:nowrap}.time-chip.dawn{border-color:#765f48;background:rgba(80,57,38,.32);color:#f0cfa6}.time-chip.morning{border-color:#465e79;background:rgba(41,65,88,.30);color:#c9e5ff}.time-chip.afternoon{border-color:#4d596c;background:rgba(57,67,82,.28);color:#d9e0ea}.time-chip.evening{border-color:#654f82;background:rgba(72,48,95,.30);color:#dbc8ff}.time-chip.night{border-color:#414d84;background:rgba(34,42,90,.34);color:#c8d0ff}.time-hint{font-size:11px;line-height:1.45;color:#8f9db5;margin-top:-3px;margin-bottom:10px}.time-row{display:grid;grid-template-columns:1fr 1fr;gap:11px}.time-hidden{display:none!important}.node .summary{font-size:11px;color:#c7d0e1;margin-top:6px;line-height:1.28;max-height:29px;overflow:hidden}.node .badge{position:absolute;left:-44px;top:27px;width:37px;text-align:right;font-size:10px;color:#71819c}.node .null{position:absolute;left:-42px;top:26px;font-size:9px;color:#aa9dff;border:1px solid #453e78;border-radius:999px;padding:2px 4px;background:#0c0b19}.dots{display:flex;gap:3px;margin-top:6px}.tdot{width:7px;height:7px;border-radius:50%}.node.collapsed:after{content:attr(data-count) " hidden";position:absolute;right:6px;bottom:-23px;font-size:10px;color:#a8b4c9;background:#121728;border:1px solid #36415d;border-radius:999px;padding:3px 7px}
 .snap-guide{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(151,138,255,.82),transparent);box-shadow:0 0 10px rgba(151,138,255,.55);z-index:20;pointer-events:none;display:none}.snap-guide.show{display:block}
 .snap-label{position:absolute;right:10px;transform:translateY(-50%);z-index:21;pointer-events:none;background:#17142d;border:1px solid #554b9b;color:#c9c3ff;border-radius:999px;padding:3px 7px;font-size:10px;display:none}.snap-label.show{display:block}
 .navpod{position:absolute;left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom));z-index:25;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;max-width:none}.navpod .btn{min-width:0;width:100%;padding-left:6px;padding-right:6px;overflow:hidden;text-overflow:ellipsis;background:rgba(10,14,26,.92);backdrop-filter:blur(8px)}
@@ -70,7 +70,7 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 .zoomread{position:absolute;left:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:25;font-size:10px;color:#8492aa;background:rgba(7,10,18,.78);border:1px solid #222c45;border-radius:999px;padding:4px 7px;pointer-events:none}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.73);display:none;align-items:center;justify-content:center;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));z-index:60}.modal-bg.show{display:flex}
 .modal{width:min(720px,100%);max-height:89dvh;overflow:auto;-webkit-overflow-scrolling:touch;background:#0b0f1b;border:1px solid #33415f;border-radius:15px;padding:17px;box-shadow:0 20px 60px rgba(0,0,0,.5)}.modal h2{margin:0 0 14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.field{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}.field label{font-size:11px;color:#9ba9c0}.field input,.field textarea,.field select{width:100%;background:#050813;color:var(--text);border:1px solid #2b3858;border-radius:9px;padding:10px}.field textarea{min-height:82px;resize:vertical}.actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:10px}.notice{font-size:12px;line-height:1.45;color:#9aa8be;background:#101523;border:1px solid #2a3653;border-radius:10px;padding:10px;margin-bottom:10px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choice{min-height:66px;text-align:left;white-space:normal}.choice b{display:block}.choice small{display:block;color:#8f9db5;margin-top:3px}
-@media(max-width:820px){.workspace{grid-template-columns:1fr}.sidebar{display:none}.brand{display:none}.topbar{padding-left:max(9px,env(safe-area-inset-left));padding-right:max(9px,env(safe-area-inset-right));gap:8px}.topbar .btn{min-width:0}.projectbar input{width:auto;flex-basis:44%}.projectbar #selectionStatus{display:none}.grid,.choices{grid-template-columns:1fr}.node{width:184px}.navpod{left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom))}.navpod .btn{font-size:12px}.historypod{right:max(8px,env(safe-area-inset-right));bottom:calc(max(8px,env(safe-area-inset-bottom)) + 54px)}.zoomread{left:8px;bottom:calc(max(8px,env(safe-area-inset-bottom)) + 54px)}}
+@media(max-width:820px){.workspace{grid-template-columns:1fr}.sidebar{display:none}.brand{display:none}.topbar{padding-left:max(9px,env(safe-area-inset-left));padding-right:max(9px,env(safe-area-inset-right));gap:8px}.topbar .btn{min-width:0}.projectbar input{width:auto;flex-basis:44%}.projectbar #selectionStatus{display:none}.grid,.choices,.time-row{grid-template-columns:1fr}.node{width:184px}.navpod{left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom))}.navpod .btn{font-size:12px}.historypod{right:max(8px,env(safe-area-inset-right));bottom:calc(max(8px,env(safe-area-inset-bottom)) + 54px)}.zoomread{left:8px;bottom:calc(max(8px,env(safe-area-inset-bottom)) + 54px)}}
 </style>
 </head>
 <body>
@@ -90,12 +90,12 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <div class="legacy-actions" aria-hidden="true">
 <button id="afterBtn"></button><button id="beforeBtn"></button><button id="branchBtn"></button><button id="editBtn"></button><button id="connectBtn"></button><button id="insertBtn"></button><button id="snapBtn"></button><button id="collapseBtn"></button>
 </div>
-<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.7</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
+<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.8</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
 <div class="workspace">
 <aside class="sidebar">
 <h3>Camera controls</h3><div class="help">One finger pans. Pinch begins only after a real second finger touches the canvas. Tap empty space to deselect. Hold an event first, then drag, to move it.</div>
 <h3>Chronology</h3><div class="help">Physical height is time. Higher = later. Lower = earlier. Event movement snaps to chronology levels.</div>
-<h3>Creating events</h3><div class="help"><b>Continue</b> extends the end of a path. <b>Insert Event</b> places something inside an existing connection. <b>New Branch</b> deliberately creates another path from an event that already continues. There is no Before command.</div><h3>Mobile layout</h3><div class="help">Global maintenance actions live under the top <b>•••</b>. The bottom dock always contains <b>Big Bang</b>, <b>Selected</b>, and <b>Fit Web</b>.</div><h3>Undo / Redo</h3><div class="help">Story changes are remembered for up to 100 actions. Camera pan and zoom are intentionally not included in history.</div><h3>Live timeline</h3><div class="help">Dragging an event now updates only that event and its connected lines on each display frame. A solid core stays beneath the cosmic glow.</div><h3>Day markers</h3><div class="help">Day boundaries live in chronology, not on the screen. Use <b>Start Next Day</b> from an event. Insertions push later day markers when needed, and dragging an event across a marker changes its day automatically.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
+<h3>Creating events</h3><div class="help"><b>Continue</b> extends the end of a path. <b>Insert Event</b> places something inside an existing connection. <b>New Branch</b> deliberately creates another path from an event that already continues. There is no Before command.</div><h3>Mobile layout</h3><div class="help">Global maintenance actions live under the top <b>•••</b>. The bottom dock always contains <b>Big Bang</b>, <b>Selected</b>, and <b>Fit Web</b>.</div><h3>Undo / Redo</h3><div class="help">Story changes are remembered for up to 100 actions. Camera pan and zoom are intentionally not included in history.</div><h3>Live timeline</h3><div class="help">Dragging an event now updates only that event and its connected lines on each display frame. A solid core stays beneath the cosmic glow.</div><h3>Day markers</h3><div class="help">Day boundaries live in chronology, not on the screen. Use <b>Start Next Day</b> from an event. Insertions push later day markers when needed, and dragging an event across a marker changes its day automatically.</div><h3>Time of day</h3><div class="help">Event Time is optional: Unspecified, Approximate, or Exact. Exact time positions the node precisely inside its Day. Approximate time uses Dawn/Morning/Afternoon/Evening/Night. Dragging a timed event updates its time automatically.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
 </aside>
 <main class="stage" id="stage">
 <div class="world" id="world">
@@ -142,6 +142,30 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <div class="modal-bg" id="nodeModal"><div class="modal">
 <h2 id="nodeModalTitle">Edit Event</h2>
 <div class="grid"><div class="field"><label>Title</label><input id="fTitle"></div><div class="field"><label>Chapter / Beat</label><input id="fChapter"></div><div class="field"><label>POV</label><input id="fPov"></div><div class="field"><label>Location</label><input id="fLocation"></div><div class="field"><label>Tags</label><input id="fTags"></div><div class="field"><label>Status</label><input id="fStatus" disabled></div></div>
+<div id="timeSection">
+  <div class="field"><label>Time of day</label>
+    <select id="fTimeMode">
+      <option value="unspecified">Unspecified</option>
+      <option value="approx">Approximate</option>
+      <option value="exact">Exact</option>
+    </select>
+  </div>
+  <div class="time-row">
+    <div class="field time-hidden" id="timeApproxWrap"><label>Approximate time</label>
+      <select id="fTimeApprox">
+        <option value="dawn">Dawn</option>
+        <option value="morning">Morning</option>
+        <option value="afternoon">Afternoon</option>
+        <option value="evening">Evening</option>
+        <option value="night">Night</option>
+      </select>
+    </div>
+    <div class="field time-hidden" id="timeExactWrap"><label>Exact time</label>
+      <input id="fTimeExact" type="time" step="900">
+    </div>
+  </div>
+  <div class="time-hint" id="timeHint">Optional. Time positions this event vertically inside its current Day.</div>
+</div>
 <div class="field"><label>What happens?</label><textarea id="fSummary"></textarea></div><div class="field"><label>Consequence — what changes because of this?</label><textarea id="fConsequence"></textarea></div><div class="field"><label>What the reader knows here</label><textarea id="fReader"></textarea></div><div class="field"><label>Hidden truth</label><textarea id="fTruth"></textarea></div><div class="field"><label>Notes</label><textarea id="fNotes" style="min-height:130px"></textarea></div>
 <div class="actions"><button class="btn danger" id="deleteBtn">Delete</button><span class="spacer"></span><button class="btn" id="cancelEdit">Cancel</button><button class="btn primary" id="saveEdit">Save Event</button></div>
 </div></div>
@@ -163,7 +187,7 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 
 <div class="modal-bg" id="daysModal"><div class="modal" style="width:min(560px,100%)">
 <h2>Day Markers</h2>
-<div class="notice">Day 1 begins above the Big Bang. Additional markers are chronological boundaries. Removing a marker joins its day back into the previous day; no events are deleted or moved.</div>
+<div class="notice">Day 1 begins above the Big Bang. Additional markers are chronological boundaries. Optional event times position nodes inside each Day. Removing a marker joins its day back into the previous day; no events are deleted.</div>
 <div id="daysList"></div>
 <div class="actions"><button class="btn" id="closeDays">Close</button></div>
 </div></div>
@@ -181,7 +205,7 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <script>
 (()=>{const KEY='nulliverse_timeweb_v1',CAMKEY='nulliverse_timeweb_camera_v1_2',GAP=150,NW=196,NH=84,LEGACY_W=2400,LEGACY_TOP=260,LEGACY_BOTTOM=220,COLS=['#55d8ff','#b070ff','#ff75c8','#6effcf','#ffd66e','#7f9dff'];
 const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2),$=id=>document.getElementById(id),stage=$('stage'),world=$('world'),nodeLayer=$('nodeLayer'),dayLayer=$('dayLayer'),svg=$('webSvg');
-function fresh(){return{version:1,layoutVersion:2,title:'My Universe',nodes:[{id:'BIG_BANG',title:'BIG BANG',snapped:true,level:0,x:0,chapter:'Origin',pov:'',location:'Nulliverse',tags:['origin'],summary:'The singular origin of everything.',consequence:'Time begins.',reader:'',truth:'',notes:'',collapsed:false}],edges:[],dayMarkers:[],selectedNodeId:'BIG_BANG',selectedEdgeId:null,colorIndex:0}}
+function fresh(){return{version:1,layoutVersion:2,title:'My Universe',nodes:[{id:'BIG_BANG',title:'BIG BANG',snapped:true,level:0,x:0,chapter:'Origin',pov:'',location:'Nulliverse',tags:['origin'],summary:'The singular origin of everything.',consequence:'Time begins.',reader:'',truth:'',notes:'',collapsed:false,timeMode:'unspecified',timeApprox:'morning',timeMinutes:600}],edges:[],dayMarkers:[],selectedNodeId:'BIG_BANG',selectedEdgeId:null,colorIndex:0}}
 function rawLoad(){try{return JSON.parse(localStorage.getItem(KEY))||fresh()}catch(_){return fresh()}}
 let p=rawLoad(),editing=null,connectFrom=null;
 function legacyHeight(pr){const ml=Math.max(0,...pr.nodes.filter(x=>x.snapped).map(x=>x.level||0));return Math.max(1800,LEGACY_TOP+LEGACY_BOTTOM+(ml+3)*GAP)}
@@ -189,6 +213,12 @@ function migrate(pr){if(pr.layoutVersion===2)return false;const oldOY=legacyHeig
 if(migrate(p))localStorage.setItem(KEY,JSON.stringify(p));
 if(!Array.isArray(p.dayMarkers)){p.dayMarkers=[];localStorage.setItem(KEY,JSON.stringify(p))}
 p.dayMarkers=p.dayMarkers.filter(m=>m&&Number.isFinite(Number(m.startLevel))&&Number(m.startLevel)>1).map(m=>({id:m.id||uid(),startLevel:Math.max(2,Math.round(Number(m.startLevel)))}));
+p.nodes.forEach(x=>{
+  if(!x.timeMode)x.timeMode='unspecified';
+  if(!x.timeApprox)x.timeApprox='morning';
+  if(!Number.isFinite(Number(x.timeMinutes)))x.timeMinutes=600;
+  x.timeMinutes=Math.max(0,Math.min(1439,Math.round(Number(x.timeMinutes))));
+});
 const HISTORY_LIMIT=100;
 let undoStack=[],redoStack=[];
 
@@ -239,25 +269,123 @@ function redo(){
   updateHistoryButtons();
 }
 
-function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.7'}
+function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.8'}
 function n(id){return p.nodes.find(x=>x.id===id)}function e(id){return p.edges.find(x=>x.id===id)}function out(id){return p.edges.filter(x=>x.from===id)}function inc(id){return p.edges.filter(x=>x.to===id)}
 function color(){const c=COLS[p.colorIndex%COLS.length];p.colorIndex++;return c}function wy(x){return -(x.level||0)*GAP}
 function sortedDayMarkers(){return (p.dayMarkers||[]).slice().sort((a,b)=>a.startLevel-b.startLevel)}
 function allDayStarts(){return [1,...sortedDayMarkers().map(m=>m.startLevel)]}
+function dayBoundaryLevels(){
+  return [0.5,...sortedDayMarkers().map(m=>m.startLevel-.5)];
+}
 function dayOfLevel(level){
-  if(!Number.isFinite(level)||level<1)return 0;
+  if(!Number.isFinite(level)||level<=0)return 0;
   let day=1;
-  sortedDayMarkers().forEach(m=>{if(level>=m.startLevel)day++});
+  sortedDayMarkers().forEach(m=>{if(level>=m.startLevel-.5)day++});
   return day;
 }
 function dayName(level){const d=dayOfLevel(level);return d?`Day ${d}`:'Origin'}
 function dayStartForLevel(level){
-  const starts=allDayStarts().filter(v=>v<=level);
-  return starts.length?Math.max(...starts):1;
+  const d=dayOfLevel(level);
+  if(d<=1)return 1;
+  const marker=sortedDayMarkers()[d-2];
+  return marker?marker.startLevel:1;
 }
 function nextDayStartAfter(level){
-  const starts=sortedDayMarkers().map(m=>m.startLevel).filter(v=>v>level);
+  const starts=sortedDayMarkers().map(m=>m.startLevel).filter(v=>v-.5>level);
   return starts.length?Math.min(...starts):null;
+}
+function ensureTimeFields(x){
+  if(!x)return;
+  if(!x.timeMode)x.timeMode='unspecified';
+  if(!x.timeApprox)x.timeApprox='morning';
+  if(!Number.isFinite(Number(x.timeMinutes)))x.timeMinutes=600;
+  x.timeMinutes=Math.max(0,Math.min(1439,Math.round(Number(x.timeMinutes))));
+}
+const APPROX_MINUTES={dawn:390,morning:600,afternoon:870,evening:1140,night:1350};
+function approxForMinutes(minutes){
+  minutes=Math.max(0,Math.min(1439,Number(minutes)||0));
+  if(minutes<480)return 'dawn';
+  if(minutes<720)return 'morning';
+  if(minutes<1020)return 'afternoon';
+  if(minutes<1260)return 'evening';
+  return 'night';
+}
+function formatClock(minutes){
+  minutes=Math.max(0,Math.min(1439,Math.round(Number(minutes)||0)));
+  const h=Math.floor(minutes/60),m=minutes%60;
+  const hour=((h+11)%12)+1;
+  return `${hour}:${String(m).padStart(2,'0')} ${h<12?'AM':'PM'}`;
+}
+function parseClock(value){
+  const m=/^(\d{2}):(\d{2})$/.exec(value||'');
+  if(!m)return 720;
+  return Math.max(0,Math.min(1439,(Number(m[1])*60)+Number(m[2])));
+}
+function clockInput(minutes){
+  minutes=Math.max(0,Math.min(1439,Math.round(Number(minutes)||0)));
+  return `${String(Math.floor(minutes/60)).padStart(2,'0')}:${String(minutes%60).padStart(2,'0')}`;
+}
+function dayBounds(day,excludeId=null){
+  const boundaries=dayBoundaryLevels();
+  const low=boundaries[Math.max(0,day-1)]??0.5;
+  let high=boundaries[day]??null;
+  if(high===null){
+    const levels=p.nodes.filter(x=>x.snapped&&x.id!=='BIG_BANG'&&x.id!==excludeId&&dayOfLevel(x.level)===day).map(x=>Number(x.level)||0);
+    const maxExisting=levels.length?Math.max(...levels):low+1;
+    high=Math.max(low+8,maxExisting+1.25);
+  }
+  if(high-low<1)high=low+1;
+  return{low,high};
+}
+function minutesToLevel(day,minutes,excludeId=null){
+  const {low,high}=dayBounds(day,excludeId);
+  const pad=Math.min(.10,(high-low)*.08);
+  const usable=Math.max(.2,(high-low)-(pad*2));
+  const f=Math.max(0,Math.min(1,(Number(minutes)||0)/1439));
+  return low+pad+(usable*f);
+}
+function levelToTime(level,excludeId=null){
+  const day=Math.max(1,dayOfLevel(level));
+  const {low,high}=dayBounds(day,excludeId);
+  const pad=Math.min(.10,(high-low)*.08);
+  const usable=Math.max(.2,(high-low)-(pad*2));
+  const f=Math.max(0,Math.min(1,(level-low-pad)/usable));
+  return{day,minutes:Math.round(f*1439)};
+}
+function timeLabel(x){
+  if(!x||x.id==='BIG_BANG')return'';
+  ensureTimeFields(x);
+  if(x.timeMode==='exact')return formatClock(x.timeMinutes);
+  if(x.timeMode==='approx')return x.timeApprox.charAt(0).toUpperCase()+x.timeApprox.slice(1);
+  return'';
+}
+function timeVisualClass(x){
+  if(!x)return'';
+  ensureTimeFields(x);
+  if(x.timeMode==='approx')return x.timeApprox;
+  if(x.timeMode==='exact')return approxForMinutes(x.timeMinutes);
+  return'';
+}
+function chronologyBadge(x){
+  if(!x||!x.snapped)return'';
+  ensureTimeFields(x);
+  if(x.timeMode!=='unspecified')return `D${dayOfLevel(x.level)}`;
+  const lv=Number(x.level);
+  return `T+${Number.isInteger(lv)?lv:lv.toFixed(1)}`;
+}
+function timeStatus(x){
+  if(!x||!x.snapped)return'';
+  const base=dayName(x.level);
+  const t=timeLabel(x);
+  return t?`${base} • ${t}`:base;
+}
+function applyTimePlacement(x,dayHint=null){
+  if(!x||!x.snapped||x.id==='BIG_BANG')return;
+  ensureTimeFields(x);
+  if(x.timeMode==='unspecified')return;
+  const day=Math.max(1,dayHint||dayOfLevel(x.level));
+  const minutes=x.timeMode==='exact'?x.timeMinutes:(APPROX_MINUTES[x.timeApprox]??600);
+  x.level=minutesToLevel(day,minutes,x.id);
 }
 function shiftDayMarkers(from,amt=1,inclusive=true){
   (p.dayMarkers||[]).forEach(m=>{
@@ -354,7 +482,7 @@ function updateContextTools(){
     $('ctxCollapse').style.display=(!floating && sn.id!=='BIG_BANG' && out(sn.id).length)?'inline-block':'none';
     $('ctxCollapse').textContent=sn.collapsed?'Expand':'Collapse';
     $('ctxDelete').style.display=sn.id==='BIG_BANG'?'none':'inline-block';
-    const nextBoundaryLevel=sn.snapped?sn.level+1:null;
+    const nextBoundaryLevel=sn.snapped?Math.max(2,Math.ceil(Number(sn.level)+0.001)):null;
     const boundaryAlreadyThere=nextBoundaryLevel!==null&&(nextBoundaryLevel===1||sortedDayMarkers().some(m=>m.startLevel===nextBoundaryLevel));
     $('ctxNextDay').style.display=(!floating&&sn.id!=='BIG_BANG'&&!boundaryAlreadyThere)?'inline-block':'none';
 
@@ -386,7 +514,7 @@ function fitWeb(){const vis=p.nodes.filter(x=>!hidden().has(x.id));if(!vis.lengt
 function startInertia(vx,vy){cancelInertia();let px=vx,py=vy,prev=performance.now();function frame(now){const dt=Math.min(32,now-prev);prev=now;cam.x+=px*dt;cam.y+=py*dt;const friction=Math.pow(.91,dt/16);px*=friction;py*=friction;applyCamera();if(Math.hypot(px,py)>.015)inertiaId=requestAnimationFrame(frame);else{inertiaId=0;saveCamera()}}inertiaId=requestAnimationFrame(frame)}
 
 /* rendering */
-function render(){nodeLayer.innerHTML='';const hid=hidden();p.nodes.forEach(x=>{if(hid.has(x.id))return;if(x.id==='BIG_BANG'){const el=document.createElement('div');el.className='origin'+(p.selectedNodeId===x.id?' selected':'');el.dataset.id=x.id;el.innerHTML='BIG<br>BANG';nodeLayer.appendChild(el);return}const el=document.createElement('div');el.className='node'+(x.snapped?'':' float')+(p.selectedNodeId===x.id?' selected':'')+(x.collapsed?' collapsed':'');el.dataset.id=x.id;el.dataset.count=x.collapsed?countDesc(x.id):0;el.style.left=(x.x-NW/2)+'px';el.style.top=((x.snapped?wy(x):x.freeY)-NH/2)+'px';const cs=[...new Set(inc(x.id).concat(out(x.id)).map(q=>q.color))].slice(0,5);el.innerHTML=`${x.snapped?`<div class="badge">T+${x.level}</div>`:`<div class="null">NULL</div>`}<div class="title">${esc(x.title)}</div><div class="meta">${x.chapter?`<span>${esc(x.chapter)}</span>`:''}${x.pov?`<span>• ${esc(x.pov)}</span>`:''}${x.location?`<span>• ${esc(x.location)}</span>`:''}</div><div class="summary">${esc(x.consequence||x.summary||'Open event details')}</div><div class="dots">${cs.map(c=>`<span class="tdot" style="background:${c};box-shadow:0 0 8px ${c}"></span>`).join('')}</div>`;nodeLayer.appendChild(el)});drawEdges(hid);renderDayMarkers();const sn=p.selectedNodeId?n(p.selectedNodeId):null,se=p.selectedEdgeId?e(p.selectedEdgeId):null;$('selectionStatus').textContent=sn?`Selected: ${sn.title}${sn.snapped?' • T+'+sn.level+' • '+dayName(sn.level):' • NULL'}`:se?`Selected thread: ${n(se.from)?.title||'?'} → ${n(se.to)?.title||'?'} • tap + to insert`:'Nothing selected';$('insertBtn').disabled=!se;$('editBtn').disabled=!sn;$('snapBtn').disabled=!(sn&&!sn.snapped);$('collapseBtn').disabled=!(sn&&sn.id!=='BIG_BANG'&&out(sn.id).length);$('collapseBtn').textContent=sn?.collapsed?'Expand':'Collapse';applyCamera()}
+function render(){nodeLayer.innerHTML='';const hid=hidden();p.nodes.forEach(x=>{if(hid.has(x.id))return;if(x.id==='BIG_BANG'){const el=document.createElement('div');el.className='origin'+(p.selectedNodeId===x.id?' selected':'');el.dataset.id=x.id;el.innerHTML='BIG<br>BANG';nodeLayer.appendChild(el);return}const el=document.createElement('div');el.className='node'+(x.snapped?'':' float')+(p.selectedNodeId===x.id?' selected':'')+(x.collapsed?' collapsed':'');el.dataset.id=x.id;el.dataset.count=x.collapsed?countDesc(x.id):0;el.style.left=(x.x-NW/2)+'px';el.style.top=((x.snapped?wy(x):x.freeY)-NH/2)+'px';const cs=[...new Set(inc(x.id).concat(out(x.id)).map(q=>q.color))].slice(0,5);ensureTimeFields(x);const tl=timeLabel(x),tc=timeVisualClass(x);el.innerHTML=`${x.snapped?`<div class="badge">${chronologyBadge(x)}</div>`:`<div class="null">NULL</div>`}<div class="title">${esc(x.title)}</div><div class="meta">${x.chapter?`<span>${esc(x.chapter)}</span>`:''}${x.pov?`<span>• ${esc(x.pov)}</span>`:''}${x.location?`<span>• ${esc(x.location)}</span>`:''}</div>${tl?`<div class="time-chip ${tc}">${esc(tl)} · ${esc(dayName(x.level))}</div>`:''}<div class="summary">${esc(x.consequence||x.summary||'Open event details')}</div><div class="dots">${cs.map(c=>`<span class="tdot" style="background:${c};box-shadow:0 0 8px ${c}"></span>`).join('')}</div>`;nodeLayer.appendChild(el)});drawEdges(hid);renderDayMarkers();const sn=p.selectedNodeId?n(p.selectedNodeId):null,se=p.selectedEdgeId?e(p.selectedEdgeId):null;$('selectionStatus').textContent=sn?`Selected: ${sn.title}${sn.snapped?' • '+chronologyBadge(sn)+' • '+timeStatus(sn):' • NULL'}`:se?`Selected thread: ${n(se.from)?.title||'?'} → ${n(se.to)?.title||'?'} • tap + to insert`:'Nothing selected';$('insertBtn').disabled=!se;$('editBtn').disabled=!sn;$('snapBtn').disabled=!(sn&&!sn.snapped);$('collapseBtn').disabled=!(sn&&sn.id!=='BIG_BANG'&&out(sn.id).length);$('collapseBtn').textContent=sn?.collapsed?'Expand':'Collapse';applyCamera()}
 function edgePathData(ed){
   const a=n(ed.from),b=n(ed.to);
   if(!a||!b||!a.snapped||!b.snapped)return null;
@@ -444,7 +572,14 @@ function updateNodeVisual(x){
   el.style.left=(x.x-NW/2)+'px';
   el.style.top=((x.snapped?wy(x):x.freeY)-NH/2)+'px';
   const badge=el.querySelector('.badge');
-  if(badge&&x.snapped)badge.textContent='T+'+x.level;
+  if(badge&&x.snapped)badge.textContent=chronologyBadge(x);
+  const chip=el.querySelector('.time-chip');
+  const tl=timeLabel(x);
+  if(chip){
+    chip.textContent=tl?`${tl} · ${dayName(x.level)}`:'';
+    chip.className=`time-chip ${timeVisualClass(x)}`;
+    chip.style.display=tl?'inline-flex':'none';
+  }
 }
 
 function scheduleLiveNodeDrag(ev){
@@ -468,11 +603,24 @@ function scheduleLiveNodeDrag(ev){
 
     x.x=Math.round(w.x/20)*20;
     if(x.snapped){
-      x.level=Math.max(1,Math.round(-w.y/GAP));
+      ensureTimeFields(x);
+      const rawLevel=Math.max(.51,-w.y/GAP);
+      if(x.timeMode==='exact'){
+        const t=levelToTime(rawLevel,x.id);
+        x.timeMinutes=Math.max(0,Math.min(1439,Math.round(t.minutes/15)*15));
+        x.level=minutesToLevel(t.day,x.timeMinutes,x.id);
+      }else if(x.timeMode==='approx'){
+        const t=levelToTime(rawLevel,x.id);
+        x.timeApprox=approxForMinutes(t.minutes);
+        const bounds=dayBounds(t.day,x.id);
+        x.level=Math.max(bounds.low+.02,Math.min(bounds.high-.02,rawLevel));
+      }else{
+        x.level=Math.max(1,Math.round(rawLevel));
+      }
       const sy=worldToStage(0,-x.level*GAP).y;
       $('snapGuide').style.top=sy+'px';
       $('snapLabel').style.top=sy+'px';
-      $('snapLabel').textContent='T+'+x.level;
+      $('snapLabel').textContent=x.timeMode==='unspecified'?chronologyBadge(x):`${dayName(x.level)} • ${timeLabel(x)}`;
       $('snapGuide').classList.add('show');
       $('snapLabel').classList.add('show');
     }else{
@@ -804,7 +952,7 @@ document.addEventListener('visibilitychange',()=>{
 });
 
 /* story editing */
-function createEvent(level,x,snapped=true,historyLabel='Create event'){checkpoint(historyLabel);const id=uid(),obj={id,title:'New Event',snapped,level:snapped?level:null,x,freeY:snapped?null:-Math.max(2,level)*GAP,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false};p.nodes.push(obj);p.selectedNodeId=id;p.selectedEdgeId=null;save();render();openEdit(id);return obj}
+function createEvent(level,x,snapped=true,historyLabel='Create event'){checkpoint(historyLabel);const id=uid(),obj={id,title:'New Event',snapped,level:snapped?level:null,x,freeY:snapped?null:-Math.max(2,level)*GAP,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false,timeMode:'unspecified',timeApprox:'morning',timeMinutes:600};p.nodes.push(obj);p.selectedNodeId=id;p.selectedEdgeId=null;save();render();openEdit(id);return obj}
 function continuePath(){
   const a=p.selectedNodeId?n(p.selectedNodeId):null;
   if(!a||!a.snapped){alert('Select a snapped event first.');return}
@@ -850,7 +998,7 @@ function newBranch(){
 function startNextDay(){
   const x=p.selectedNodeId?n(p.selectedNodeId):null;
   if(!x||!x.snapped||x.id==='BIG_BANG')return;
-  const startLevel=x.level+1;
+  const startLevel=Math.max(2,Math.ceil(Number(x.level)+0.001));
   if(startLevel<=1||sortedDayMarkers().some(m=>m.startLevel===startLevel))return;
   checkpoint('Start next day');
   p.dayMarkers.push({id:uid(),startLevel});
@@ -932,7 +1080,7 @@ function performInsertBetween(ed,dayChoice=null){
   }
 
   const id=uid();
-  const obj={id,title:'New Event',snapped:true,level,x:((early.id==='BIG_BANG'?0:early.x)+(late.id==='BIG_BANG'?0:late.x))/2,freeY:null,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false};
+  const obj={id,title:'New Event',snapped:true,level,x:((early.id==='BIG_BANG'?0:early.x)+(late.id==='BIG_BANG'?0:late.x))/2,freeY:null,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false,timeMode:'unspecified',timeApprox:'morning',timeMinutes:600};
   p.nodes.push(obj);
   p.selectedNodeId=id;
   p.selectedEdgeId=null;
@@ -941,7 +1089,7 @@ function performInsertBetween(ed,dayChoice=null){
   save();render();openEdit(id);
 }
 
-function floating(){checkpoint('Create floating event');const center=screenToWorld(stage.getBoundingClientRect().left+stage.clientWidth/2,stage.getBoundingClientRect().top+stage.clientHeight/2),id=uid(),obj={id,title:'Floating Idea',snapped:false,level:null,x:center.x,freeY:center.y,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false};p.nodes.push(obj);p.selectedNodeId=id;p.selectedEdgeId=null;save();render();openEdit(id)}
+function floating(){checkpoint('Create floating event');const center=screenToWorld(stage.getBoundingClientRect().left+stage.clientWidth/2,stage.getBoundingClientRect().top+stage.clientHeight/2),id=uid(),obj={id,title:'Floating Idea',snapped:false,level:null,x:center.x,freeY:center.y,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false,timeMode:'unspecified',timeApprox:'morning',timeMinutes:600};p.nodes.push(obj);p.selectedNodeId=id;p.selectedEdgeId=null;save();render();openEdit(id)}
 function connect(){const a=p.selectedNodeId?n(p.selectedNodeId):null;if(!a||!a.snapped){alert('Select a snapped event first.');return}connectFrom=a.id;$('connectBtn').classList.add('active');$('selectionStatus').textContent='Tap the snapped event this thread should connect to.'}
 function finishConnect(id){const a=n(connectFrom),b=n(id);if(a&&b&&b.snapped&&a.id!==b.id&&!p.edges.some(ed=>(ed.from===a.id&&ed.to===b.id)||(ed.from===b.id&&ed.to===a.id))){checkpoint('Connect events');const early=a.level<=b.level?a:b,late=a.level<=b.level?b:a;p.edges.push({id:uid(),from:early.id,to:late.id,color:inc(early.id)[0]?.color||out(early.id)[0]?.color||'#ff75c8'})}connectFrom=null;$('connectBtn').classList.remove('active');p.selectedNodeId=id;save();render()}
 function insertBetween(){
@@ -956,9 +1104,29 @@ function insertBetween(){
   }
   performInsertBetween(ed,null);
 }
-function openEdit(id){editing=id;const x=n(id);if(!x)return;$('nodeModalTitle').textContent=id==='BIG_BANG'?'Big Bang Notes':'Edit Event';$('fTitle').value=x.title||'';$('fChapter').value=x.chapter||'';$('fPov').value=x.pov||'';$('fLocation').value=x.location||'';$('fTags').value=(x.tags||[]).join(', ');$('fSummary').value=x.summary||'';$('fConsequence').value=x.consequence||'';$('fReader').value=x.reader||'';$('fTruth').value=x.truth||'';$('fNotes').value=x.notes||'';$('fStatus').value=id==='BIG_BANG'?'Fixed origin':x.snapped?'Snapped at T+'+x.level+' • '+dayName(x.level):'Floating in the Nulliverse';$('fTitle').disabled=id==='BIG_BANG';$('deleteBtn').style.display=id==='BIG_BANG'?'none':'inline-block';$('nodeModal').classList.add('show')}
+function updateTimeEditor(){
+  const mode=$('fTimeMode').value;
+  $('timeApproxWrap').classList.toggle('time-hidden',mode!=='approx');
+  $('timeExactWrap').classList.toggle('time-hidden',mode!=='exact');
+  $('timeHint').textContent=mode==='exact'?'Exact time sets this event’s precise vertical position inside its current Day.':mode==='approx'?'Approximate time places the event in a broad part of the day; you may still drag it within that region.':'Unspecified keeps chronology manual, as before.';
+}
+function openEdit(id){
+  editing=id;const x=n(id);if(!x)return;ensureTimeFields(x);
+  $('nodeModalTitle').textContent=id==='BIG_BANG'?'Big Bang Notes':'Edit Event';
+  $('fTitle').value=x.title||'';$('fChapter').value=x.chapter||'';$('fPov').value=x.pov||'';$('fLocation').value=x.location||'';$('fTags').value=(x.tags||[]).join(', ');
+  $('fSummary').value=x.summary||'';$('fConsequence').value=x.consequence||'';$('fReader').value=x.reader||'';$('fTruth').value=x.truth||'';$('fNotes').value=x.notes||'';
+  $('fStatus').value=id==='BIG_BANG'?'Fixed origin':x.snapped?`${chronologyBadge(x)} • ${timeStatus(x)}`:'Floating in the Nulliverse';
+  $('fTimeMode').value=x.timeMode||'unspecified';$('fTimeApprox').value=x.timeApprox||'morning';$('fTimeExact').value=clockInput(x.timeMinutes);
+  const canTime=id!=='BIG_BANG'&&x.snapped;
+  $('timeSection').classList.toggle('time-hidden',!canTime);
+  updateTimeEditor();
+  $('fTitle').disabled=id==='BIG_BANG';$('deleteBtn').style.display=id==='BIG_BANG'?'none':'inline-block';$('nodeModal').classList.add('show');
+}
 function saveEdit(){
-  const x=n(editing);if(!x)return;
+  const x=n(editing);if(!x)return;ensureTimeFields(x);
+  const oldDay=x.snapped?Math.max(1,dayOfLevel(x.level)):null;
+  const canTime=x.id!=='BIG_BANG'&&x.snapped;
+  const mode=canTime?$('fTimeMode').value:'unspecified';
   const next={
     title:x.id==='BIG_BANG'?x.title:($('fTitle').value.trim()||'Untitled Event'),
     chapter:$('fChapter').value.trim(),
@@ -969,11 +1137,16 @@ function saveEdit(){
     consequence:$('fConsequence').value.trim(),
     reader:$('fReader').value.trim(),
     truth:$('fTruth').value.trim(),
-    notes:$('fNotes').value.trim()
+    notes:$('fNotes').value.trim(),
+    timeMode:mode,
+    timeApprox:canTime?$('fTimeApprox').value:(x.timeApprox||'morning'),
+    timeMinutes:canTime?parseClock($('fTimeExact').value):(x.timeMinutes||600)
   };
-  const current={title:x.title,chapter:x.chapter,pov:x.pov,location:x.location,tags:x.tags||[],summary:x.summary,consequence:x.consequence,reader:x.reader,truth:x.truth,notes:x.notes};
+  const current={title:x.title,chapter:x.chapter,pov:x.pov,location:x.location,tags:x.tags||[],summary:x.summary,consequence:x.consequence,reader:x.reader,truth:x.truth,notes:x.notes,timeMode:x.timeMode||'unspecified',timeApprox:x.timeApprox||'morning',timeMinutes:Number(x.timeMinutes)||600};
   if(JSON.stringify(next)!==JSON.stringify(current))checkpoint('Edit event');
   Object.assign(x,next);
+  if(canTime&&x.timeMode!=='unspecified')applyTimePlacement(x,oldDay);
+  normalizeEdges();
   save();$('nodeModal').classList.remove('show');render();
 }
 let deleteTarget=null;
@@ -1032,6 +1205,7 @@ function backup(){p.title=$('projectTitle').value.trim()||'My Universe';save();c
 $('restoreInput').addEventListener('click',()=>{$('topMenuPanel').classList.remove('show')});$('restoreInput').addEventListener('change',async ev=>{const f=ev.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.nodes)||!Array.isArray(d.edges))throw new Error('Not a Time Web project');checkpoint('Restore project');p=d;if(migrate(p)){}save();render();fitWeb()}catch(err){alert('Could not restore: '+err.message)}ev.target.value=''});
 
 /* controls */
+$('fTimeMode').addEventListener('change',updateTimeEditor);
 $('projectTitle').addEventListener('input',ev=>{p.title=ev.target.value;save()});
 $('topMenuBtn').onclick=ev=>{
   ev.stopPropagation();
