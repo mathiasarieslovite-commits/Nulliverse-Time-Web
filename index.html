@@ -33,7 +33,7 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 .context-menu{display:none;margin-top:6px;padding:5px;gap:5px;flex-wrap:wrap;border:1px solid #3b4866;border-radius:12px;background:rgba(8,12,22,.97);backdrop-filter:blur(10px)}
 .context-menu.show{display:flex}
 .context-menu .ctxbtn{flex:1 1 82px;min-height:38px;padding:6px 7px;border-radius:9px;border:1px solid #34415f;background:#12192a;color:#eef4ff;font-size:11px;font-weight:700}
-.context-menu .ctxbtn.danger{background:#3b2029;border-color:#713747;color:#ffdbe2}
+.context-menu .ctxbtn.danger{background:#3b2029;border-color:#713747;color:#ffdbe2}.context-menu .ctxbtn b{display:block}.context-menu .ctxbtn small{display:block;margin-top:2px;color:#8f9db5;font-size:9px;font-weight:500;white-space:normal;line-height:1.25}
 .thread-tools{position:absolute;z-index:30;display:none;touch-action:none}
 .thread-tools.show{display:block}
 .thread-tools button{min-height:42px;padding:8px 13px;border-radius:999px;border:1px solid #9e95ff;background:rgba(42,35,101,.96);color:white;font-size:12px;font-weight:850;box-shadow:0 0 15px rgba(132,116,255,.7),0 0 32px rgba(83,205,255,.2);backdrop-filter:blur(8px)}
@@ -81,12 +81,12 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <div class="legacy-actions" aria-hidden="true">
 <button id="afterBtn"></button><button id="beforeBtn"></button><button id="branchBtn"></button><button id="editBtn"></button><button id="connectBtn"></button><button id="insertBtn"></button><button id="snapBtn"></button><button id="collapseBtn"></button>
 </div>
-<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.4.2</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
+<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.5</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
 <div class="workspace">
 <aside class="sidebar">
 <h3>Camera controls</h3><div class="help">One finger pans. Pinch begins only after a real second finger touches the canvas. Tap empty space to deselect. Hold an event first, then drag, to move it.</div>
 <h3>Chronology</h3><div class="help">Physical height is time. Higher = later. Lower = earlier. Event movement snaps to chronology levels.</div>
-<h3>Context tools</h3><div class="help">Tap an event to get tools beside it. Use <b>Edit</b>, <b>+</b>, or <b>•••</b>. Floating events show <b>Snap</b>. Tap a thread for <b>＋ Insert Event</b>.</div><h3>Mobile layout</h3><div class="help">Global maintenance actions live under the top <b>•••</b>. The bottom dock always contains <b>Big Bang</b>, <b>Selected</b>, and <b>Fit Web</b>.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
+<h3>Creating events</h3><div class="help"><b>Continue</b> extends the end of a path. <b>Insert Event</b> places something inside an existing connection. <b>New Branch</b> deliberately creates another path from an event that already continues. There is no Before command.</div><h3>Mobile layout</h3><div class="help">Global maintenance actions live under the top <b>•••</b>. The bottom dock always contains <b>Big Bang</b>, <b>Selected</b>, and <b>Fit Web</b>.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
 </aside>
 <main class="stage" id="stage">
 <div class="world" id="world">
@@ -105,9 +105,8 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
     <button class="ctxbtn" id="ctxMore">•••</button>
   </div>
   <div class="context-menu" id="ctxAddMenu">
-    <button class="ctxbtn" id="ctxBefore">+ Before</button>
-    <button class="ctxbtn" id="ctxAfter">+ After</button>
-    <button class="ctxbtn" id="ctxBranch">+ Branch</button>
+    <button class="ctxbtn" id="ctxAfter"><b>Continue</b><small>Extend this path</small></button>
+    <button class="ctxbtn" id="ctxBranch"><b>New Branch</b><small>Diverge from this event</small></button>
   </div>
   <div class="context-menu" id="ctxMoreMenu">
     <button class="ctxbtn" id="ctxConnect">Connect</button>
@@ -156,7 +155,7 @@ let p=rawLoad(),editing=null,connectFrom=null;
 function legacyHeight(pr){const ml=Math.max(0,...pr.nodes.filter(x=>x.snapped).map(x=>x.level||0));return Math.max(1800,LEGACY_TOP+LEGACY_BOTTOM+(ml+3)*GAP)}
 function migrate(pr){if(pr.layoutVersion===2)return false;const oldOY=legacyHeight(pr)-LEGACY_BOTTOM;pr.nodes.forEach(x=>{if(x.id==='BIG_BANG'){x.x=0;return}x.x=(Number(x.x)||LEGACY_W/2-NW/2)+NW/2-LEGACY_W/2;if(!x.snapped){x.freeY=(Number(x.freeY)||oldOY-NH/2)+NH/2-oldOY}});pr.layoutVersion=2;return true}
 if(migrate(p))localStorage.setItem(KEY,JSON.stringify(p));
-function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.4.2'}
+function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.5'}
 function n(id){return p.nodes.find(x=>x.id===id)}function e(id){return p.edges.find(x=>x.id===id)}function out(id){return p.edges.filter(x=>x.from===id)}function inc(id){return p.edges.filter(x=>x.to===id)}
 function color(){const c=COLS[p.colorIndex%COLS.length];p.colorIndex++;return c}function wy(x){return -(x.level||0)*GAP}
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
@@ -221,7 +220,10 @@ function updateContextTools(){
     $('ctxCollapse').style.display=(!floating && sn.id!=='BIG_BANG' && out(sn.id).length)?'inline-block':'none';
     $('ctxCollapse').textContent=sn.collapsed?'Expand':'Collapse';
     $('ctxDelete').style.display=sn.id==='BIG_BANG'?'none':'inline-block';
-    $('ctxBefore').style.display=(sn.id==='BIG_BANG'||sn.level<=0)?'none':'inline-block';
+
+    const hasContinuation=!floating&&out(sn.id).length>0;
+    $('ctxAfter').style.display=(!floating&&!hasContinuation)?'inline-block':'none';
+    $('ctxBranch').style.display=(!floating&&hasContinuation)?'inline-block':'none';
   }else{
     tools.classList.remove('show');
     hideContextMenus();
@@ -574,7 +576,48 @@ document.addEventListener('visibilitychange',()=>{
 
 /* story editing */
 function createEvent(level,x,snapped=true){const id=uid(),obj={id,title:'New Event',snapped,level:snapped?level:null,x,freeY:snapped?null:-Math.max(2,level)*GAP,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false};p.nodes.push(obj);p.selectedNodeId=id;p.selectedEdgeId=null;save();render();openEdit(id);return obj}
-function relative(where,branch){const a=p.selectedNodeId?n(p.selectedNodeId):null;if(!a||!a.snapped){alert('Select a snapped event first.');return}let level;if(where==='after'){level=a.level+1;if(p.nodes.some(x=>x.snapped&&x.id!=='BIG_BANG'&&x.level===level))push(level)}else{if(a.level<=1){push(1);level=1}else{level=a.level-1;if(p.nodes.some(x=>x.snapped&&x.id!=='BIG_BANG'&&x.level===level)){push(a.level);level=a.level}}}const offset=branch?(out(a.id).length%2?280:-280):0,obj=createEvent(level,(a.id==='BIG_BANG'?0:a.x)+offset,true),c=branch?color():(inc(a.id)[0]?.color||out(a.id)[0]?.color||color());if(where==='after')p.edges.push({id:uid(),from:a.id,to:obj.id,color:c});else p.edges.push({id:uid(),from:obj.id,to:a.id,color:c});save();render()}
+function continuePath(){
+  const a=p.selectedNodeId?n(p.selectedNodeId):null;
+  if(!a||!a.snapped){alert('Select a snapped event first.');return}
+
+  if(out(a.id).length>0){
+    alert('This event already continues. Tap its thread to Insert Event, or use New Branch to create another path.');
+    return;
+  }
+
+  const level=a.level+1;
+  const obj=createEvent(level,(a.id==='BIG_BANG'?0:a.x),true);
+  const c=inc(a.id)[0]?.color||color();
+
+  p.edges.push({id:uid(),from:a.id,to:obj.id,color:c});
+  save();render();
+}
+
+function newBranch(){
+  const a=p.selectedNodeId?n(p.selectedNodeId):null;
+  if(!a||!a.snapped){alert('Select a snapped event first.');return}
+
+  if(out(a.id).length===0){
+    alert('This event is currently the end of its path. Use Continue first. New Branch is for an event that already has a continuation.');
+    return;
+  }
+
+  const level=a.level+1;
+  const outgoing=out(a.id);
+  const direction=(outgoing.length%2===1)?1:-1;
+  const spread=300+Math.floor(outgoing.length/2)*90;
+  const baseX=a.id==='BIG_BANG'?0:a.x;
+
+  const obj=createEvent(level,baseX+(direction*spread),true);
+
+  /* Keep current color behavior for now.
+     Named threads / color architecture are intentionally deferred. */
+  const c=color();
+
+  p.edges.push({id:uid(),from:a.id,to:obj.id,color:c});
+  save();render();
+}
+
 function floating(){const center=screenToWorld(stage.getBoundingClientRect().left+stage.clientWidth/2,stage.getBoundingClientRect().top+stage.clientHeight/2),id=uid(),obj={id,title:'Floating Idea',snapped:false,level:null,x:center.x,freeY:center.y,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false};p.nodes.push(obj);p.selectedNodeId=id;p.selectedEdgeId=null;save();render();openEdit(id)}
 function connect(){const a=p.selectedNodeId?n(p.selectedNodeId):null;if(!a||!a.snapped){alert('Select a snapped event first.');return}connectFrom=a.id;$('connectBtn').classList.add('active');$('selectionStatus').textContent='Tap the snapped event this thread should connect to.'}
 function finishConnect(id){const a=n(connectFrom),b=n(id);if(a&&b&&b.snapped&&a.id!==b.id&&!p.edges.some(ed=>(ed.from===a.id&&ed.to===b.id)||(ed.from===b.id&&ed.to===a.id))){const early=a.level<=b.level?a:b,late=a.level<=b.level?b:a;p.edges.push({id:uid(),from:early.id,to:late.id,color:inc(early.id)[0]?.color||out(early.id)[0]?.color||'#ff75c8'})}connectFrom=null;$('connectBtn').classList.remove('active');p.selectedNodeId=id;save();render()}
@@ -647,7 +690,7 @@ document.addEventListener('pointerdown',ev=>{
   if(!ev.target.closest?.('#topMenuPanel')&&!ev.target.closest?.('#topMenuBtn')){
     $('topMenuPanel').classList.remove('show');
   }
-});$('afterBtn').onclick=()=>relative('after',false);$('beforeBtn').onclick=()=>relative('before',false);$('branchBtn').onclick=()=>relative('after',true);$('editBtn').onclick=()=>{const x=p.selectedNodeId?n(p.selectedNodeId):null;if(x)openEdit(x.id)};$('floatBtn').onclick=floating;$('connectBtn').onclick=connect;$('insertBtn').onclick=insertBetween;$('snapBtn').onclick=openSnap;$('collapseBtn').onclick=collapse;$('backupBtn').onclick=()=>{$('topMenuPanel').classList.remove('show');backup()};
+});$('afterBtn').onclick=continuePath;$('beforeBtn').onclick=()=>{};$('branchBtn').onclick=newBranch;$('editBtn').onclick=()=>{const x=p.selectedNodeId?n(p.selectedNodeId):null;if(x)openEdit(x.id)};$('floatBtn').onclick=floating;$('connectBtn').onclick=connect;$('insertBtn').onclick=insertBetween;$('snapBtn').onclick=openSnap;$('collapseBtn').onclick=collapse;$('backupBtn').onclick=()=>{$('topMenuPanel').classList.remove('show');backup()};
 $('bigBangBtn').onclick=focusBigBang;$('selectedBtn').onclick=focusSelected;$('fitBtn').onclick=fitWeb;
 $('edgePlus').addEventListener('pointerdown',ev=>{ev.stopPropagation()});
 $('edgePlus').addEventListener('click',ev=>{ev.preventDefault();ev.stopPropagation();insertBetween()});
@@ -660,9 +703,8 @@ $('ctxEdit').onclick=()=>{const x=p.selectedNodeId?n(p.selectedNodeId):null;if(x
 $('ctxAdd').onclick=()=>{$('ctxMoreMenu').classList.remove('show');$('ctxAddMenu').classList.toggle('show')};
 $('ctxMore').onclick=()=>{$('ctxAddMenu').classList.remove('show');$('ctxMoreMenu').classList.toggle('show')};
 $('ctxSnap').onclick=()=>{hideContextMenus();openSnap()};
-$('ctxBefore').onclick=()=>{hideContextMenus();relative('before',false)};
-$('ctxAfter').onclick=()=>{hideContextMenus();relative('after',false)};
-$('ctxBranch').onclick=()=>{hideContextMenus();relative('after',true)};
+$('ctxAfter').onclick=()=>{hideContextMenus();continuePath()};
+$('ctxBranch').onclick=()=>{hideContextMenus();newBranch()};
 $('ctxConnect').onclick=()=>{hideContextMenus();connect()};
 $('ctxCollapse').onclick=()=>{hideContextMenus();collapse()};
 $('ctxDelete').onclick=()=>{hideContextMenus();const x=p.selectedNodeId?n(p.selectedNodeId):null;if(x)requestDelete(x.id)};
