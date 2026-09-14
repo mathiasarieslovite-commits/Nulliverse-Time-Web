@@ -47,6 +47,10 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 .stage:before{content:"";position:absolute;inset:-80px;pointer-events:none;opacity:.30;background-image:radial-gradient(circle,#fff 0 1px,transparent 1.1px),radial-gradient(circle,#88a5ff 0 1px,transparent 1.1px);background-size:101px 101px,157px 157px;background-position:13px 25px,71px 43px}
 .world{position:absolute;left:0;top:0;width:1px;height:1px;transform-origin:0 0;will-change:transform}
 .time-axis{position:absolute;left:0;top:-50000px;width:1px;height:50000px;background:linear-gradient(to top,rgba(142,131,255,.02),rgba(142,131,255,.42),rgba(142,131,255,.05));z-index:1;pointer-events:none}
+.day-layer{position:absolute;left:0;top:0;width:1px;height:1px;z-index:2;pointer-events:none}
+.day-marker{position:absolute;left:-50000px;width:100000px;height:1px;border-top:1px dashed rgba(137,151,190,.42);box-shadow:0 -1px 10px rgba(102,123,181,.08);pointer-events:none}
+.day-marker-label{position:absolute;top:-12px;transform:translateX(-50%);padding:3px 9px;border-radius:999px;border:1px solid rgba(83,101,145,.72);background:rgba(8,12,23,.94);color:#aebbd2;font-size:9px;font-weight:850;letter-spacing:.13em;white-space:nowrap;box-shadow:0 0 16px rgba(67,88,142,.13);pointer-events:none}
+
 .web{position:absolute;left:-50000px;top:-50000px;width:100000px;height:100000px;z-index:3;overflow:visible}
 .edgeBase{fill:none;stroke-width:2.2;stroke-linecap:round;opacity:.98;pointer-events:none}.edge{fill:none;stroke-width:5;stroke-linecap:round;filter:url(#glow);opacity:.58;pointer-events:none}
 .edgeHit{fill:none;stroke:transparent;stroke-width:26;pointer-events:stroke;cursor:pointer}.edgeHit.selected{stroke:rgba(255,255,255,.07)}.edge-plus{position:absolute;z-index:24;width:44px;height:44px;margin-left:-22px;margin-top:-22px;border-radius:50%;border:1px solid #9e95ff;background:radial-gradient(circle at 50% 45%,#fff 0 7%,#bfb8ff 8% 13%,#6d60ff 34%,#29245c 72%);color:white;font-size:28px;font-weight:800;line-height:38px;text-align:center;box-shadow:0 0 16px rgba(132,116,255,.85),0 0 36px rgba(83,205,255,.28);display:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.edge-plus.show{display:none}.edge-plus:active{transform:scale(.94)}
@@ -78,6 +82,7 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <button class="btn" id="topMenuBtn" aria-label="More app actions">•••</button>
 </div>
 <div class="top-menu-panel" id="topMenuPanel">
+  <button class="btn" id="daysBtn">Day Markers</button>
   <button class="btn" id="backupBtn">Backup</button>
   <label class="btn" for="restoreInput">Restore</label><input id="restoreInput" type="file" accept=".json,.timeweb" hidden>
   <button class="btn danger" id="newBtn">New Universe</button>
@@ -85,16 +90,17 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <div class="legacy-actions" aria-hidden="true">
 <button id="afterBtn"></button><button id="beforeBtn"></button><button id="branchBtn"></button><button id="editBtn"></button><button id="connectBtn"></button><button id="insertBtn"></button><button id="snapBtn"></button><button id="collapseBtn"></button>
 </div>
-<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.6.1</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
+<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.7</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
 <div class="workspace">
 <aside class="sidebar">
 <h3>Camera controls</h3><div class="help">One finger pans. Pinch begins only after a real second finger touches the canvas. Tap empty space to deselect. Hold an event first, then drag, to move it.</div>
 <h3>Chronology</h3><div class="help">Physical height is time. Higher = later. Lower = earlier. Event movement snaps to chronology levels.</div>
-<h3>Creating events</h3><div class="help"><b>Continue</b> extends the end of a path. <b>Insert Event</b> places something inside an existing connection. <b>New Branch</b> deliberately creates another path from an event that already continues. There is no Before command.</div><h3>Mobile layout</h3><div class="help">Global maintenance actions live under the top <b>•••</b>. The bottom dock always contains <b>Big Bang</b>, <b>Selected</b>, and <b>Fit Web</b>.</div><h3>Undo / Redo</h3><div class="help">Story changes are remembered for up to 100 actions. Camera pan and zoom are intentionally not included in history.</div><h3>Live timeline</h3><div class="help">Dragging an event now updates only that event and its connected lines on each display frame. A solid core stays beneath the cosmic glow.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
+<h3>Creating events</h3><div class="help"><b>Continue</b> extends the end of a path. <b>Insert Event</b> places something inside an existing connection. <b>New Branch</b> deliberately creates another path from an event that already continues. There is no Before command.</div><h3>Mobile layout</h3><div class="help">Global maintenance actions live under the top <b>•••</b>. The bottom dock always contains <b>Big Bang</b>, <b>Selected</b>, and <b>Fit Web</b>.</div><h3>Undo / Redo</h3><div class="help">Story changes are remembered for up to 100 actions. Camera pan and zoom are intentionally not included in history.</div><h3>Live timeline</h3><div class="help">Dragging an event now updates only that event and its connected lines on each display frame. A solid core stays beneath the cosmic glow.</div><h3>Day markers</h3><div class="help">Day boundaries live in chronology, not on the screen. Use <b>Start Next Day</b> from an event. Insertions push later day markers when needed, and dragging an event across a marker changes its day automatically.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
 </aside>
 <main class="stage" id="stage">
 <div class="world" id="world">
 <div class="time-axis"></div>
+<div class="day-layer" id="dayLayer"></div>
 <svg class="web" id="webSvg" viewBox="-50000 -50000 100000 100000"><defs><filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs></svg>
 <div id="nodeLayer"></div>
 </div>
@@ -113,6 +119,7 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
     <button class="ctxbtn" id="ctxBranch"><b>New Branch</b><small>Diverge from this event</small></button>
   </div>
   <div class="context-menu" id="ctxMoreMenu">
+    <button class="ctxbtn" id="ctxNextDay"><b>Start Next Day</b><small>Add a day boundary after this event</small></button>
     <button class="ctxbtn" id="ctxConnect">Connect</button>
     <button class="ctxbtn" id="ctxCollapse">Collapse</button>
     <button class="ctxbtn danger" id="ctxDelete">Delete</button>
@@ -154,15 +161,34 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <div class="actions"><button class="btn" id="cancelDelete">Cancel</button></div>
 </div></div>
 
+<div class="modal-bg" id="daysModal"><div class="modal" style="width:min(560px,100%)">
+<h2>Day Markers</h2>
+<div class="notice">Day 1 begins above the Big Bang. Additional markers are chronological boundaries. Removing a marker joins its day back into the previous day; no events are deleted or moved.</div>
+<div id="daysList"></div>
+<div class="actions"><button class="btn" id="closeDays">Close</button></div>
+</div></div>
+
+<div class="modal-bg" id="dayInsertModal"><div class="modal" style="width:min(560px,100%)">
+<h2>Which Day?</h2>
+<div class="notice" id="dayInsertNotice">This connection crosses a day boundary. Choose which side of the boundary the inserted event belongs to.</div>
+<div class="choices">
+<button class="btn choice" id="insertEarlierDay"><b id="earlierDayLabel">Earlier Day</b><small>Place the new event before the day boundary.</small></button>
+<button class="btn choice primary" id="insertLaterDay"><b id="laterDayLabel">Later Day</b><small>Place the new event after the day boundary.</small></button>
+</div>
+<div class="actions"><button class="btn" id="cancelDayInsert">Cancel</button></div>
+</div></div>
+
 <script>
 (()=>{const KEY='nulliverse_timeweb_v1',CAMKEY='nulliverse_timeweb_camera_v1_2',GAP=150,NW=196,NH=84,LEGACY_W=2400,LEGACY_TOP=260,LEGACY_BOTTOM=220,COLS=['#55d8ff','#b070ff','#ff75c8','#6effcf','#ffd66e','#7f9dff'];
-const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2),$=id=>document.getElementById(id),stage=$('stage'),world=$('world'),nodeLayer=$('nodeLayer'),svg=$('webSvg');
-function fresh(){return{version:1,layoutVersion:2,title:'My Universe',nodes:[{id:'BIG_BANG',title:'BIG BANG',snapped:true,level:0,x:0,chapter:'Origin',pov:'',location:'Nulliverse',tags:['origin'],summary:'The singular origin of everything.',consequence:'Time begins.',reader:'',truth:'',notes:'',collapsed:false}],edges:[],selectedNodeId:'BIG_BANG',selectedEdgeId:null,colorIndex:0}}
+const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2),$=id=>document.getElementById(id),stage=$('stage'),world=$('world'),nodeLayer=$('nodeLayer'),dayLayer=$('dayLayer'),svg=$('webSvg');
+function fresh(){return{version:1,layoutVersion:2,title:'My Universe',nodes:[{id:'BIG_BANG',title:'BIG BANG',snapped:true,level:0,x:0,chapter:'Origin',pov:'',location:'Nulliverse',tags:['origin'],summary:'The singular origin of everything.',consequence:'Time begins.',reader:'',truth:'',notes:'',collapsed:false}],edges:[],dayMarkers:[],selectedNodeId:'BIG_BANG',selectedEdgeId:null,colorIndex:0}}
 function rawLoad(){try{return JSON.parse(localStorage.getItem(KEY))||fresh()}catch(_){return fresh()}}
 let p=rawLoad(),editing=null,connectFrom=null;
 function legacyHeight(pr){const ml=Math.max(0,...pr.nodes.filter(x=>x.snapped).map(x=>x.level||0));return Math.max(1800,LEGACY_TOP+LEGACY_BOTTOM+(ml+3)*GAP)}
 function migrate(pr){if(pr.layoutVersion===2)return false;const oldOY=legacyHeight(pr)-LEGACY_BOTTOM;pr.nodes.forEach(x=>{if(x.id==='BIG_BANG'){x.x=0;return}x.x=(Number(x.x)||LEGACY_W/2-NW/2)+NW/2-LEGACY_W/2;if(!x.snapped){x.freeY=(Number(x.freeY)||oldOY-NH/2)+NH/2-oldOY}});pr.layoutVersion=2;return true}
 if(migrate(p))localStorage.setItem(KEY,JSON.stringify(p));
+if(!Array.isArray(p.dayMarkers)){p.dayMarkers=[];localStorage.setItem(KEY,JSON.stringify(p))}
+p.dayMarkers=p.dayMarkers.filter(m=>m&&Number.isFinite(Number(m.startLevel))&&Number(m.startLevel)>1).map(m=>({id:m.id||uid(),startLevel:Math.max(2,Math.round(Number(m.startLevel)))}));
 const HISTORY_LIMIT=100;
 let undoStack=[],redoStack=[];
 
@@ -213,11 +239,36 @@ function redo(){
   updateHistoryButtons();
 }
 
-function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.6.1'}
+function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.7'}
 function n(id){return p.nodes.find(x=>x.id===id)}function e(id){return p.edges.find(x=>x.id===id)}function out(id){return p.edges.filter(x=>x.from===id)}function inc(id){return p.edges.filter(x=>x.to===id)}
 function color(){const c=COLS[p.colorIndex%COLS.length];p.colorIndex++;return c}function wy(x){return -(x.level||0)*GAP}
+function sortedDayMarkers(){return (p.dayMarkers||[]).slice().sort((a,b)=>a.startLevel-b.startLevel)}
+function allDayStarts(){return [1,...sortedDayMarkers().map(m=>m.startLevel)]}
+function dayOfLevel(level){
+  if(!Number.isFinite(level)||level<1)return 0;
+  let day=1;
+  sortedDayMarkers().forEach(m=>{if(level>=m.startLevel)day++});
+  return day;
+}
+function dayName(level){const d=dayOfLevel(level);return d?`Day ${d}`:'Origin'}
+function dayStartForLevel(level){
+  const starts=allDayStarts().filter(v=>v<=level);
+  return starts.length?Math.max(...starts):1;
+}
+function nextDayStartAfter(level){
+  const starts=sortedDayMarkers().map(m=>m.startLevel).filter(v=>v>level);
+  return starts.length?Math.min(...starts):null;
+}
+function shiftDayMarkers(from,amt=1,inclusive=true){
+  (p.dayMarkers||[]).forEach(m=>{
+    if(inclusive?m.startLevel>=from:m.startLevel>from)m.startLevel+=amt;
+  });
+}
+function pushNodes(from,amt=1,except=null){
+  p.nodes.forEach(x=>{if(x.snapped&&x.id!=='BIG_BANG'&&x.id!==except&&x.level>=from)x.level+=amt});
+}
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function push(from,amt=1,except=null){p.nodes.forEach(x=>{if(x.snapped&&x.id!=='BIG_BANG'&&x.id!==except&&x.level>=from)x.level+=amt})}
+function push(from,amt=1,except=null){pushNodes(from,amt,except);shiftDayMarkers(from,amt,true)}
 function normalizeEdges(){p.edges.forEach(ed=>{const a=n(ed.from),b=n(ed.to);if(a?.snapped&&b?.snapped&&a.level>b.level){const t=ed.from;ed.from=ed.to;ed.to=t}})}
 function countDesc(id){const seen=new Set(),q=[id];while(q.length){const cur=q.shift();out(cur).forEach(ed=>{if(!seen.has(ed.to)){seen.add(ed.to);q.push(ed.to)}})}return seen.size}
 function hidden(){const set=new Set();function walk(id){for(const ed of out(id)){const c=ed.to;if(set.has(c))continue;const allInside=inc(c).every(q=>q.from===id||set.has(q.from));if(allInside){set.add(c);walk(c)}}}p.nodes.filter(x=>x.collapsed).forEach(x=>walk(x.id));return set}
@@ -226,8 +277,33 @@ function hidden(){const set=new Set();function walk(id){for(const ed of out(id))
 let cam=loadCamera(),active=new Map(),gesture='none',panStart=null,pinchStart=null,nodePress=null,nodeDrag=null,pressTimer=null,lastMoves=[],inertiaId=0,dragFrame=0,pendingDragPoint=null;
 function loadCamera(){try{const c=JSON.parse(localStorage.getItem(CAMKEY));if(c&&Number.isFinite(c.x)&&Number.isFinite(c.y)&&Number.isFinite(c.s))return{x:c.x,y:c.y,s:Math.max(.35,Math.min(2,c.s))}}catch(_){}return{x:innerWidth/2,y:innerHeight*.72,s:1}}
 function saveCamera(){localStorage.setItem(CAMKEY,JSON.stringify(cam))}
-function applyCamera(){world.style.transform=`translate(${cam.x}px,${cam.y}px) scale(${cam.s})`;$('zoomRead').textContent=Math.round(cam.s*100)+'%';updateEdgePlus();updateContextTools()}
+function applyCamera(){world.style.transform=`translate(${cam.x}px,${cam.y}px) scale(${cam.s})`;$('zoomRead').textContent=Math.round(cam.s*100)+'%';updateEdgePlus();updateContextTools();updateDayMarkerLabels()}
 function screenToWorld(sx,sy){const r=stage.getBoundingClientRect();return{x:(sx-r.left-cam.x)/cam.s,y:(sy-r.top-cam.y)/cam.s}}
+function renderDayMarkers(){
+  dayLayer.innerHTML='';
+  const boundaries=[{id:'DAY_1',startLevel:1,fixed:true},...sortedDayMarkers()];
+  boundaries.forEach((m,index)=>{
+    const el=document.createElement('div');
+    el.className='day-marker';
+    el.dataset.dayMarkerId=m.id;
+    el.style.top=(-(m.startLevel-.5)*GAP)+'px';
+    const label=document.createElement('div');
+    label.className='day-marker-label';
+    label.textContent=`DAY ${index+1}`;
+    el.appendChild(label);
+    dayLayer.appendChild(el);
+  });
+  updateDayMarkerLabels();
+}
+function updateDayMarkerLabels(){
+  if(!dayLayer)return;
+  const r=stage.getBoundingClientRect();
+  const centerWorld=screenToWorld(r.left+stage.clientWidth/2,r.top).x;
+  dayLayer.querySelectorAll('.day-marker-label').forEach(label=>{
+    label.style.left=(50000+centerWorld)+'px';
+  });
+}
+
 function worldToStage(x,yv){return{x:cam.x+x*cam.s,y:cam.y+yv*cam.s}}
 function edgeMidpoint(ed){
   if(!ed)return null;
@@ -278,6 +354,9 @@ function updateContextTools(){
     $('ctxCollapse').style.display=(!floating && sn.id!=='BIG_BANG' && out(sn.id).length)?'inline-block':'none';
     $('ctxCollapse').textContent=sn.collapsed?'Expand':'Collapse';
     $('ctxDelete').style.display=sn.id==='BIG_BANG'?'none':'inline-block';
+    const nextBoundaryLevel=sn.snapped?sn.level+1:null;
+    const boundaryAlreadyThere=nextBoundaryLevel!==null&&(nextBoundaryLevel===1||sortedDayMarkers().some(m=>m.startLevel===nextBoundaryLevel));
+    $('ctxNextDay').style.display=(!floating&&sn.id!=='BIG_BANG'&&!boundaryAlreadyThere)?'inline-block':'none';
 
     const hasContinuation=!floating&&out(sn.id).length>0;
     $('ctxAfter').style.display=(!floating&&!hasContinuation)?'inline-block':'none';
@@ -307,7 +386,7 @@ function fitWeb(){const vis=p.nodes.filter(x=>!hidden().has(x.id));if(!vis.lengt
 function startInertia(vx,vy){cancelInertia();let px=vx,py=vy,prev=performance.now();function frame(now){const dt=Math.min(32,now-prev);prev=now;cam.x+=px*dt;cam.y+=py*dt;const friction=Math.pow(.91,dt/16);px*=friction;py*=friction;applyCamera();if(Math.hypot(px,py)>.015)inertiaId=requestAnimationFrame(frame);else{inertiaId=0;saveCamera()}}inertiaId=requestAnimationFrame(frame)}
 
 /* rendering */
-function render(){nodeLayer.innerHTML='';const hid=hidden();p.nodes.forEach(x=>{if(hid.has(x.id))return;if(x.id==='BIG_BANG'){const el=document.createElement('div');el.className='origin'+(p.selectedNodeId===x.id?' selected':'');el.dataset.id=x.id;el.innerHTML='BIG<br>BANG';nodeLayer.appendChild(el);return}const el=document.createElement('div');el.className='node'+(x.snapped?'':' float')+(p.selectedNodeId===x.id?' selected':'')+(x.collapsed?' collapsed':'');el.dataset.id=x.id;el.dataset.count=x.collapsed?countDesc(x.id):0;el.style.left=(x.x-NW/2)+'px';el.style.top=((x.snapped?wy(x):x.freeY)-NH/2)+'px';const cs=[...new Set(inc(x.id).concat(out(x.id)).map(q=>q.color))].slice(0,5);el.innerHTML=`${x.snapped?`<div class="badge">T+${x.level}</div>`:`<div class="null">NULL</div>`}<div class="title">${esc(x.title)}</div><div class="meta">${x.chapter?`<span>${esc(x.chapter)}</span>`:''}${x.pov?`<span>• ${esc(x.pov)}</span>`:''}${x.location?`<span>• ${esc(x.location)}</span>`:''}</div><div class="summary">${esc(x.consequence||x.summary||'Open event details')}</div><div class="dots">${cs.map(c=>`<span class="tdot" style="background:${c};box-shadow:0 0 8px ${c}"></span>`).join('')}</div>`;nodeLayer.appendChild(el)});drawEdges(hid);const sn=p.selectedNodeId?n(p.selectedNodeId):null,se=p.selectedEdgeId?e(p.selectedEdgeId):null;$('selectionStatus').textContent=sn?`Selected: ${sn.title}${sn.snapped?' • T+'+sn.level:' • NULL'}`:se?`Selected thread: ${n(se.from)?.title||'?'} → ${n(se.to)?.title||'?'} • tap + to insert`:'Nothing selected';$('insertBtn').disabled=!se;$('editBtn').disabled=!sn;$('snapBtn').disabled=!(sn&&!sn.snapped);$('collapseBtn').disabled=!(sn&&sn.id!=='BIG_BANG'&&out(sn.id).length);$('collapseBtn').textContent=sn?.collapsed?'Expand':'Collapse';applyCamera()}
+function render(){nodeLayer.innerHTML='';const hid=hidden();p.nodes.forEach(x=>{if(hid.has(x.id))return;if(x.id==='BIG_BANG'){const el=document.createElement('div');el.className='origin'+(p.selectedNodeId===x.id?' selected':'');el.dataset.id=x.id;el.innerHTML='BIG<br>BANG';nodeLayer.appendChild(el);return}const el=document.createElement('div');el.className='node'+(x.snapped?'':' float')+(p.selectedNodeId===x.id?' selected':'')+(x.collapsed?' collapsed':'');el.dataset.id=x.id;el.dataset.count=x.collapsed?countDesc(x.id):0;el.style.left=(x.x-NW/2)+'px';el.style.top=((x.snapped?wy(x):x.freeY)-NH/2)+'px';const cs=[...new Set(inc(x.id).concat(out(x.id)).map(q=>q.color))].slice(0,5);el.innerHTML=`${x.snapped?`<div class="badge">T+${x.level}</div>`:`<div class="null">NULL</div>`}<div class="title">${esc(x.title)}</div><div class="meta">${x.chapter?`<span>${esc(x.chapter)}</span>`:''}${x.pov?`<span>• ${esc(x.pov)}</span>`:''}${x.location?`<span>• ${esc(x.location)}</span>`:''}</div><div class="summary">${esc(x.consequence||x.summary||'Open event details')}</div><div class="dots">${cs.map(c=>`<span class="tdot" style="background:${c};box-shadow:0 0 8px ${c}"></span>`).join('')}</div>`;nodeLayer.appendChild(el)});drawEdges(hid);renderDayMarkers();const sn=p.selectedNodeId?n(p.selectedNodeId):null,se=p.selectedEdgeId?e(p.selectedEdgeId):null;$('selectionStatus').textContent=sn?`Selected: ${sn.title}${sn.snapped?' • T+'+sn.level+' • '+dayName(sn.level):' • NULL'}`:se?`Selected thread: ${n(se.from)?.title||'?'} → ${n(se.to)?.title||'?'} • tap + to insert`:'Nothing selected';$('insertBtn').disabled=!se;$('editBtn').disabled=!sn;$('snapBtn').disabled=!(sn&&!sn.snapped);$('collapseBtn').disabled=!(sn&&sn.id!=='BIG_BANG'&&out(sn.id).length);$('collapseBtn').textContent=sn?.collapsed?'Expand':'Collapse';applyCamera()}
 function edgePathData(ed){
   const a=n(ed.from),b=n(ed.to);
   if(!a||!b||!a.snapped||!b.snapped)return null;
@@ -768,11 +847,116 @@ function newBranch(){
   save();render();
 }
 
+function startNextDay(){
+  const x=p.selectedNodeId?n(p.selectedNodeId):null;
+  if(!x||!x.snapped||x.id==='BIG_BANG')return;
+  const startLevel=x.level+1;
+  if(startLevel<=1||sortedDayMarkers().some(m=>m.startLevel===startLevel))return;
+  checkpoint('Start next day');
+  p.dayMarkers.push({id:uid(),startLevel});
+  save();render();
+}
+
+function renderDaysManager(){
+  const list=$('daysList');
+  if(!list)return;
+  const markers=sortedDayMarkers();
+  let html=`<div class="notice"><b>DAY 1</b><br><span style="color:#8f9db5">Begins after the Big Bang • fixed</span></div>`;
+  markers.forEach((m,index)=>{
+    html+=`<div style="display:flex;gap:8px;align-items:center;margin:8px 0;padding:9px;border:1px solid #2d3956;border-radius:10px;background:#0d1220">
+      <div style="flex:1"><b>DAY ${index+2}</b><div style="font-size:11px;color:#8f9db5;margin-top:3px">Starts at T+${m.startLevel}</div></div>
+      <button class="btn danger remove-day" data-id="${esc(m.id)}">Remove</button>
+    </div>`;
+  });
+  if(!markers.length)html+=`<div style="font-size:12px;color:#8f9db5;padding:8px 0">No additional day boundaries yet.</div>`;
+  list.innerHTML=html;
+  list.querySelectorAll('.remove-day').forEach(btn=>{
+    btn.onclick=()=>{
+      const id=btn.dataset.id;
+      checkpoint('Remove day marker');
+      p.dayMarkers=p.dayMarkers.filter(m=>m.id!==id);
+      save();render();renderDaysManager();
+    };
+  });
+}
+
+let pendingDayInsertEdgeId=null;
+function showCrossDayInsert(ed,early,late){
+  pendingDayInsertEdgeId=ed.id;
+  const a=dayName(early.level),b=dayName(late.level);
+  $('earlierDayLabel').textContent=a;
+  $('laterDayLabel').textContent=b;
+  $('dayInsertNotice').textContent=`This connection runs from ${a} into ${b}. Which day should the new event belong to?`;
+  $('dayInsertModal').classList.add('show');
+}
+
+function performInsertBetween(ed,dayChoice=null){
+  const a=n(ed.from),b=n(ed.to);
+  if(!a||!b)return;
+  const early=a.level<=b.level?a:b,late=a.level<=b.level?b:a;
+  const earlyDay=dayOfLevel(early.level),lateDay=dayOfLevel(late.level);
+
+  checkpoint('Insert event');
+
+  let level;
+  if(earlyDay===lateDay){
+    if(late.level-early.level>1){
+      level=Math.round((early.level+late.level)/2);
+    }else{
+      push(late.level);
+      level=early.level+1;
+    }
+  }else if(dayChoice==='later'){
+    const start=dayStartForLevel(late.level);
+    level=Math.max(early.level+1,start);
+    if(level>=late.level){
+      /* Keep this day's own boundary fixed. Move the later event and
+         later day boundaries upward to make room inside the later day. */
+      pushNodes(late.level,1);
+      shiftDayMarkers(start,1,false);
+      level=late.level;
+    }
+  }else{
+    /* Earlier day: use the final slot before the next day boundary.
+       If no slot exists, move the boundary and later chronology upward. */
+    const boundary=nextDayStartAfter(early.level);
+    if(boundary===null){
+      if(late.level-early.level>1)level=Math.round((early.level+late.level)/2);
+      else{push(late.level);level=early.level+1}
+    }else if(boundary-early.level>1){
+      level=Math.min(late.level-1,boundary-1);
+    }else{
+      push(boundary);
+      level=boundary;
+    }
+  }
+
+  const id=uid();
+  const obj={id,title:'New Event',snapped:true,level,x:((early.id==='BIG_BANG'?0:early.x)+(late.id==='BIG_BANG'?0:late.x))/2,freeY:null,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false};
+  p.nodes.push(obj);
+  p.selectedNodeId=id;
+  p.selectedEdgeId=null;
+  p.edges=p.edges.filter(q=>q.id!==ed.id);
+  p.edges.push({id:uid(),from:early.id,to:id,color:ed.color},{id:uid(),from:id,to:late.id,color:ed.color});
+  save();render();openEdit(id);
+}
+
 function floating(){checkpoint('Create floating event');const center=screenToWorld(stage.getBoundingClientRect().left+stage.clientWidth/2,stage.getBoundingClientRect().top+stage.clientHeight/2),id=uid(),obj={id,title:'Floating Idea',snapped:false,level:null,x:center.x,freeY:center.y,chapter:'',pov:'',location:'',tags:[],summary:'',consequence:'',reader:'',truth:'',notes:'',collapsed:false};p.nodes.push(obj);p.selectedNodeId=id;p.selectedEdgeId=null;save();render();openEdit(id)}
 function connect(){const a=p.selectedNodeId?n(p.selectedNodeId):null;if(!a||!a.snapped){alert('Select a snapped event first.');return}connectFrom=a.id;$('connectBtn').classList.add('active');$('selectionStatus').textContent='Tap the snapped event this thread should connect to.'}
 function finishConnect(id){const a=n(connectFrom),b=n(id);if(a&&b&&b.snapped&&a.id!==b.id&&!p.edges.some(ed=>(ed.from===a.id&&ed.to===b.id)||(ed.from===b.id&&ed.to===a.id))){checkpoint('Connect events');const early=a.level<=b.level?a:b,late=a.level<=b.level?b:a;p.edges.push({id:uid(),from:early.id,to:late.id,color:inc(early.id)[0]?.color||out(early.id)[0]?.color||'#ff75c8'})}connectFrom=null;$('connectBtn').classList.remove('active');p.selectedNodeId=id;save();render()}
-function insertBetween(){const ed=p.selectedEdgeId?e(p.selectedEdgeId):null;if(!ed)return;const a=n(ed.from),b=n(ed.to);if(!a||!b)return;const early=a.level<=b.level?a:b,late=a.level<=b.level?b:a;let level;if(late.level-early.level>1)level=Math.round((early.level+late.level)/2);else{push(late.level);level=early.level+1}const obj=createEvent(level,((early.id==='BIG_BANG'?0:early.x)+(late.id==='BIG_BANG'?0:late.x))/2,true,'Insert event');p.edges=p.edges.filter(q=>q.id!==ed.id);p.edges.push({id:uid(),from:early.id,to:obj.id,color:ed.color},{id:uid(),from:obj.id,to:late.id,color:ed.color});save();render();openEdit(obj.id)}
-function openEdit(id){editing=id;const x=n(id);if(!x)return;$('nodeModalTitle').textContent=id==='BIG_BANG'?'Big Bang Notes':'Edit Event';$('fTitle').value=x.title||'';$('fChapter').value=x.chapter||'';$('fPov').value=x.pov||'';$('fLocation').value=x.location||'';$('fTags').value=(x.tags||[]).join(', ');$('fSummary').value=x.summary||'';$('fConsequence').value=x.consequence||'';$('fReader').value=x.reader||'';$('fTruth').value=x.truth||'';$('fNotes').value=x.notes||'';$('fStatus').value=id==='BIG_BANG'?'Fixed origin':x.snapped?'Snapped at T+'+x.level:'Floating in the Nulliverse';$('fTitle').disabled=id==='BIG_BANG';$('deleteBtn').style.display=id==='BIG_BANG'?'none':'inline-block';$('nodeModal').classList.add('show')}
+function insertBetween(){
+  const ed=p.selectedEdgeId?e(p.selectedEdgeId):null;
+  if(!ed)return;
+  const a=n(ed.from),b=n(ed.to);
+  if(!a||!b)return;
+  const early=a.level<=b.level?a:b,late=a.level<=b.level?b:a;
+  if(dayOfLevel(early.level)!==dayOfLevel(late.level)){
+    showCrossDayInsert(ed,early,late);
+    return;
+  }
+  performInsertBetween(ed,null);
+}
+function openEdit(id){editing=id;const x=n(id);if(!x)return;$('nodeModalTitle').textContent=id==='BIG_BANG'?'Big Bang Notes':'Edit Event';$('fTitle').value=x.title||'';$('fChapter').value=x.chapter||'';$('fPov').value=x.pov||'';$('fLocation').value=x.location||'';$('fTags').value=(x.tags||[]).join(', ');$('fSummary').value=x.summary||'';$('fConsequence').value=x.consequence||'';$('fReader').value=x.reader||'';$('fTruth').value=x.truth||'';$('fNotes').value=x.notes||'';$('fStatus').value=id==='BIG_BANG'?'Fixed origin':x.snapped?'Snapped at T+'+x.level+' • '+dayName(x.level):'Floating in the Nulliverse';$('fTitle').disabled=id==='BIG_BANG';$('deleteBtn').style.display=id==='BIG_BANG'?'none':'inline-block';$('nodeModal').classList.add('show')}
 function saveEdit(){
   const x=n(editing);if(!x)return;
   const next={
@@ -855,6 +1039,11 @@ $('topMenuBtn').onclick=ev=>{
 };
 $('topMenuPanel').addEventListener('pointerdown',ev=>ev.stopPropagation());
 $('topMenuPanel').addEventListener('click',ev=>ev.stopPropagation());
+$('daysBtn').onclick=()=>{
+  $('topMenuPanel').classList.remove('show');
+  renderDaysManager();
+  $('daysModal').classList.add('show');
+};
 document.addEventListener('pointerdown',ev=>{
   if(!ev.target.closest?.('#topMenuPanel')&&!ev.target.closest?.('#topMenuBtn')){
     $('topMenuPanel').classList.remove('show');
@@ -884,13 +1073,28 @@ $('ctxMore').onclick=()=>{$('ctxAddMenu').classList.remove('show');$('ctxMoreMen
 $('ctxSnap').onclick=()=>{hideContextMenus();openSnap()};
 $('ctxAfter').onclick=()=>{hideContextMenus();continuePath()};
 $('ctxBranch').onclick=()=>{hideContextMenus();newBranch()};
+$('ctxNextDay').onclick=()=>{hideContextMenus();startNextDay()};
 $('ctxConnect').onclick=()=>{hideContextMenus();connect()};
 $('ctxCollapse').onclick=()=>{hideContextMenus();collapse()};
 $('ctxDelete').onclick=()=>{hideContextMenus();const x=p.selectedNodeId?n(p.selectedNodeId):null;if(x)requestDelete(x.id)};
 $('ctxThreadInsert').onclick=()=>insertBetween();
 
 $('newBtn').onclick=()=>{$('topMenuPanel').classList.remove('show');if(confirm('Start a new Time Web? Make a Backup first if you want to keep this universe.')){checkpoint('New universe');p=fresh();save();render();focusBigBang()}};
-$('saveEdit').onclick=saveEdit;$('cancelEdit').onclick=()=>$('nodeModal').classList.remove('show');$('deleteBtn').onclick=()=>{if(editing)requestDelete(editing)};$('snapBefore').onclick=()=>snap('before');$('snapAfter').onclick=()=>snap('after');$('cancelSnap').onclick=()=>$('snapModal').classList.remove('show');$('deleteReconnect').onclick=()=>{if(deleteTarget)removeNode(deleteTarget,true)};$('deleteSever').onclick=()=>{if(deleteTarget)removeNode(deleteTarget,false)};$('cancelDelete').onclick=()=>{$('deleteModal').classList.remove('show');deleteTarget=null};['nodeModal','snapModal','deleteModal'].forEach(id=>$(id).addEventListener('click',ev=>{if(ev.target===$(id)){$(id).classList.remove('show');if(id==='deleteModal')deleteTarget=null}}));
+$('insertEarlierDay').onclick=()=>{
+  const ed=pendingDayInsertEdgeId?e(pendingDayInsertEdgeId):null;
+  $('dayInsertModal').classList.remove('show');
+  pendingDayInsertEdgeId=null;
+  if(ed)performInsertBetween(ed,'earlier');
+};
+$('insertLaterDay').onclick=()=>{
+  const ed=pendingDayInsertEdgeId?e(pendingDayInsertEdgeId):null;
+  $('dayInsertModal').classList.remove('show');
+  pendingDayInsertEdgeId=null;
+  if(ed)performInsertBetween(ed,'later');
+};
+$('cancelDayInsert').onclick=()=>{$('dayInsertModal').classList.remove('show');pendingDayInsertEdgeId=null};
+$('closeDays').onclick=()=>$('daysModal').classList.remove('show');
+$('saveEdit').onclick=saveEdit;$('cancelEdit').onclick=()=>$('nodeModal').classList.remove('show');$('deleteBtn').onclick=()=>{if(editing)requestDelete(editing)};$('snapBefore').onclick=()=>snap('before');$('snapAfter').onclick=()=>snap('after');$('cancelSnap').onclick=()=>$('snapModal').classList.remove('show');$('deleteReconnect').onclick=()=>{if(deleteTarget)removeNode(deleteTarget,true)};$('deleteSever').onclick=()=>{if(deleteTarget)removeNode(deleteTarget,false)};$('cancelDelete').onclick=()=>{$('deleteModal').classList.remove('show');deleteTarget=null};['nodeModal','snapModal','deleteModal','daysModal','dayInsertModal'].forEach(id=>$(id).addEventListener('click',ev=>{if(ev.target===$(id)){$(id).classList.remove('show');if(id==='deleteModal')deleteTarget=null}}));
 window.addEventListener('resize',()=>{applyCamera()});
 
 /* iOS / Safari guard:
