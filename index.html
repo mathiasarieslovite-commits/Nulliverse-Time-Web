@@ -48,6 +48,21 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 .world{position:absolute;left:0;top:0;width:1px;height:1px;transform-origin:0 0;will-change:transform}
 .time-axis{position:absolute;left:0;top:-50000px;width:1px;height:50000px;background:linear-gradient(to top,rgba(142,131,255,.02),rgba(142,131,255,.42),rgba(142,131,255,.05));z-index:1;pointer-events:none}
 .day-layer{position:absolute;left:0;top:0;width:1px;height:1px;z-index:2;pointer-events:none}
+.day-band{position:absolute;left:-50000px;width:100000px;pointer-events:none;overflow:hidden}
+.day-band:before{content:"";position:absolute;inset:0;background:linear-gradient(to right,transparent 0%,rgba(255,255,255,.02) 10%,rgba(255,255,255,.06) 50%,rgba(255,255,255,.02) 90%,transparent 100%)}
+.day-band:after{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.10),transparent);opacity:.45}
+.day-band.dawn{background:linear-gradient(to right,transparent 0%,rgba(196,145,92,.045) 18%,rgba(255,192,130,.11) 50%,rgba(196,145,92,.045) 82%,transparent 100%)}
+.day-band.morning{background:linear-gradient(to right,transparent 0%,rgba(89,149,214,.045) 18%,rgba(107,187,255,.11) 50%,rgba(89,149,214,.045) 82%,transparent 100%)}
+.day-band.afternoon{background:linear-gradient(to right,transparent 0%,rgba(108,130,168,.04) 18%,rgba(169,189,221,.09) 50%,rgba(108,130,168,.04) 82%,transparent 100%)}
+.day-band.evening{background:linear-gradient(to right,transparent 0%,rgba(126,84,176,.045) 18%,rgba(191,123,255,.11) 50%,rgba(126,84,176,.045) 82%,transparent 100%)}
+.day-band.night{background:linear-gradient(to right,transparent 0%,rgba(48,62,130,.045) 18%,rgba(91,112,226,.11) 50%,rgba(48,62,130,.045) 82%,transparent 100%)}
+.day-band-label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:3px 9px;border-radius:999px;border:1px solid rgba(66,81,119,.46);background:rgba(6,9,18,.52);backdrop-filter:blur(4px);color:#c3cee3;font-size:9px;font-weight:760;letter-spacing:.12em;white-space:nowrap;opacity:.52;box-shadow:0 0 14px rgba(0,0,0,.18)}
+.day-band.dawn .day-band-label{color:#f0d3ad;border-color:rgba(115,86,49,.55)}
+.day-band.morning .day-band-label{color:#cae6ff;border-color:rgba(58,96,135,.55)}
+.day-band.afternoon .day-band-label{color:#d8e0ee;border-color:rgba(83,98,122,.55)}
+.day-band.evening .day-band-label{color:#dccbff;border-color:rgba(100,72,139,.55)}
+.day-band.night .day-band-label{color:#c8d4ff;border-color:rgba(62,76,140,.55)}
+.day-band-tick{position:absolute;left:calc(50% - 18px);width:36px;height:1px;background:rgba(183,194,220,.18);opacity:.55}
 .day-marker{position:absolute;left:-50000px;width:100000px;height:1px;border-top:1px dashed rgba(137,151,190,.42);box-shadow:0 -1px 10px rgba(102,123,181,.08);pointer-events:none}
 .day-marker-label{position:absolute;top:-12px;transform:translateX(-50%);padding:3px 9px;border-radius:999px;border:1px solid rgba(83,101,145,.72);background:rgba(8,12,23,.94);color:#aebbd2;font-size:9px;font-weight:850;letter-spacing:.13em;white-space:nowrap;box-shadow:0 0 16px rgba(67,88,142,.13);pointer-events:none}
 
@@ -269,7 +284,7 @@ function redo(){
   updateHistoryButtons();
 }
 
-function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.8'}
+function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.8.1'}
 function n(id){return p.nodes.find(x=>x.id===id)}function e(id){return p.edges.find(x=>x.id===id)}function out(id){return p.edges.filter(x=>x.from===id)}function inc(id){return p.edges.filter(x=>x.to===id)}
 function color(){const c=COLS[p.colorIndex%COLS.length];p.colorIndex++;return c}function wy(x){return -(x.level||0)*GAP}
 function sortedDayMarkers(){return (p.dayMarkers||[]).slice().sort((a,b)=>a.startLevel-b.startLevel)}
@@ -409,6 +424,46 @@ function applyCamera(){world.style.transform=`translate(${cam.x}px,${cam.y}px) s
 function screenToWorld(sx,sy){const r=stage.getBoundingClientRect();return{x:(sx-r.left-cam.x)/cam.s,y:(sy-r.top-cam.y)/cam.s}}
 function renderDayMarkers(){
   dayLayer.innerHTML='';
+  const DAY_SEGMENTS=[
+    {key:'dawn',label:'DAWN',start:0,end:480},
+    {key:'morning',label:'MORNING',start:480,end:720},
+    {key:'afternoon',label:'AFTERNOON',start:720,end:1020},
+    {key:'evening',label:'EVENING',start:1020,end:1260},
+    {key:'night',label:'NIGHT',start:1260,end:1440}
+  ];
+  const totalDays=Math.max(1,...p.nodes.filter(x=>x.snapped&&x.id!=='BIG_BANG').map(x=>dayOfLevel(x.level)),sortedDayMarkers().length+1);
+
+  for(let day=1;day<=totalDays;day++){
+    const bounds=dayBounds(day);
+    DAY_SEGMENTS.forEach((seg,idx)=>{
+      const startLevel=minutesToLevel(day,seg.start);
+      let endLevel=seg.end>=1440?bounds.high:minutesToLevel(day,seg.end);
+      if(endLevel<startLevel)endLevel=startLevel;
+      const top=(-endLevel*GAP)+'px';
+      const h=Math.max(14,(endLevel-startLevel)*GAP);
+      const band=document.createElement('div');
+      band.className=`day-band ${seg.key}`;
+      band.dataset.day=String(day);
+      band.dataset.segment=seg.key;
+      band.style.top=top;
+      band.style.height=h+'px';
+
+      const label=document.createElement('div');
+      label.className='day-band-label';
+      label.textContent=`${seg.label} · DAY ${day}`;
+      band.appendChild(label);
+
+      if(idx<DAY_SEGMENTS.length-1){
+        const tick=document.createElement('div');
+        tick.className='day-band-tick';
+        tick.style.bottom='0px';
+        band.appendChild(tick);
+      }
+
+      dayLayer.appendChild(band);
+    });
+  }
+
   const boundaries=[{id:'DAY_1',startLevel:1,fixed:true},...sortedDayMarkers()];
   boundaries.forEach((m,index)=>{
     const el=document.createElement('div');
@@ -427,8 +482,11 @@ function updateDayMarkerLabels(){
   if(!dayLayer)return;
   const r=stage.getBoundingClientRect();
   const centerWorld=screenToWorld(r.left+stage.clientWidth/2,r.top).x;
-  dayLayer.querySelectorAll('.day-marker-label').forEach(label=>{
+  dayLayer.querySelectorAll('.day-marker-label, .day-band-label').forEach(label=>{
     label.style.left=(50000+centerWorld)+'px';
+  });
+  dayLayer.querySelectorAll('.day-band-tick').forEach(tick=>{
+    tick.style.left=(50000+centerWorld-18)+'px';
   });
 }
 
