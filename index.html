@@ -44,7 +44,7 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 .workspace{display:grid;grid-template-columns:225px 1fr;min-height:0}.sidebar{background:#080b13;border-right:1px solid #18213a;padding:12px;overflow:auto}.sidebar h3{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#9daac1;margin:12px 0 7px}.help{font-size:12px;color:#8c99b0;line-height:1.5}
 .stage{position:relative;overflow:hidden;touch-action:none;background:radial-gradient(circle at 50% 86%,rgba(118,91,255,.14),transparent 24%),radial-gradient(circle at 18% 25%,rgba(74,194,255,.06),transparent 22%),radial-gradient(circle at 82% 34%,rgba(255,100,198,.06),transparent 21%),#04050c;cursor:grab}
 .stage.panning{cursor:grabbing}
-/* v1.8.4 adaptive performance engine.
+/* v1.8.5 adaptive performance engine.
    Expensive cosmetics are temporarily reduced only while the canvas moves. */
 .stage.performance-active .edge{filter:none!important;opacity:.92;stroke-width:3.2}
 .stage.performance-active .edgeBase{opacity:1;stroke-width:2.4}
@@ -98,7 +98,7 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <button class="btn" id="topMenuBtn" aria-label="More app actions">•••</button>
 </div>
 <div class="top-menu-panel" id="topMenuPanel">
-  <button class="btn" id="daysBtn">Day Markers</button>
+  <button class="btn" id="daysBtn">Dawns</button>
   <button class="btn" id="backupBtn">Backup</button>
   <label class="btn" for="restoreInput">Restore</label><input id="restoreInput" type="file" accept=".json,.timeweb" hidden>
   <button class="btn danger" id="newBtn">New Universe</button>
@@ -106,12 +106,12 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <div class="legacy-actions" aria-hidden="true">
 <button id="afterBtn"></button><button id="beforeBtn"></button><button id="branchBtn"></button><button id="editBtn"></button><button id="connectBtn"></button><button id="insertBtn"></button><button id="snapBtn"></button><button id="collapseBtn"></button>
 </div>
-<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.8.4</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
+<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.8.5</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
 <div class="workspace">
 <aside class="sidebar">
 <h3>Camera controls</h3><div class="help">One finger pans. Pinch begins only after a real second finger touches the canvas. Tap empty space to deselect. Hold an event first, then drag, to move it.</div>
 <h3>Chronology</h3><div class="help">Physical height is time. Higher = later. Lower = earlier. Event movement snaps to chronology levels.</div>
-<h3>Creating events</h3><div class="help"><b>Continue</b> extends the end of a path. <b>Insert Event</b> places something inside an existing connection. <b>New Branch</b> deliberately creates another path from an event that already continues. There is no Before command.</div><h3>Mobile layout</h3><div class="help">Global maintenance actions live under the top <b>•••</b>. The bottom dock always contains <b>Big Bang</b>, <b>Selected</b>, and <b>Fit Web</b>.</div><h3>Undo / Redo</h3><div class="help">Story changes are remembered for up to 100 actions. Camera pan and zoom are intentionally not included in history.</div><h3>Live timeline</h3><div class="help">Dragging an event now updates only that event and its connected lines on each display frame. A solid core stays beneath the cosmic glow.</div><h3>Performance engine</h3><div class="help">While you pan, pinch, drag, or coast, Nulliverse temporarily simplifies expensive glow, blur, and shadow effects and updates the camera at most once per display frame. Full cosmic effects return when motion stops.</div><h3>Day markers</h3><div class="help">Day boundaries live in chronology, not on the screen. Use <b>Start Next Day</b> from an event. Insertions push later day markers when needed, and dragging an event across a marker changes its day automatically.</div><h3>Time of day</h3><div class="help">Event Time is optional: Unspecified, Approximate, or Exact. Exact time positions the node precisely inside its Day. Approximate time uses Dawn/Morning/Afternoon/Evening/Night. Dragging a timed event updates its time automatically.</div><h3>Time display</h3><div class="help">Time-of-day stays on the event itself through its time chip. The large Dawn/Morning/Afternoon/Evening/Night background bands and elastic band layout are intentionally not used in this version.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
+<h3>Creating events</h3><div class="help"><b>Continue</b> extends the end of a path. <b>Insert Event</b> places something inside an existing connection. <b>New Branch</b> deliberately creates another path from an event that already continues. There is no Before command.</div><h3>Mobile layout</h3><div class="help">Global maintenance actions live under the top <b>•••</b>. The bottom dock always contains <b>Big Bang</b>, <b>Selected</b>, and <b>Fit Web</b>.</div><h3>Undo / Redo</h3><div class="help">Story changes are remembered for up to 100 actions. Camera pan and zoom are intentionally not included in history.</div><h3>Live timeline</h3><div class="help">Dragging an event now updates only that event and its connected lines on each display frame. A solid core stays beneath the cosmic glow.</div><h3>Performance engine</h3><div class="help">While you pan, pinch, drag, or coast, Nulliverse temporarily simplifies expensive glow, blur, and shadow effects and updates the camera at most once per display frame. Full cosmic effects return when motion stops.</div><h3>Dawns</h3><div class="help">A <b>Dawn</b> begins a new story-time cycle. Use <b>Begin Next Dawn</b> from an event. The span from one Dawn to the next is a <b>Dawnspan</b>. Insertions push later Dawns when needed, and dragging an event across a Dawn changes which Dawnspan it belongs to.</div><h3>Time of day</h3><div class="help">Event Time is optional: Unspecified, Approximate, or Exact. Exact time positions the node precisely inside its current Dawnspan. Approximate time uses Dawn/Morning/Afternoon/Evening/Night. Dragging a timed event updates its time automatically.</div><h3>Time display</h3><div class="help">Time-of-day stays on the event itself through its time chip. The large Dawn/Morning/Afternoon/Evening/Night background bands and elastic band layout are intentionally not used in this version.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
 </aside>
 <main class="stage" id="stage">
 <div class="world" id="world">
@@ -135,7 +135,7 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
     <button class="ctxbtn" id="ctxBranch"><b>New Branch</b><small>Diverge from this event</small></button>
   </div>
   <div class="context-menu" id="ctxMoreMenu">
-    <button class="ctxbtn" id="ctxNextDay"><b>Start Next Day</b><small>Add a day boundary after this event</small></button>
+    <button class="ctxbtn" id="ctxNextDay"><b>Begin Next Dawn</b><small>Start a new Dawnspan after this event</small></button>
     <button class="ctxbtn" id="ctxConnect">Connect</button>
     <button class="ctxbtn" id="ctxCollapse">Collapse</button>
     <button class="ctxbtn danger" id="ctxDelete">Delete</button>
@@ -180,7 +180,7 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
       <input id="fTimeExact" type="time" step="900">
     </div>
   </div>
-  <div class="time-hint" id="timeHint">Optional. Time positions this event vertically inside its current Day.</div>
+  <div class="time-hint" id="timeHint">Optional. Time positions this event vertically inside its current Dawnspan.</div>
 </div>
 <div class="field"><label>What happens?</label><textarea id="fSummary"></textarea></div><div class="field"><label>Consequence — what changes because of this?</label><textarea id="fConsequence"></textarea></div><div class="field"><label>What the reader knows here</label><textarea id="fReader"></textarea></div><div class="field"><label>Hidden truth</label><textarea id="fTruth"></textarea></div><div class="field"><label>Notes</label><textarea id="fNotes" style="min-height:130px"></textarea></div>
 <div class="actions"><button class="btn danger" id="deleteBtn">Delete</button><span class="spacer"></span><button class="btn" id="cancelEdit">Cancel</button><button class="btn primary" id="saveEdit">Save Event</button></div>
@@ -202,18 +202,18 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 </div></div>
 
 <div class="modal-bg" id="daysModal"><div class="modal" style="width:min(560px,100%)">
-<h2>Day Markers</h2>
-<div class="notice">Day 1 begins above the Big Bang. Additional markers are chronological boundaries. Optional event times position nodes inside each Day. Removing a marker joins its day back into the previous day; no events are deleted.</div>
+<h2>Dawns</h2>
+<div class="notice">The <b>First Dawn</b> begins above the Big Bang. Each additional Dawn starts a new story-time cycle. The interval from one Dawn to the next is a <b>Dawnspan</b>. Optional event times position nodes inside their current Dawnspan. Removing a Dawn merges that Dawnspan back into the previous one; no events are deleted.</div>
 <div id="daysList"></div>
 <div class="actions"><button class="btn" id="closeDays">Close</button></div>
 </div></div>
 
 <div class="modal-bg" id="dayInsertModal"><div class="modal" style="width:min(560px,100%)">
-<h2>Which Day?</h2>
-<div class="notice" id="dayInsertNotice">This connection crosses a day boundary. Choose which side of the boundary the inserted event belongs to.</div>
+<h2>Which Dawnspan?</h2>
+<div class="notice" id="dayInsertNotice">This connection crosses a Dawn boundary. Choose which Dawnspan the inserted event belongs to.</div>
 <div class="choices">
-<button class="btn choice" id="insertEarlierDay"><b id="earlierDayLabel">Earlier Day</b><small>Place the new event before the day boundary.</small></button>
-<button class="btn choice primary" id="insertLaterDay"><b id="laterDayLabel">Later Day</b><small>Place the new event after the day boundary.</small></button>
+<button class="btn choice" id="insertEarlierDay"><b id="earlierDayLabel">Earlier Dawn</b><small>Place the new event in the earlier Dawnspan.</small></button>
+<button class="btn choice primary" id="insertLaterDay"><b id="laterDayLabel">Later Dawn</b><small>Place the new event in the later Dawnspan.</small></button>
 </div>
 <div class="actions"><button class="btn" id="cancelDayInsert">Cancel</button></div>
 </div></div>
@@ -285,7 +285,7 @@ function redo(){
   updateHistoryButtons();
 }
 
-function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.8.4'}
+function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.8.5'}
 function n(id){return p.nodes.find(x=>x.id===id)}function e(id){return p.edges.find(x=>x.id===id)}function out(id){return p.edges.filter(x=>x.from===id)}function inc(id){return p.edges.filter(x=>x.to===id)}
 function color(){const c=COLS[p.colorIndex%COLS.length];p.colorIndex++;return c}function wy(x){return -(x.level||0)*GAP}
 function sortedDayMarkers(){return (p.dayMarkers||[]).slice().sort((a,b)=>a.startLevel-b.startLevel)}
@@ -299,7 +299,16 @@ function dayOfLevel(level){
   sortedDayMarkers().forEach(m=>{if(level>=m.startLevel-.5)day++});
   return day;
 }
-function dayName(level){const d=dayOfLevel(level);return d?`Day ${d}`:'Origin'}
+const DAWN_WORDS=['','First','Second','Third','Fourth','Fifth','Sixth','Seventh','Eighth','Ninth','Tenth','Eleventh','Twelfth','Thirteenth','Fourteenth','Fifteenth','Sixteenth','Seventeenth','Eighteenth','Nineteenth','Twentieth'];
+function dawnOrdinal(n){
+  n=Math.max(1,Math.round(Number(n)||1));
+  if(DAWN_WORDS[n])return DAWN_WORDS[n];
+  const mod100=n%100,mod10=n%10;
+  const suffix=(mod100>=11&&mod100<=13)?'th':mod10===1?'st':mod10===2?'nd':mod10===3?'rd':'th';
+  return `${n}${suffix}`;
+}
+function dawnNameByNumber(n){return `${dawnOrdinal(n)} Dawn`}
+function dayName(level){const d=dayOfLevel(level);return d?dawnNameByNumber(d):'Origin'}
 function dayStartForLevel(level){
   const d=dayOfLevel(level);
   if(d<=1)return 1;
@@ -456,7 +465,7 @@ function renderDayMarkers(){
     el.style.top=(-(m.startLevel-.5)*GAP)+'px';
     const label=document.createElement('div');
     label.className='day-marker-label';
-    label.textContent=`DAY ${index+1}`;
+    label.textContent=dawnNameByNumber(index+1).toUpperCase();
     el.appendChild(label);
     dayLayer.appendChild(el);
   });
@@ -553,7 +562,7 @@ function fitWeb(){const vis=p.nodes.filter(x=>!hidden().has(x.id));if(!vis.lengt
 function startInertia(vx,vy){cancelInertia();setPerformanceMode(true);let px=vx,py=vy,prev=performance.now();function frame(now){const dt=Math.min(32,now-prev);prev=now;cam.x+=px*dt;cam.y+=py*dt;const friction=Math.pow(.91,dt/16);px*=friction;py*=friction;applyCamera();if(Math.hypot(px,py)>.015)inertiaId=requestAnimationFrame(frame);else{inertiaId=0;saveCamera();setPerformanceMode(false)}}inertiaId=requestAnimationFrame(frame)}
 
 /* rendering */
-function render(){nodeLayer.innerHTML='';const hid=hidden();p.nodes.forEach(x=>{if(hid.has(x.id))return;if(x.id==='BIG_BANG'){const el=document.createElement('div');el.className='origin'+(p.selectedNodeId===x.id?' selected':'');el.dataset.id=x.id;el.innerHTML='BIG<br>BANG';nodeLayer.appendChild(el);return}const el=document.createElement('div');el.className='node'+(x.snapped?'':' float')+(p.selectedNodeId===x.id?' selected':'')+(x.collapsed?' collapsed':'');el.dataset.id=x.id;el.dataset.count=x.collapsed?countDesc(x.id):0;el.style.left=(x.x-NW/2)+'px';el.style.top=((x.snapped?wy(x):x.freeY)-NH/2)+'px';const cs=[...new Set(inc(x.id).concat(out(x.id)).map(q=>q.color))].slice(0,5);ensureTimeFields(x);const tl=timeLabel(x),tc=timeVisualClass(x);el.innerHTML=`${x.snapped?`<div class="badge">${chronologyBadge(x)}</div>`:`<div class="null">NULL</div>`}<div class="title">${esc(x.title)}</div><div class="meta">${x.chapter?`<span>${esc(x.chapter)}</span>`:''}${x.pov?`<span>• ${esc(x.pov)}</span>`:''}${x.location?`<span>• ${esc(x.location)}</span>`:''}</div>${tl?`<div class="time-chip ${tc}">${esc(tl)} · ${esc(dayName(x.level))}</div>`:''}<div class="summary">${esc(x.consequence||x.summary||'Open event details')}</div><div class="dots">${cs.map(c=>`<span class="tdot" style="background:${c};box-shadow:0 0 8px ${c}"></span>`).join('')}</div>`;nodeLayer.appendChild(el)});drawEdges(hid);renderDayMarkers();const sn=p.selectedNodeId?n(p.selectedNodeId):null,se=p.selectedEdgeId?e(p.selectedEdgeId):null;$('selectionStatus').textContent=sn?`Selected: ${sn.title}${sn.snapped?' • '+chronologyBadge(sn)+' • '+timeStatus(sn):' • NULL'}`:se?`Selected thread: ${n(se.from)?.title||'?'} → ${n(se.to)?.title||'?'} • tap + to insert`:'Nothing selected';$('insertBtn').disabled=!se;$('editBtn').disabled=!sn;$('snapBtn').disabled=!(sn&&!sn.snapped);$('collapseBtn').disabled=!(sn&&sn.id!=='BIG_BANG'&&out(sn.id).length);$('collapseBtn').textContent=sn?.collapsed?'Expand':'Collapse';applyCamera()}
+function render(){nodeLayer.innerHTML='';const hid=hidden();p.nodes.forEach(x=>{if(hid.has(x.id))return;if(x.id==='BIG_BANG'){const el=document.createElement('div');el.className='origin'+(p.selectedNodeId===x.id?' selected':'');el.dataset.id=x.id;el.innerHTML='BIG<br>BANG';nodeLayer.appendChild(el);return}const el=document.createElement('div');el.className='node'+(x.snapped?'':' float')+(p.selectedNodeId===x.id?' selected':'')+(x.collapsed?' collapsed':'');el.dataset.id=x.id;el.dataset.count=x.collapsed?countDesc(x.id):0;el.style.left=(x.x-NW/2)+'px';el.style.top=((x.snapped?wy(x):x.freeY)-NH/2)+'px';const cs=[...new Set(inc(x.id).concat(out(x.id)).map(q=>q.color))].slice(0,5);ensureTimeFields(x);const tl=timeLabel(x),tc=timeVisualClass(x);el.innerHTML=`${x.snapped?`<div class="badge">${chronologyBadge(x)}</div>`:`<div class="null">NULL</div>`}<div class="title">${esc(x.title)}</div><div class="meta">${x.chapter?`<span>${esc(x.chapter)}</span>`:''}${x.pov?`<span>• ${esc(x.pov)}</span>`:''}${x.location?`<span>• ${esc(x.location)}</span>`:''}</div>${tl?`<div class="time-chip ${tc}">${esc(dayName(x.level))} · ${esc(tl)}</div>`:''}<div class="summary">${esc(x.consequence||x.summary||'Open event details')}</div><div class="dots">${cs.map(c=>`<span class="tdot" style="background:${c};box-shadow:0 0 8px ${c}"></span>`).join('')}</div>`;nodeLayer.appendChild(el)});drawEdges(hid);renderDayMarkers();const sn=p.selectedNodeId?n(p.selectedNodeId):null,se=p.selectedEdgeId?e(p.selectedEdgeId):null;$('selectionStatus').textContent=sn?`Selected: ${sn.title}${sn.snapped?' • '+chronologyBadge(sn)+' • '+timeStatus(sn):' • NULL'}`:se?`Selected thread: ${n(se.from)?.title||'?'} → ${n(se.to)?.title||'?'} • tap + to insert`:'Nothing selected';$('insertBtn').disabled=!se;$('editBtn').disabled=!sn;$('snapBtn').disabled=!(sn&&!sn.snapped);$('collapseBtn').disabled=!(sn&&sn.id!=='BIG_BANG'&&out(sn.id).length);$('collapseBtn').textContent=sn?.collapsed?'Expand':'Collapse';applyCamera()}
 function edgePathData(ed){
   const a=n(ed.from),b=n(ed.to);
   if(!a||!b||!a.snapped||!b.snapped)return null;
@@ -615,7 +624,7 @@ function updateNodeVisual(x){
   const chip=el.querySelector('.time-chip');
   const tl=timeLabel(x);
   if(chip){
-    chip.textContent=tl?`${tl} · ${dayName(x.level)}`:'';
+    chip.textContent=tl?`${dayName(x.level)} · ${tl}`:'';
     chip.className=`time-chip ${timeVisualClass(x)}`;
     chip.style.display=tl?'inline-flex':'none';
   }
@@ -1054,7 +1063,7 @@ function startNextDay(){
   if(!x||!x.snapped||x.id==='BIG_BANG')return;
   const startLevel=Math.max(2,Math.ceil(Number(x.level)+0.001));
   if(startLevel<=1||sortedDayMarkers().some(m=>m.startLevel===startLevel))return;
-  checkpoint('Start next day');
+  checkpoint('Begin next dawn');
   p.dayMarkers.push({id:uid(),startLevel});
   save();render();
 }
@@ -1063,19 +1072,19 @@ function renderDaysManager(){
   const list=$('daysList');
   if(!list)return;
   const markers=sortedDayMarkers();
-  let html=`<div class="notice"><b>DAY 1</b><br><span style="color:#8f9db5">Begins after the Big Bang • fixed</span></div>`;
+  let html=`<div class="notice"><b>${dawnNameByNumber(1).toUpperCase()}</b><br><span style="color:#8f9db5">Begins after the Big Bang • fixed</span></div>`;
   markers.forEach((m,index)=>{
     html+=`<div style="display:flex;gap:8px;align-items:center;margin:8px 0;padding:9px;border:1px solid #2d3956;border-radius:10px;background:#0d1220">
-      <div style="flex:1"><b>DAY ${index+2}</b><div style="font-size:11px;color:#8f9db5;margin-top:3px">Starts at T+${m.startLevel}</div></div>
+      <div style="flex:1"><b>${dawnNameByNumber(index+2).toUpperCase()}</b><div style="font-size:11px;color:#8f9db5;margin-top:3px">Dawnspan begins at T+${m.startLevel}</div></div>
       <button class="btn danger remove-day" data-id="${esc(m.id)}">Remove</button>
     </div>`;
   });
-  if(!markers.length)html+=`<div style="font-size:12px;color:#8f9db5;padding:8px 0">No additional day boundaries yet.</div>`;
+  if(!markers.length)html+=`<div style="font-size:12px;color:#8f9db5;padding:8px 0">No additional Dawns yet.</div>`;
   list.innerHTML=html;
   list.querySelectorAll('.remove-day').forEach(btn=>{
     btn.onclick=()=>{
       const id=btn.dataset.id;
-      checkpoint('Remove day marker');
+      checkpoint('Remove dawn');
       p.dayMarkers=p.dayMarkers.filter(m=>m.id!==id);
       save();render();renderDaysManager();
     };
@@ -1088,7 +1097,7 @@ function showCrossDayInsert(ed,early,late){
   const a=dayName(early.level),b=dayName(late.level);
   $('earlierDayLabel').textContent=a;
   $('laterDayLabel').textContent=b;
-  $('dayInsertNotice').textContent=`This connection runs from ${a} into ${b}. Which day should the new event belong to?`;
+  $('dayInsertNotice').textContent=`This connection runs from ${a} into ${b}. Which Dawnspan should the new event belong to?`;
   $('dayInsertModal').classList.add('show');
 }
 
@@ -1162,7 +1171,7 @@ function updateTimeEditor(){
   const mode=$('fTimeMode').value;
   $('timeApproxWrap').classList.toggle('time-hidden',mode!=='approx');
   $('timeExactWrap').classList.toggle('time-hidden',mode!=='exact');
-  $('timeHint').textContent=mode==='exact'?'Exact time sets this event’s precise vertical position inside its current Day.':mode==='approx'?'Approximate time places the event in a broad part of the day; you may still drag it within that region.':'Unspecified keeps chronology manual, as before.';
+  $('timeHint').textContent=mode==='exact'?'Exact time sets this event’s precise vertical position inside its current Dawnspan.':mode==='approx'?'Approximate time places the event in a broad part of its Dawnspan; you may still drag it within that region.':'Unspecified keeps chronology manual, as before.';
 }
 function openEdit(id){
   editing=id;const x=n(id);if(!x)return;ensureTimeFields(x);
