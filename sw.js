@@ -1,4 +1,4 @@
-const CACHE='nulliverse-timeweb-v1-8-10';
+const CACHE='nulliverse-timeweb-v1-8-11';
 const ASSETS=[
   './',
   './index.html',

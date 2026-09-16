@@ -57,9 +57,9 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 .projectbar{display:flex;gap:9px;align-items:center;touch-action:none;padding:7px max(9px,env(safe-area-inset-right)) 7px max(9px,env(safe-area-inset-left));background:#090c15;border-bottom:1px solid #18213a;z-index:35;min-width:0;overflow:hidden}
 .projectbar input{min-width:0;flex:0 1 42%;background:#050813;color:var(--text);border:1px solid #2b3756;border-radius:9px;padding:8px 9px}.status{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}.projectbar #saveStatus{flex:1 1 auto}.projectbar #selectionStatus{flex:0 1 36%;text-align:right}
 .workspace{display:grid;grid-template-columns:225px 1fr;min-height:0}.sidebar{background:#080b13;border-right:1px solid #18213a;padding:12px;overflow:auto}.sidebar h3{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#9daac1;margin:12px 0 7px}.help{font-size:12px;color:#8c99b0;line-height:1.5}
-.stage{position:relative;overflow:hidden;touch-action:none;background:radial-gradient(circle at 50% 86%,rgba(118,91,255,.14),transparent 24%),radial-gradient(circle at 18% 25%,rgba(74,194,255,.06),transparent 22%),radial-gradient(circle at 82% 34%,rgba(255,100,198,.06),transparent 21%),#04050c;cursor:grab}
+.stage{position:relative;overflow:hidden;touch-action:none;isolation:isolate;background:radial-gradient(ellipse at 48% 82%,rgba(75,63,150,.095),transparent 31%),radial-gradient(ellipse at 13% 24%,rgba(55,91,118,.045),transparent 28%),radial-gradient(ellipse at 88% 18%,rgba(96,66,118,.035),transparent 25%),linear-gradient(180deg,#03040a 0%,#04050c 54%,#020308 100%);cursor:grab}
 .stage.panning{cursor:grabbing}
-/* v1.8.10 adaptive performance engine.
+/* v1.8.11 adaptive performance engine.
    Expensive cosmetics are temporarily reduced only while the canvas moves. */
 .stage.performance-active .edge{filter:none!important;opacity:.92;stroke-width:3.2}
 .stage.performance-active .edgeBase{opacity:1;stroke-width:2.4}
@@ -75,7 +75,47 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 .node{contain:layout paint style;content-visibility:auto;contain-intrinsic-size:196px 84px}
 .origin{contain:layout paint style;content-visibility:auto;contain-intrinsic-size:94px 94px}
 
-.stage:before{content:"";position:absolute;inset:-80px;pointer-events:none;opacity:.30;background-image:radial-gradient(circle,#fff 0 1px,transparent 1.1px),radial-gradient(circle,#88a5ff 0 1px,transparent 1.1px);background-size:101px 101px,157px 157px;background-position:13px 25px,71px 43px}
+.stage:before{content:"";position:absolute;inset:-100px;z-index:0;pointer-events:none;opacity:.20;background-image:radial-gradient(circle at 17% 43%,rgba(213,222,255,.72) 0 .7px,transparent .9px),radial-gradient(circle at 68% 24%,rgba(130,151,205,.58) 0 .65px,transparent .9px),radial-gradient(circle at 39% 77%,rgba(196,174,222,.42) 0 .55px,transparent .85px),radial-gradient(circle at 82% 69%,rgba(107,130,170,.45) 0 .55px,transparent .8px);background-size:173px 137px,229px 191px,311px 257px,421px 347px;background-position:19px 41px,101px 13px,57px 129px,211px 77px}
+
+.nulliverse-env{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;user-select:none;contain:strict;opacity:.86}
+.world{z-index:2}
+.void-haze{position:absolute;border-radius:50%;pointer-events:none}
+.void-haze.a{width:72vw;height:42vh;left:-28vw;top:18vh;background:radial-gradient(ellipse at center,rgba(77,71,135,.10) 0%,rgba(37,43,80,.045) 42%,transparent 72%)}
+.void-haze.b{width:62vw;height:34vh;right:-20vw;bottom:9vh;background:radial-gradient(ellipse at center,rgba(48,77,97,.075) 0%,rgba(42,45,79,.035) 45%,transparent 74%)}
+.void-haze.c{width:44vw;height:26vh;right:17vw;top:-10vh;background:radial-gradient(ellipse at center,rgba(100,67,113,.055) 0%,rgba(49,38,70,.02) 47%,transparent 76%)}
+
+.dormant-filament{position:absolute;height:1px;transform-origin:left center;opacity:.18;background:linear-gradient(90deg,transparent,rgba(123,119,183,.08) 11%,rgba(156,151,218,.34) 48%,rgba(86,113,157,.12) 76%,transparent)}
+.dormant-filament:after{content:"";position:absolute;left:44%;top:-3px;width:7px;height:7px;border-radius:50%;border:1px solid rgba(142,136,202,.18);background:rgba(76,72,121,.08)}
+.dormant-filament.f1{width:54vw;left:-8vw;top:31%;transform:rotate(-17deg)}
+.dormant-filament.f2{width:44vw;right:-10vw;top:62%;transform:rotate(23deg)}
+.dormant-filament.f3{width:31vw;left:47%;top:14%;transform:rotate(8deg);opacity:.11}
+
+.dead-world{position:absolute;border-radius:50%;opacity:.24;box-shadow:inset -24px -17px 38px rgba(0,0,0,.72),inset 9px 7px 22px rgba(133,145,184,.035),0 0 42px rgba(75,82,128,.045)}
+.dead-world:before{content:"";position:absolute;inset:7%;border-radius:50%;border:1px solid rgba(124,132,168,.10);background:radial-gradient(circle at 33% 29%,rgba(130,137,172,.055),transparent 26%),radial-gradient(circle at 63% 61%,rgba(55,61,90,.12),transparent 29%)}
+.dead-world:after{content:"";position:absolute;inset:-5%;border-radius:50%;border:1px solid rgba(126,131,174,.08);clip-path:polygon(0 0,100% 0,100% 53%,70% 48%,63% 66%,42% 61%,30% 83%,0 74%)}
+.dead-world.w1{width:250px;height:250px;right:-92px;top:11%;background:radial-gradient(circle at 39% 35%,rgba(102,109,145,.19),rgba(30,33,53,.31) 43%,rgba(6,7,15,.88) 73%);clip-path:polygon(0 0,100% 0,100% 100%,69% 100%,61% 82%,48% 89%,39% 72%,21% 77%,8% 56%,0 49%)}
+.dead-world.w2{width:176px;height:176px;left:-72px;bottom:8%;opacity:.17;background:radial-gradient(circle at 58% 31%,rgba(91,104,129,.18),rgba(25,28,42,.30) 48%,rgba(5,6,12,.91) 76%);clip-path:polygon(0 6%,83% 0,100% 23%,86% 45%,95% 71%,68% 100%,35% 89%,18% 100%,0 86%)}
+.dead-world.w3{width:86px;height:86px;right:19%;bottom:21%;opacity:.11;background:radial-gradient(circle at 42% 39%,rgba(109,98,133,.20),rgba(20,22,36,.32) 51%,rgba(5,6,12,.92) 78%);clip-path:polygon(8% 0,100% 8%,89% 44%,100% 72%,73% 100%,39% 86%,0 96%,12% 53%,0 25%)}
+
+.world-crack{position:absolute;height:1px;transform-origin:left center;background:linear-gradient(90deg,rgba(165,169,196,.04),rgba(182,178,210,.28),rgba(94,97,125,.04));opacity:.62}
+.w1 .c1{width:77px;left:27px;top:78px;transform:rotate(31deg)}
+.w1 .c2{width:65px;left:77px;top:109px;transform:rotate(-49deg)}
+.w1 .c3{width:54px;left:105px;top:75px;transform:rotate(67deg)}
+.w2 .c1{width:49px;left:52px;top:49px;transform:rotate(52deg)}
+.w2 .c2{width:38px;left:78px;top:87px;transform:rotate(-33deg)}
+.w3 .c1{width:25px;left:20px;top:30px;transform:rotate(41deg)}
+
+.ruin-ring{position:absolute;width:224px;height:82px;left:19%;top:9%;border-radius:50%;border:1px solid rgba(111,119,158,.13);border-left-color:transparent;border-bottom-color:rgba(107,113,151,.045);transform:rotate(-14deg);opacity:.22}
+.ruin-ring:before{content:"";position:absolute;width:128px;height:24px;left:41px;top:28px;border-radius:50%;border-top:1px solid rgba(151,151,183,.12);border-right:1px solid rgba(151,151,183,.035);transform:rotate(7deg)}
+.ruin-ring:after{content:"";position:absolute;width:3px;height:3px;left:24px;top:36px;border-radius:50%;background:rgba(150,150,185,.17);box-shadow:34px -8px 0 rgba(130,134,169,.12),84px 13px 0 rgba(114,117,151,.12),131px -3px 0 rgba(144,137,165,.09),174px 6px 0 rgba(109,117,149,.10)}
+
+.gravity-scar{position:absolute;width:38vw;height:15vh;right:4vw;top:39%;border-radius:50%;opacity:.13;border-top:1px solid rgba(128,122,175,.22);border-bottom:1px solid rgba(71,96,127,.08);transform:rotate(-9deg)}
+.gravity-scar:before,.gravity-scar:after{content:"";position:absolute;border-radius:50%;inset:14%;border-top:1px solid rgba(115,113,159,.15);border-left:1px solid transparent}
+.gravity-scar:after{inset:28%;opacity:.7;transform:rotate(7deg)}
+
+.stage.performance-active .nulliverse-env{opacity:.38}
+.stage.performance-active .world-crack,.stage.performance-active .gravity-scar,.stage.performance-active .dormant-filament:after{display:none}
+
 .world{position:absolute;left:0;top:0;width:1px;height:1px;transform-origin:0 0;will-change:transform}
 .time-axis{position:absolute;left:0;top:-50000px;width:1px;height:50000px;background:linear-gradient(to top,rgba(142,131,255,.02),rgba(142,131,255,.42),rgba(142,131,255,.05));z-index:1;pointer-events:none}
 .day-layer{position:absolute;left:0;top:0;width:1px;height:1px;z-index:2;pointer-events:none}
@@ -128,14 +168,40 @@ button,input,textarea,select{font:inherit} button{cursor:pointer;-webkit-tap-hig
 <div class="legacy-actions" aria-hidden="true">
 <button id="afterBtn"></button><button id="beforeBtn"></button><button id="branchBtn"></button><button id="editBtn"></button><button id="connectBtn"></button><button id="insertBtn"></button><button id="snapBtn"></button><button id="collapseBtn"></button>
 </div>
-<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.8.10</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
+<div class="projectbar"><input id="projectTitle" value="My Universe"><span class="status" id="saveStatus">Saved on this device • v1.8.11</span><span class="spacer"></span><span class="status" id="selectionStatus">Big Bang selected</span></div>
 <div class="workspace">
 <aside class="sidebar">
 <h3>Camera controls</h3><div class="help">One finger pans. Pinch begins only after a real second finger touches the canvas. Tap empty space to deselect. Hold an event first, then drag, to move it.</div>
 <h3>Chronology</h3><div class="help">Physical height is time. Higher = later. Lower = earlier. Event movement snaps to chronology levels.</div>
-<h3>Creating events</h3><div class="help"><b>Continue</b> extends the end of a path. <b>Insert Event</b> places something inside an existing connection. <b>New Branch</b> deliberately creates another path from an event that already continues. There is no Before command.</div><h3>Mobile layout</h3><div class="help">Global maintenance actions live under the top <b>•••</b>. The bottom dock always contains <b>Big Bang</b>, <b>Selected</b>, and <b>Fit Web</b>.</div><h3>Undo / Redo</h3><div class="help">Story changes are remembered for up to 100 actions. Camera pan and zoom are intentionally not included in history.</div><h3>Live timeline</h3><div class="help">Dragging an event now updates only that event and its connected lines on each display frame. A solid core stays beneath the cosmic glow.</div><h3>Performance engine</h3><div class="help">While you pan, pinch, drag, or coast, Nulliverse temporarily simplifies expensive glow, blur, and shadow effects and updates the camera at most once per display frame. Full cosmic effects return when motion stops.</div><h3>Update reliability</h3><div class="help">When Nulliverse launches online, navigation now checks the network for the newest app shell first. If the network is slow or unavailable, it falls back to the cached copy so offline use still works. Story data remains in local storage and is not cleared by app updates.</div><h3>Dawns</h3><div class="help"><b>First Dawn</b> is the starting chapter. Later Dawns do not exist until you create them. Select the event where a chapter should end, then use <b>Begin Next Dawn</b>. Nulliverse never pre-places future chapters for you.</div><h3>Time of day</h3><div class="help">Time is descriptive metadata only: Unspecified, Approximate, or Exact. Approximate time uses Dawn/Morning/Afternoon/Evening/Night. Choosing a time never moves an event, and moving an event never changes its chosen time. Only crossing a Dawn boundary changes which Dawn/chapter it belongs to.</div><h3>Time display</h3><div class="help">Time-of-day stays on the event itself through its time chip. There are no Dawn/Morning/Afternoon/Evening/Night background regions or spatial boundaries.</div><h3>Time Glow threads</h3><div class="help">Each cosmic thread segment takes the glow color of the <b>event it leads into</b>. Dawn = amber, Morning = sky blue, Afternoon = teal, Evening = violet, Night = indigo. Exact times map to the same five broad glow families. Unspecified stays cyan.</div><h3>Floating ideas</h3><div class="help">Tap <b>Snap</b>, then drag a floating event onto the exact cosmic thread where it belongs. The target thread brightens and shows a + marker; <b>release = snap</b>. The new event inherits that thread’s broad time period, preserving Timeglow continuity. Regular snapped events never use magnetic snapping. Manual anchor selection remains available as a fallback.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
+<h3>Creating events</h3><div class="help"><b>Continue</b> extends the end of a path. <b>Insert Event</b> places something inside an existing connection. <b>New Branch</b> deliberately creates another path from an event that already continues. There is no Before command.</div><h3>Mobile layout</h3><div class="help">Global maintenance actions live under the top <b>•••</b>. The bottom dock always contains <b>Big Bang</b>, <b>Selected</b>, and <b>Fit Web</b>.</div><h3>Undo / Redo</h3><div class="help">Story changes are remembered for up to 100 actions. Camera pan and zoom are intentionally not included in history.</div><h3>Live timeline</h3><div class="help">Dragging an event now updates only that event and its connected lines on each display frame. A solid core stays beneath the cosmic glow.</div><h3>Performance engine</h3><div class="help">While you pan, pinch, drag, or coast, Nulliverse temporarily simplifies expensive glow, blur, and shadow effects and updates the camera at most once per display frame. Full cosmic effects return when motion stops.</div><h3>Update reliability</h3><div class="help">When Nulliverse launches online, navigation now checks the network for the newest app shell first. If the network is slow or unavailable, it falls back to the cached copy so offline use still works. Story data remains in local storage and is not cleared by app updates.</div><h3>The Nulliverse</h3><div class="help">The background is not ordinary outer space. It is an endless void outside normal story-time: faint particulate matter, dormant filaments, distortions, and the distant remains of universes that died. These ruins are atmosphere only—the living Time Web remains the active structure.</div><h3>Dawns</h3><div class="help"><b>First Dawn</b> is the starting chapter. Later Dawns do not exist until you create them. Select the event where a chapter should end, then use <b>Begin Next Dawn</b>. Nulliverse never pre-places future chapters for you.</div><h3>Time of day</h3><div class="help">Time is descriptive metadata only: Unspecified, Approximate, or Exact. Approximate time uses Dawn/Morning/Afternoon/Evening/Night. Choosing a time never moves an event, and moving an event never changes its chosen time. Only crossing a Dawn boundary changes which Dawn/chapter it belongs to.</div><h3>Time display</h3><div class="help">Time-of-day stays on the event itself through its time chip. There are no Dawn/Morning/Afternoon/Evening/Night background regions or spatial boundaries.</div><h3>Time Glow threads</h3><div class="help">Each cosmic thread segment takes the glow color of the <b>event it leads into</b>. Dawn = amber, Morning = sky blue, Afternoon = teal, Evening = violet, Night = indigo. Exact times map to the same five broad glow families. Unspecified stays cyan.</div><h3>Floating ideas</h3><div class="help">Tap <b>Snap</b>, then drag a floating event onto the exact cosmic thread where it belongs. The target thread brightens and shows a + marker; <b>release = snap</b>. The new event inherits that thread’s broad time period, preserving Timeglow continuity. Regular snapped events never use magnetic snapping. Manual anchor selection remains available as a fallback.</div><h3>The web</h3><div class="help">Cosmic threads are the cytoskeleton of your story universe. Simple deleted in-between events now heal the thread automatically.</div>
 </aside>
 <main class="stage" id="stage">
+<div class="nulliverse-env" aria-hidden="true">
+  <div class="void-haze a"></div>
+  <div class="void-haze b"></div>
+  <div class="void-haze c"></div>
+
+  <div class="dormant-filament f1"></div>
+  <div class="dormant-filament f2"></div>
+  <div class="dormant-filament f3"></div>
+
+  <div class="ruin-ring"></div>
+
+  <div class="dead-world w1">
+    <span class="world-crack c1"></span>
+    <span class="world-crack c2"></span>
+    <span class="world-crack c3"></span>
+  </div>
+  <div class="dead-world w2">
+    <span class="world-crack c1"></span>
+    <span class="world-crack c2"></span>
+  </div>
+  <div class="dead-world w3">
+    <span class="world-crack c1"></span>
+  </div>
+
+  <div class="gravity-scar"></div>
+</div>
 <div class="world" id="world">
 <div class="time-axis"></div>
 <div class="day-layer" id="dayLayer"></div>
@@ -339,7 +405,7 @@ function redo(){
   updateHistoryButtons();
 }
 
-function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.8.10'}
+function save(){localStorage.setItem(KEY,JSON.stringify(p));$('saveStatus').textContent='Saved on this device • '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' • v1.8.11'}
 function n(id){return p.nodes.find(x=>x.id===id)}function e(id){return p.edges.find(x=>x.id===id)}function out(id){return p.edges.filter(x=>x.from===id)}function inc(id){return p.edges.filter(x=>x.to===id)}
 function color(){const c=COLS[p.colorIndex%COLS.length];p.colorIndex++;return c}function wy(x){return -(x.level||0)*GAP}
 function sortedDayMarkers(){return (p.dayMarkers||[]).slice().sort((a,b)=>a.startLevel-b.startLevel)}
@@ -383,7 +449,7 @@ function ensureTimeFields(x){
 const APPROX_MINUTES={dawn:390,morning:600,afternoon:870,evening:1140,night:1350};
 function approxForMinutes(minutes){
   minutes=Math.max(0,Math.min(1439,Number(minutes)||0));
-  /* v1.8.10 exact-time glow buckets:
+  /* v1.8.11 exact-time glow buckets:
      Night 9 PM–4:59 AM, Dawn 5–7:59 AM, Morning 8–11:59 AM,
      Afternoon 12–4:59 PM, Evening 5–8:59 PM. */
   if(minutes<300)return 'night';
@@ -409,7 +475,7 @@ function clockInput(minutes){
   return `${String(Math.floor(minutes/60)).padStart(2,'0')}:${String(minutes%60).padStart(2,'0')}`;
 }
 /* LEGACY TIME-POSITION HELPERS — retained for compatibility only.
-   v1.8.10 does not use these for editing or dragging events. */
+   v1.8.11 does not use these for editing or dragging events. */
 function dayBounds(day,excludeId=null){
   const boundaries=dayBoundaryLevels();
   const low=boundaries[Math.max(0,day-1)]??0.5;
@@ -680,7 +746,7 @@ function snapFloatingIntoEdge(floatingId,edgeId,targetPoint){
   const a=n(ed.from),b=n(ed.to);
   if(!a||!b||!a.snapped||!b.snapped)return false;
 
-  /* v1.8.10 — preserve Timeglow continuity when a timeless floating idea is
+  /* v1.8.11 — preserve Timeglow continuity when a timeless floating idea is
      inserted into a thread. Exact destination times are intentionally reduced
      to their broad Dawn/Morning/Afternoon/Evening/Night family. */
   inheritBroadTimeFromEdge(x,ed);
@@ -930,7 +996,7 @@ function scheduleLiveNodeDrag(ev){
       ensureTimeFields(x);
       const rawLevel=Math.max(.51,-w.y/GAP);
 
-      /* v1.8.10: position controls chronology only.
+      /* v1.8.11: position controls chronology only.
          Time-of-day never changes because of dragging. */
       x.level=Math.max(1,Math.round(rawLevel));
 
@@ -1232,7 +1298,7 @@ function pointerEnd(ev,cancelled=false){
         if(didSnap){
           const snapped=n(dragged.id);
           const inherited=timeLabel(snapped);
-          $('saveStatus').textContent=`Snapped into thread${inherited?' • inherited '+inherited:''} • v1.8.10`;
+          $('saveStatus').textContent=`Snapped into thread${inherited?' • inherited '+inherited:''} • v1.8.11`;
         }
       }else{
         if(finishingDrag.preDragState&&finishingDrag.preDragState!==historyState()){
@@ -1536,7 +1602,7 @@ function saveEdit(){
   const current={title:x.title,chapter:x.chapter,pov:x.pov,location:x.location,tags:x.tags||[],summary:x.summary,consequence:x.consequence,reader:x.reader,truth:x.truth,notes:x.notes,timeMode:x.timeMode||'unspecified',timeApprox:x.timeApprox||'morning',timeMinutes:Number(x.timeMinutes)||600};
   if(JSON.stringify(next)!==JSON.stringify(current))checkpoint('Edit event');
   Object.assign(x,next);
-  /* v1.8.10: time is descriptive metadata only; saving it never moves a node. */
+  /* v1.8.11: time is descriptive metadata only; saving it never moves a node. */
   normalizeEdges();
   save();$('nodeModal').classList.remove('show');render();
 }
